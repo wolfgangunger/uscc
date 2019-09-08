@@ -36,11 +36,53 @@ p {
 	line-height: 24px;
 }
   .paragraph1 {
-    font-size: 88px;
-    font-family: verdana;
+    font-size: 96px;
+    /*font-family: verdana;*/
+	font-family: arial black;
     font-weight: bolder;
-    color: #999;
+	margin: 2;
+	margin-bottom: 46px;
+	color: #9DC3E6
   }
+  
+   .paragraph1b {
+    font-size: 44px;
+	font-family: franklin gothic;
+    font-weight: bolder;
+	margin: 32;
+	margin-bottom: 22px;
+	color: #9DC3E6
+  }
+  
+   .paragraph1c {
+    font-size: 28px;
+	font-family: Bahnschrift semibold;
+    font-weight: bolder;
+	margin: 32;
+	margin-bottom: 22px;
+	color:  #9DC3E6
+  }
+  
+   .paragraph1d {
+    font-size: 24px;
+	font-family: Open Sans;
+	font-weight: normal;
+	/*color: #92D050*/
+	margin: 32;
+	margin-bottom: 12px;
+	color: #92D050
+  }
+
+   .paragraph1e {
+    font-size: 18px;
+	font-family: sans-serif;
+	font-weight: normal;
+	margin: 32;
+	margin-bottom: 12px;
+	color:  #9DC3E6
+  }
+
+  
   .paragraph2 {
     font-size: 28px;
     font-family: verdana;
@@ -135,7 +177,7 @@ hr {
 /* Home Style */
 header {
 	/*background: url(../img/header-bg.jpg) no-repeat bottom center;*/
-        background: url(../img/uscc-bg1.jpg) no-repeat bottom center ;
+        background: url(../img/uscc-bg2.jpg) no-repeat bottom center ;
         /*background-image: url(../img/uscc-bg6.jpg) no-repeat bottom center;*/
         /*background: url(../img/galapagos.jpg) no-repeat bottom center;*/
         /*margin-top: 3em;
