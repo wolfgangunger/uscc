@@ -145,7 +145,8 @@ hr {
 }
 #menu a.navbar-brand {
 	font-size: 22px;
-	color: #ddd;
+	/*color: #ddd;*/
+	color: #c59af7;
 	font-weight: 700;
 }
 #menu a.navbar-brand i.fa {
