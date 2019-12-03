@@ -37,11 +37,11 @@ p {
 	font-family: 'Open Sans', sans-serif;
 	/*color: #888;*/
 	color: rgb(27, 3, 136);
-	line-height: 24px;
+	line-height: 24px
 }
   .paragraph1 {
-    font-size: 96px;
-	font-family: arial black;
+    font-size: 116px;
+	font-family: Source Sans Pro Black;
     font-weight: bolder;
 	margin: 2;
 	margin-bottom: 46px;
@@ -50,11 +50,11 @@ p {
   
    .paragraph1b {
     font-size: 44px;
-	font-family: franklin gothic;
+	font-family: Dosis;
     font-weight: bolder;
 	margin: 32;
 	margin-bottom: 22px;
-	color: #9DC3E6
+	color: #76B531
   }
   
    .paragraph1c {
@@ -73,7 +73,7 @@ p {
 	margin: 32;
 	margin-bottom: 12px;
 	/*color: #92D050*/
-	color : #00d900
+	color : #76B531
   }
 
    .paragraph1e {
@@ -139,8 +139,8 @@ hr {
 	transition: all 0.8s;
 }
 #menu.navbar-default {
-	/*background-color: rgba(248, 248, 248, 0);*/
-	background-color: rgb(27, 3, 136);
+	/*background-color: rgb(27, 3, 136);*/
+	background-color: rgb(18, 4, 20);
 	border-color: rgba(231, 231, 231, 0);
 }
 #menu a.navbar-brand {
@@ -191,7 +191,7 @@ hr {
 /* Home Style */
 header {
 	/*background: url(../img/header-bg.jpg) no-repeat bottom center;*/
-        background: url(../img/uscc-bg3.jpg) no-repeat bottom center ;
+        background: url(../img/uscc-bg4.jpg) no-repeat bottom center ;
         /*background-image: url(../img/uscc-bg6.jpg) no-repeat bottom center;*/
         /*margin-top: 3em;
         //width="5%";
