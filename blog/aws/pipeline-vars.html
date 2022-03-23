@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger</title>
+    <meta name="description"
+        content="SCC Brasil Software Cloud Consulting Blumenau Santa Catarina Brasil Cloud Training Consulting Engineering AWS Devops Software Development Wolfgang Unger os cloud gurus #sccbrasil #oscloudgurus cloud software shoring aws java jee javascript">
+    <meta name="author" content="SCC Brasil Wolfgang Unger">
+    <meta name="og:title" property="og:title"
+        content="SCC Brasil Software Cloud Consulting #sccbrasil #oscloudgurus cloud">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>How to pass Variables from Stage to Stage in CodePipeline</h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+                    <p>If you worked with CodePipeline, you might know you have normally various stages, like Source,
+                        Build, Test etc
+                        <br>
+                        The Source Stage will checkout the Source Code needed for the other stages from Github or
+                        CodeCommmit<br>
+                        The following stages could be a CodeBuild Project, could include Actions like ShellScripAction
+                        or other Actions <br>
+                        Sometimes you might need some Git Infos in one of these actions or stages
+                        <br>
+                        To be able to read these informations, you must do some changes in you pipeline, described next
+                        <br>
+                        lease also have a look in this AWS documention, where you can find useful informations and also
+                        a list of the available variables of each stage<br>
+                        <li><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/reference-variables.html"
+                                class="page-scroll" target="_blank">AWS Documentation on CodePipeline Variables</a></li>
+                        <br>
+                        First you must set a Variable Namespace from the stage where you want to pass variables to other
+                        stages <br>
+                        In your pipeline stage you can find informations on this if you click the I(nfo) logo on the
+                        right side of the stage box <br>
+                        You can see in this picture if have already set the Namespace in this example stage<br>
+                        <img src="img/cp-var1.png" alt="SMM" width="400"> <br>
+                        <br>
+                        You can add the namespace by editing the pipeline and stage by Editing it or of course the
+                        better way
+                        to adapt your IaC definition of the pipeline<br>
+                        For a Python CDK Pipeline this would be for example to add a parameter to the Action <br>
+                        <em>
+                            source_action=cpactions.CodeStarConnectionsSourceAction(<br>
+                            &ensp; action_name="GitHub",<br>
+                            &ensp; connection_arn=codestar_connection_arn,<br>
+                            &ensp; owner=repo_owner,<br>
+                            &ensp; repo=repo,<br>
+                            &ensp; branch=config["main"]<br>
+                            &ensp; trigger_on_push=True,<br>
+                            &ensp; output=source_artifact,<br>
+                            &ensp; <b>variables_namespace="SourceVariables"</b><br>
+                            )<br>
+                        </em>
+                        <br>
+                        <br>
+                        Once you have added this namespace you can by now read these SourceVariables in follow up
+                        stages. As listed up in the AWS documentations these are: <br>
+
+                        #{SourceVariables.AuthorDate}<br>
+                        #{SourceVariables.BranchName}<br>
+                        #{SourceVariables.CommitId}<br>
+                        #{SourceVariables.CommitMessage}<br>
+                        #{SourceVariables.CommitterDate}<br>
+                        #{SourceVariables.CommitUrl}<br>
+                        #{SourceVariables.RepositoryName}<br>
+                        <br>
+                        Unfortunatelly you cannot read them straight ahead as they are in a ShellScripAction or other
+                        Action.<br>
+                        You must define a environment variable for this Action and this will allow you to read this
+                        variable in you bash script. <br>
+                        Therefor you have to add environment variable to the action where you need to evaluate the
+                        SourceVariables<br>
+                        In this example action, there are already 3 variables defined .<br>
+                        <img src="img/cp-var2.png" alt="SMM" width="700"> <br>
+                        <br>
+                        <em>
+                            action = pipelines.ShellScriptAction(<br>
+                            &nbsp;action_name="AcceptanceTests",<br>
+                            &nbsp;run_order=stage.next_sequential_run_order(),<br>
+                            &nbsp;additional_artifacts=[source_artifact],<br>
+                            &nbsp;environment_variables={<br>
+                            &ensp;"Commit_MSG": aws_codebuild.BuildEnvironmentVariable(<br>
+                            &ensp; value="#{SourceVariables.CommitMessage}",<br>
+                            &ensp; type=aws_codebuild.BuildEnvironmentVariableType.PLAINTEXT<br>
+                            &ensp;),<br>
+                            &ensp; "BranchName": aws_codebuild.BuildEnvironmentVariable(<br>
+                            &ensp; value="#{SourceVariables.BranchName}",<br>
+                            &ensp; type=aws_codebuild.BuildEnvironmentVariableType.PLAINTEXT<br>
+                            &ensp; )<br>
+                            &nbsp;},<br>
+                            &nbsp;..<br>
+                        </em>
+                        <br>
+                        By now your are able the read the mapped variable Commit_MSG in your Shell scripts or other
+                        Actions<br>
+                        You can simple read theme with:<br>
+                        <em>BRANCH_NAME=${BranchName}</em><br>
+                        Don't forget, you cannot read the Variables from Source Stage directly.<br>
+                        This won't work:<br>
+                        <em>BRANCH_NAME=${SourceVariables.BranchName}</em><br>
+                        <br>
+                        This is just one example how to pass variables from the source stage to a following Stage and
+                        ShellScripAction.<br>
+                        But you can pass any of the listed variables in the AWS documentation to stages and actions
+                        AFTER the stage, where you defined your namespace.<br>
+                        Now have fun with your CodePipeline
+                    <p></p>
+                </div>
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>4 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
