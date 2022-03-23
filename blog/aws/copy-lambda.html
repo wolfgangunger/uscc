@@ -6,7 +6,7 @@
         <title>AWS Blog Wolfgang Unger</title>
         <meta name="description" content="SCC Brasil Software Cloud Consulting Blumenau Santa Catarina Brasil Cloud Training Consulting Engineering AWS Devops Software Development Wolfgang Unger os cloud gurus #sccbrasil #oscloudgurus cloud software shoring aws java jee javascript">
         <meta name="author" content="SCC Brasil Wolfgang Unger">
-	    <meta name="og:title" property="og:title" content="SCC Brasil Software Cloud Consulting #sccbrasil #oscloudgurus cloud Blog Wolfgang Unger">
+	    <meta name="og:title" property="og:title" content="SCC Brasil Software Cloud Consulting #sccbrasil #oscloudgurus cloud">
  
         <!-- Favicons
             ================================================== -->
@@ -32,7 +32,12 @@
         <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
         <script src="script.js"></script>
         
-
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
     </head>
     <body>
    
@@ -47,53 +52,64 @@
                 -->
 			    <p class="paragraph1">SCC</p>
                 <p class="paragraph1b">Brasil</p>	
-                <p class="paragraph1c">os cloud gurus </p>			
+                <p class="paragraph1c">os cloud gurus </p>					
                 <p class="paragraph1d">Software Cloud Consulting</p>	
                 <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
                 <div class="clearfix"></div>
         </header>
-        <!-- About Section -->
         
         
         
         <div id="about-section">
             <div class="container">
                 <div class="section-title">
-                    <h2>AWS Blog Wolfgang Unger</h2>
+                    <h2>How to copy a lambda function</h2>
                     <hr>
                 </div>
                 <div class="space"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <h4>News, HowTos & Tutorials about AWS </h4>
                         <p></p>
-                        <p>See also my youtube channel for AWS videos</p>
-                        <li><a href="https://www.youtube.com/channel/UC2DqvypwzdKUkDGX-VQHO7w" class="page-scroll"target="_blank" >Wolfgang Unger - Cloud & AWS</a></li>
+                        <h4>By Wolfgang Unger</h4><br>
+                        <p>If you worked with Lambda you might have been in a situation where you want to test your changes on a existing Lambda Function <br>
+                            without changing the productive Lambda Version  <br> 
+                         If you have only code to copy, you can just copy it to the code editor, ok.<br>
+                         But if you have a Lambda Function with additional dependencies/packages it is little more effort.<br>   
+                         One approach could also be versions and alias but to keep it simple it would be fine to copy the function and edit the code inside, wouldn't it?<br>
+                            Unfortunately there is no function in AWS to copy a Lambda<br>
+                        But you can do the following way:<br>
+                        In your existing Lambda use Actions- > Export Function<br>
+                        Download the zip file <br>
+                        <img src="img/copy-lambda1.jpg" alt="SMM" width="300" > <br>
+                        <br>
+                        Then create a new Lambda Function witht the same Runtime ( for Example Python 3.8)<br>
+                        This will create a hello World code example. <br>
+                        Now on the code editor your can use Upload From -> .zip File<br>
+                        <img src="img/copy-lambda2.jpg" alt="SMM" width="300" > <br>    
+                        That's it. 
+                        Your Lambda was copied.
+                        Please have also a look in the preferences of the SessionsManager. You can setup looging ( to CloudWatch or S3)and Shell Profiles (Linux and Windows)<br>
                         <p></p>
-                        <p>Recent Posts</p>          
-                            <li><a href="session-manager.html" class="page-scroll">Session Manager</a></li>
-                            <p></p>
-                            <li><a href="deploy-eb.html" class="page-scroll">Deploy a Elastic Beanstalk Application in 1 min</a></li>
-                            <p></p>
-                            <li><a href="copy-lambda.html" class="page-scroll">Copy a Lambda Function</a></li>
-                            <p></p>  
-
-                            <p></p>                            
-                            
-
-                            <p></p>
-                            <li><a href="../../index.html" class="page-scroll">Home</a></li>                               
                     </div>
+                    
 
+                    <p></p>
+                    See also this video about SSM on my youtube channel<br>
+                    
+                    <li><a href="https://www.youtube.com/watch?v=jrYwS0yF3uc" class="page-scroll" target="_blank">AWS Channel Wolfgang Unger - SSM</a></li>
+                    <p></p>
                 </div>
             </div>
+            <center><li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li></center>
         </div>
+
+        
 
 
         <div id="team-section">
             <div class="container">
                 <div class="section-title">
-                    <h2>Autor   
+                    <h2>Autor</h2>
                     <hr>
                 </div>
                 <div id="row">
@@ -115,6 +131,7 @@
                 </div>
             </div>
         </div>
+        <!-- Contact Section -->
 
         <div id="social-section">
             <div class="container">
