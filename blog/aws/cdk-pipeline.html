@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger</title>
+    <meta name="description"
+        content="SCC Brasil Software Cloud Consulting Blumenau Santa Catarina Brasil Cloud Training Consulting Engineering AWS Devops Software Development Wolfgang Unger os cloud gurus #sccbrasil #oscloudgurus cloud software shoring aws java jee javascript">
+    <meta name="author" content="SCC Brasil Wolfgang Unger">
+    <meta name="og:title" property="og:title"
+        content="SCC Brasil Software Cloud Consulting #sccbrasil #oscloudgurus cloud">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>CodePipeline with CDK Python and generic
+                    Superclass</h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+                    <p>This tutorial will cover various topics about AWS Code Pipelines for deploying AWS Resources and
+                        Stacks to your accounts <br>
+                        First, how should in general the account structure and setup look like to deploy with AWS<br>
+                        codepipeline?<br>
+                        Next, how should the CodePipeline be implemented in CDK (Python). See my example on github :
+                        <a href="https://github.com/wolfgangunger/cdk-codepipeline" class="page-scroll">Git
+                            Wolfgang
+                            Unger CDK Pipeline</a><br>
+                        I will also cover here how to use object orientated features in your CDK Python Project to<br>
+                        re-use Code and
+                        avoid Copy & Paste Anti-Pattern. Therefor we use a Generla/Abstract Pipeline Superclass which
+                        can be<br>
+                        sub-classed in
+                        other projects and Actions can be overwritten or excluded.<br>
+                        The resources we are going the deploy are simple, but it shows the process in general.<br>
+                        We have a ECR Repo, S3 Bucket, Batch, Job Definitions and a Lambda. Of course you will have
+                        to<br>
+                        adapt these resources in the AppDeploy and Toolchain Deploy Stages for your needs.<br>
+                        We will have infrastrucure tests in our project to test the CDK Stacks and Constructs.<br>
+                        We will have tests for the lambda code.<br>
+                        There are Integration Tests ( only implemented very simple) and Acceptance Tests in the
+                        Pipeline
+                        ( dummy code)<br>
+                        Please take also a look in the AWS Documentation on CDK Pipeline, this contains a lot of useful
+                        informations :<br>
+                        <a href="https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.pipelines/README.html"
+                            class="page-scroll">AWS Documentation on CDK Pipelines</a>
+                        <br><br>
+
+
+                        First lets cover a overview how to create a AWS CodePipeline to deploy your<br>
+                        AWS Resources ( as CloudFormation Stacks generated by CDK) to your Accounts.<br>
+                        What kind of setup do you ( already have or ) need to deploy your AWS Resources with CDK (
+                        and therefor with CloudFormation) to your accounts?<br>
+                        For sure you have a least one account. In this case this would be the PROD account and the
+                        setup will be quite simple.<br>
+                        But more likely you will have at least one more account for development and testing or
+                        also used
+                        a Test account and a Integration account. This setup would look like this:<br>
+                        <img src="img/CodePipeline1b.jpg" alt="SMM" width="500"> <br>
+                        <br>
+                        In these 3 accounts we will deploy our AWS resources. The 3 stages should be identical
+                        concerning the resourses
+                        But beneath the resources we want to deploy to run our services on these accounts ( for example
+                        a Fargate Cluster with microservices)<br>
+                        we need also a CodePipeline to deploy these.<br>
+                        Where should we deploy the CodePipeline ( and other CIDC related resources like CodeBuild<br>
+                        Projects)? For sure not in one ( or all) of our stage accounts. <br>
+                        Therefor we need a dedicated account for the CI/CD resources, let's call it Toolchain
+                        Account.<br>
+                        Our AWS Account strucutre will then be like this:<br>
+                        <img src="img/CodePipeline2b.jpg" alt="SMM" width="400"> <br>
+                        <br>
+                        Now we can setup our CDK Project for our CodePipeline.<br>
+                        <br>
+                        First lets illustrate in a simplified AWS diagram, what we want to set up:<br>
+                        <img src="img/pipelineDiagram.jpg" alt="SMM" width="800"> <br>
+                        The diagram shows the pipeline inside the Toolchain Account.<br>
+                        The source can be Github, Github Enterprise, CodeCommit, this does not really matter.<br>
+                        Note:<br>
+                        I am using a CodeStar Connection to my Github and this CodeStar Connection is referenced in
+                        the<br>
+                        pipeline,
+                        not the Github directly.<br>
+                        You have to create this CodeStar Connection manually in the AWS Console UI before the first
+                        deployment of the Pipeline.<br>
+                        <br>
+                        There are 3 more accounts DEV, QA & PROD. Into these 3 account we will deploy a ECR-Repo, a S3
+                        Bucket, a Lambda Function,<br>
+                        an API- Gateway and an Fargate Service with our Pipeline. <br>
+                        Furthermore the pipeline will also deploy 2 resources inside the Toolchain Account, a
+                        ParameterStore and one more ECR-Repo.<br>
+                        This is basically the setup of the sample Project.<br>
+                        <br><br>
+                        Lets go<br>
+                        You find the source to this example in my github account : <br>
+                        <a href="https://github.com/wolfgangunger/cdk-codepipeline" class="page-scroll">Git Wolfgang
+                            Unger CDK Pipeline</a>
+                        The structure of the project is the following:<br><br>
+                        README<br>
+                        cdk.json<br>
+                        requirements.txt<br>
+                        app.py ( the main python file for the cdk commands, creates the Pipeline Stack)<br>
+                        generic/infrastructure ( generic cdk classes and constructs to reuse in other projects)<br>
+                        generic/infrastructure/tests ( cdk tests for this folder)<br>
+                        infrastructure ( project specific cdk classes and constructs)<br>
+                        infrastructure/tests ( cdk tests for this folder)<br>
+                        tests/acceptance <br>
+                        tests/integration<br>
+                        <br>
+                        <br>
+                        First we have to define our requirements.txt
+                        I am using CDK2 in my example.
+                        For CDK2 the requirements.txt will look like this:<br>
+                        <em>aws-cdk-lib==2.21.1<br>
+                            constructs>=10.0.0<br> .... <br>
+                        </em><br>
+                        Next we have to define all account informations in our cdk.json.
+                        So we define our account structure and informations in the config inside the cdk.json.<br>
+                        The cdk.json will be like this (simplified):<br>
+                        <em>
+                            {<br>
+                            &ensp;"app": "python3 app.py",<br>
+                            &ensp;"context": {<br>
+                            &ensp;&ensp;"@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,<br>
+                            &ensp;&ensp;"@aws-cdk/core:stackRelativeExports": true,<br>
+                            &ensp;&ensp;"@aws-cdk/aws-rds:lowercaseDbIdentifier": true,<br>
+                            &ensp;&ensp;"@aws-cdk/aws-lambda:recognizeVersionProps": true,<br>
+                            &ensp;&ensp;"@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true,<br>
+                            &ensp;&ensp;"@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": true,<br>
+                            &ensp;&ensp;"@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,<br>
+                            &ensp;&ensp;"@aws-cdk/core:checkSecretUsage": true,<br>
+                            &ensp;&ensp;"@aws-cdk/aws-iam:minimizePolicies": true,<br>
+                            &ensp;&ensp;"@aws-cdk/core:target-partitions": [<br>
+                            &ensp;&ensp;&ensp;"aws",<br>
+                            &ensp;&ensp;&ensp;"aws-cn"<br>
+                            &ensp;&ensp;],<br>
+                            &ensp;&ensp;"config" : {<br>
+                            &ensp;&ensp;&ensp;"accounts" :{<br>
+                            &ensp;&ensp;&ensp;&ensp;"tooling": {<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;"account":"123456789012",<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;"region":"eu-west-1"<br>
+                            &ensp;&ensp;&ensp;&ensp;},<br>
+                            &ensp;&ensp;&ensp;&ensp;"dev": {<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;"account":"123456789012",<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;"region":"eu-west-1",<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;....more params<br>
+                            &ensp;&ensp;&ensp;&ensp;},<br>
+                            &ensp;&ensp;&ensp;&ensp;"qa": {<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;"account":"123456789012",<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;"region":"eu-west-1",<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;....<br>
+                            &ensp;&ensp;&ensp;&ensp;},<br>
+                            &ensp;&ensp;&ensp;&ensp;"prod": {<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp; "account":"123456789012",<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp;"region":"eu-west-1",<br>
+                            &ensp;&ensp;&ensp;&ensp;&ensp; ....<br>
+                            &ensp;&ensp;&ensp;&ensp;}<br>
+                            &ensp;&ensp;&ensp;},<br>
+                            &ensp;&ensp;&ensp;"development_branch": "development",<br>
+                            &ensp;&ensp;&ensp;"production_branch": "main",<br>
+                            &ensp;&ensp;&ensp;"repo" : "cdk-pipeline",<br>
+                            &ensp;&ensp;...<br>
+                            &ensp;&ensp;}<br>
+                            &ensp;}<br>
+                            }<br>
+                        </em>
+                        <br>
+                        <br>
+                        Also we need to bootstrap the CDK before the first CDK deploy TODO <br>
+                        The pipeline will be created in the Toolchain Account. The pipeline is self-mutating, so once
+                        created in
+                        can update itself on Github Changes after a Push to the Repo.<br>
+                        But of course it cannot create itself for the very first time.
+                        So you will have to create the pipeline the first time with the CLI.<br>
+                        <b>cdk deploy ...TODO <br>
+                            PipelineStack</b><br>
+                        You will also need Roles for the Pipeline. The Pipeline needs rights on the Toolchain Account to
+                        create Resources there ( itself and
+                        CodeBuild Projects), execute CodeBuild and CodePipeline of course and also the rights to deploy
+                        Resources in the 3 Stage Accounts.<br>
+                        <br>
+                        For our Synth and Deploy Actions for the 3 Stages and also for Acceptance Tests for example on
+                        DEV or QA we will also need these roles. We can create Policy Statements for Pipeline Actions (
+                        CodeBuildSteps) using
+                        these roles, but the roles itself we will create before the pipeline itself.
+                        These roles are inside the Stack TODO<br>
+                        I am using CDK2 in my example, if you are still in CDK1 there are some differences (For example
+                        in CDK1 exists a cdkPipeline which no longer is available in CDK 2 . You
+                        cannot migrate this cdk class, you will have to switch to the CodePipeline class).<br>
+
+                        The pipeline can be created like this :
+                        <em>
+                            pipeline = CodePipeline(<br>
+                            &ensp; self,<br>
+                            &ensp;id,<br>
+                            &ensp; pipeline_name=id,<br>
+                            &ensp;synth=synth_step,<br>
+                            &ensp;cross_account_keys=True,<br>
+                            &ensp;code_build_defaults=pipelines.CodeBuildOptions(<br>
+                            &ensp;&ensp;build_environment=BuildEnvironment(<br>
+                            &ensp;&ensp;&ensp;build_image=aws_codebuild.LinuxBuildImage.STANDARD_5_0,<br>
+                            &ensp;&ensp;&ensp;privileged=True,<br>
+                            &ensp;&ensp;)<br>
+                            &ensp;),<br>
+                            )<br>
+                        </em>
+
+                        Inside our pipeline will have to implement the structure, this means stages, actions etc.<br>
+                        The most important objects in our pipeline will be :<br>
+                        <b>CodePipeline<br>
+                            Stage<br>
+                            CodeBuildStep<br>
+                        </b>
+                        For sure we will have to deploy resources to our stages ( DEV, INT , PROD), so at least we must
+                        have on stage ( CDK Stage class) in our pipeline . This stage will contain the CDK Stacks which
+                        will be deployed to the stage account.<br>
+                        So a very simple example should only contain this one stage object inside the pipeline.<br>
+                        And we will execute some Actions, for example the Synth Action or execute Tests, which we will
+                        do with CodeBuildSteps<br>
+                        My Github Example is a little bit more advanced to cover some typical requirements on projects
+                        with a little more complicated infrastructures.<br>
+                        We have a Toolchain Deploy Stage.<br>
+                        This will deploy resources in the Toolchain Account, not the pipeline itself, but for example
+                        resources
+                        which might be needed by the other 3 accounts in common like a Parameter Store or common ECR
+                        Repo.<br>
+                        Further we will separate the deployments for our Stages in 2 parts, a Bootstrap and the Main
+                        part.<br>
+                        This might be neccessary if you work for example with docker images, need to create resources
+                        like
+                        ECR repos first, then execute some other actions ( like docker builds and push to ECR ), before
+                        finally be
+                        able to create the rest of resource, which might be fargate service depending on the already
+                        deployed images in ECR:<br>
+                        So the structure of the Pipeline will be like this:.<br>
+                        <img src="img/CodePipeline3b.jpg" alt="SMM" width="400"> <br>
+                        <br>
+                        The pipeline will run from top to bottom, so first create the Toolchain resources.<br>
+                        Then creating the DEV Bootstrap resources and afterwards the rest of the DEV resources.<br>
+                        Then the same for QA and finally the same for PROD.<br>
+                        This would already deploy all resources we want to our stages, but of course we want to add some
+                        tests to our Pipeline.<br>
+                        First we should test our CDK Code before deploying anything at all.
+                        Therefore we ran the infrastructure tests even before the Toolchain Stage.<br>
+                        We can also tests the lambda code here.<br>
+                        After Deploying DEV we want to run Integration and also Acceptance Tests.<br>
+                        After QA we execute Acceptance Tests. Maybe also in PROD.( of course you can change this order
+                        and
+                        strucure as you want).<br>
+                        Finally we also add Manual Approval Steps before the next Stages.<br>
+                        So our Pipeline will look like this.<br>
+                        <img src="img/CodePipeline4b.jpg" alt="SMM" width="400"> <br>
+                        <br>
+                        We could also do one thing different here:<br>
+                        Separate the Prod Stage into a different pipeline.<br>
+                        Maybe we want to give less users permission to execute the prod pipeline. <br>
+                        In this case we could create 2 Pipelines, one for DEV & QA and one for PROD.<br>
+                        But for our example and tutorial this pipeline will do . <br>
+                        <br>
+                        Now we have the design of our Pipeline, let's start to code it.<br>
+                        We could do it one way to keep it simple.<br>
+                        Inside the PipelineStack we add anything we need after the Constructor in sequential order in a
+                        bunch of lines.<br>
+                        This is actually what many Stack classes look like and it works fine.
+                        But there is one disadvantage.<br>
+                        Since we wrote a real cool pipeline, we want to re-use it for further project, don't we?<br>
+                        If you have just one big block of code you will not be able to changes a small part without
+                        copying and adapting the whole pipeline.<br>
+                        We will use a different approach:<br>
+                        The CDK Code is in Python ( or Java etc) so let's make use of object orientated features !
+                        Let write a generic Pipeline class we can reuse and for any usage in a project we will subclass
+                        this pipeline and adapt
+                        only the parts we need to adapt.<br>
+                        Therefor we will structure the code of our PipelineStack better and exclude code in methods.
+                        This allows us to overwride these methods in a subclass.<br>
+                        We will try move any code which might be changed by a future project in a method. So for example
+                        the
+                        commands for the Integration Tests might be different in my next project. So I only want to
+                        changes this command,
+                        but not the whole pipeline.<br>
+                        Also I might not need Acceptance Tests or Integration Tests for another project, so I want to
+                        get rid of these easily.<br>
+                        <br>
+                        So we will add Steps/Actions this way in our generic Pipeline<br>
+                        <br>
+                        <b>GenericPipelineStack:</b><br>
+                        <em>
+                            infrastrucure_tests = self.get_infrastrucure_tests(<br>
+                            &ensp;git_input<br>
+                            )<br>
+                            if infrastrucure_tests != None:<br>
+                            &ensp;stage.add_post(infrastrucure_tests)<br>
+                        </em>
+                        <br><br>
+
+                        The method for the infrastrucure-test looks like this and it also separates the command into a
+                        dedicated method<br>
+                        <b>GenericPipelineStack:</b><br>
+                        <em>
+                            def get_infrastrucure_tests(self, git_input):<br>
+                            &ensp; dev_infrastrucure_tests = pipelines.CodeBuildStep(<br>
+                            &ensp;&ensp;"InfrastructureTests",<br>
+                            &ensp;&ensp; input=git_input,<br>
+                            &ensp;&ensp; build_environment=aws_codebuild.BuildEnvironment(<br>
+                            &ensp;&ensp;&ensp; build_image=aws_codebuild.LinuxBuildImage.AMAZON_LINUX_2_3,<br>
+                            &ensp;&ensp;&ensp; privileged=True,<br>
+                            &ensp;&ensp; ),<br>
+                            &ensp;&ensp; commands=self.get_infrastructure_tests_commands(),<br>
+                            &ensp;)<br>
+                            &ensp;return dev_infrastrucure_tests<br>
+                            <br>
+                            def get_infrastructure_tests_commands(<br>
+                            &ensp;&ensp; self<br>
+                            &ensp; ) -> list:<br>
+                            &ensp;&ensp;commands = [<br>
+                            &ensp;&ensp;&ensp;"pip install -r requirements.txt",<br>
+                            &ensp;&ensp;&ensp;"pip install -r requirements_dev.txt",<br>
+                            &ensp;&ensp;&ensp;"pytest --cov=infrastructure --cov-branch --cov-report term-missing -vvvv
+                            -s
+                            infrastructure/tests",<br>
+                            &ensp;&ensp;]<br>
+                            &ensp;&ensp;return commands<br>
+                        </em>
+
+                        <br><br>
+                        This will allow us to use our pipeline in a more generic way and we can re-use it much more
+                        simple in other projects.
+                        We will subclass our Generic Pipeline Stack with a Project Pipeline Stack<br>
+
+                        class ProjectPipelineStack(GenericPipelineStack):<br>
+
+                        If we are able use the GenericPipelineStack as it is, perfect we hast have to implement the def
+                        __init__ method and call the super construcur, thats it, our
+                        ProjectPipelineStack will have about 10 lines of code.<br>
+
+                        But what if we want to call different tests or tests in another folder and we must to change to
+                        command for the infrastructure tests?<br>
+                        IF we would have only one big block of code inside the GenericPipelineStack, this would not be
+                        possible.<br>
+                        But now, we can just overwrite the method #get_infrastructure_tests_commands<br>
+                        <br>
+                        <b>ProjectPipelineStack:</b><br>
+                        <em>
+                            def get_infrastructure_tests_commands(<br>
+                            &ensp;&ensp; self<br>
+                            &ensp; ) -> list:<br>
+                            &ensp;&ensp;commands = [<br>
+                            &ensp;&ensp;&ensp;"pip install -r requirements.txt",<br>
+                            &ensp;&ensp;&ensp;"pip install -r requirements_dev.txt",<br>
+                            &ensp;&ensp;&ensp;"pytest --cov=infrastructure --cov-branch --cov-report term-missing -vvvv
+                            -s
+                            myfolder/tests",<br>
+                            &ensp;&ensp;]<br>
+                            &ensp;&ensp;return commands<br>
+                        </em>
+                        <br>
+                        Maybe you have not yet infrastructure tests ( or integration/acceptance tests) and want to
+                        remove this step/actions from the pipeline?<br>
+                        Well just do the following overwrite in your Subclass.<br>
+                        <br>
+                        <b>ProjectPipelineStack:</b><br>
+                        <em>
+                            def get_infrastrucure_tests(self, git_input):<br>
+                            &ensp;return None<br>
+
+
+                        </em>
+                        <br>
+                        In our GeneralPipelineStack we have this implementation, do you remember?<br>
+                        <em>
+                            if infrastrucure_tests != None:<br>
+                            &ensp;  stage.add_post(infrastrucure_tests)<br>
+                        </em>
+                        Since we are returning now None, no Tests will be added to our Pipeline, no step is added. <br>
+                        <br>
+                        This way you can easily re-use and adapt the GenericPipelineStack.<br>
+                        If you need to change a CodeBuildStep or Command just overwrite the method in your SubClass
+                        of<br>
+                        the Pipeline.<br>
+                        <br>
+                        You can apply this also to your CDK classes.You can create generic Stacks or Constructs and<br>
+                        reuse them in your project,
+                        so you don't have to write them from scratch again in your new project.<br>
+                        You can see the ECRConstruct class in this folder as example.<br>
+                        Inside the project I have a folder<br>
+                        generic/infrastructure<br>
+                        in which the generic infrastructure/cdk classes are located.<br>
+                        the project specific classes are inside the folder<br>
+                        infrastructure<br>
+                        <br>
+                    <h3>Tests</h3>
+                    The example project shows also the following concepts :<br>
+                    <b>Infrastructure</b> (cdk ) tests.<br>
+                    these tests are executed first, before deploying the Stacks<br>
+                    Note: <br>
+                    CDK Tests are easy to write if you have a Stack . See the examples on how to test Stacks.<br>
+                    For example you can create the Stack and check one or more of the resources are really
+                    included.<br>
+                    If you have only a Construct, then they cannot be tested the same way.<br>
+                    Therefore I have an example with a wrapper class, basically a Stack which creates the
+                    construct.<br>
+                    This way, you can now create this wrapper Stack, which will create the construct.<br>
+                    <br>
+                    <b>Lambda tests</b><br>
+                    Here we have 2 kind of examples:<br>
+                    -Simple tests which tests just python methods<br>
+                    -Lambda mock tests which mock and test lambda code that uses for example boto3 and aws
+                    resources<br>
+                    the lambda tests are also executed before deploying the stacks.<br>
+                    <br>
+                    There is a simple example for <b>Integration</b> tests<br>
+                    these tests are validating the deployed resources on the stage account.<br>
+                    therefor the CodeBuildStep for these commands needs to assume a role to access the stage
+                    account.<br>
+                    you can see the code for this inside the integration tests CodeBuildStep
+                    of course the integration tests must run after the deployment of the stacks<br>
+                    <br>
+                    <b>Acceptance tests.</b><br>
+                    These are only implemented as dummy tests in this project. feel free to implement these<br>
+                    <br>
+                    <h3>Setup Summary:</h3><br>
+                    -Create CodeStar Connection in DeveloperTools ( if not using Github directly in Source)<br>
+                    -Adapt Project for your environment ( account numbers, connection Url in cdk.json)<br>
+                    -Create your own Stacks and adapt the Stages ( AppDeploy, BootstrapDeploy)<br>
+                    -Deploy Roles to Dev, QA & Prod<br>
+                    -Bootstrap the Pipeline Project<br>
+                    -Deploy the Pipeline the very first time manually with CLI : cdk deploy<br>
+                    -By now changes in you repo will trigger the pipeline, including self-mutate of the pipeline<br>
+                    <p></p>
+                    References<br>
+                    <li><a href="https://docs.aws.amazon.com/cdk/api/v1/python/aws_cdk.pipelines/README.html"
+                            class="page-scroll">AWS Doco on CDK Pipelines</a></li>
+                    <li><a href="https://github.com/wolfgangunger/cdk-codepipeline" class="page-scroll">Git Wolfgang
+                            Unger CDK Pipeline</a></li>
+                </div>
+                <br><br>
+            </div>
+        </div>
+        <br><br>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>4 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
