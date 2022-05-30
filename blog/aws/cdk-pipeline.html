@@ -114,10 +114,11 @@
                         setup will be quite simple.<br>
                         But more likely you will have at least one more account for development and testing or
                         also used
-                        a Test account and a Integration account. This setup would look like this:<br>
+                        a DEV account and a Integration/QA account. This setup would look like this:<br>
                         <img src="img/CodePipeline1b.jpg" alt="SMM" width="500"> <br>
                         <br>
-                        In these 3 accounts we will deploy our AWS resources. The 3 stages should be identical
+                        In these 3 accounts we will deploy our AWS resources. The names of the Stages (DEV,QA,INT,PROD)
+                        does not really matter. The 3 stages should be identical
                         concerning the resourses
                         But beneath the resources we want to deploy to run our services on these accounts ( for example
                         a Fargate Cluster with microservices)<br>
@@ -225,14 +226,23 @@
                         </em>
                         <br>
                         <br>
-                        Also we need to bootstrap the CDK before the first CDK deploy TODO <br>
+                        Also we need to bootstrap the CDK before the first CDK deploy<br>
+
+                        First you need to call this commando for the Toolchain Account ( with Toolchain Credentials)<br>
+                        cdk bootstrap --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
+                        aws://12345678912/us-east-1<br>
+                        <br>
+                        Then for each Stage Account
+                        (with stage credentials, first account is toolchain , second stage account)<br>
+                        cdk bootstrap --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
+                        --trust 12345678912 aws://12345678915/eu-west-1<br>
+                        <br>
                         The pipeline will be created in the Toolchain Account. The pipeline is self-mutating, so once
                         created in
                         can update itself on Github Changes after a Push to the Repo.<br>
                         But of course it cannot create itself for the very first time.
                         So you will have to create the pipeline the first time with the CLI.<br>
-                        <b>cdk deploy ...TODO <br>
-                            PipelineStack</b><br>
+                        <b>cdk deploy cdk-pipeline</b><br>
                         You will also need Roles for the Pipeline. The Pipeline needs rights on the Toolchain Account to
                         create Resources there ( itself and
                         CodeBuild Projects), execute CodeBuild and CodePipeline of course and also the rights to deploy
@@ -242,7 +252,7 @@
                         DEV or QA we will also need these roles. We can create Policy Statements for Pipeline Actions (
                         CodeBuildSteps) using
                         these roles, but the roles itself we will create before the pipeline itself.
-                        These roles are inside the Stack TODO<br>
+                        These roles are inside the Stack bootstrap_role_stack<br>
                         I am using CDK2 in my example, if you are still in CDK1 there are some differences (For example
                         in CDK1 exists a cdkPipeline which no longer is available in CDK 2 . You
                         cannot migrate this cdk class, you will have to switch to the CodePipeline class).<br>
@@ -302,6 +312,9 @@
                         First we should test our CDK Code before deploying anything at all.
                         Therefore we ran the infrastructure tests even before the Toolchain Stage.<br>
                         We can also tests the lambda code here.<br>
+                        So our Toolchain Stage will look like this once it is deployed.<br>
+                        <img src="img/toolchain-stage.jpg" alt="SMM" width="500"> <br>
+                        <br>
                         After Deploying DEV we want to run Integration and also Acceptance Tests.<br>
                         After QA we execute Acceptance Tests. Maybe also in PROD.( of course you can change this order
                         and
@@ -313,8 +326,9 @@
                         We could also do one thing different here:<br>
                         Separate the Prod Stage into a different pipeline.<br>
                         Maybe we want to give less users permission to execute the prod pipeline. <br>
+                        Or we have a different branch for DEV/QA and PROD<br>
                         In this case we could create 2 Pipelines, one for DEV & QA and one for PROD.<br>
-                        But for our example and tutorial this pipeline will do . <br>
+
                         <br>
                         Now we have the design of our Pipeline, let's start to code it.<br>
                         We could do it one way to keep it simple.<br>
@@ -394,7 +408,7 @@
 
                         But what if we want to call different tests or tests in another folder and we must to change to
                         command for the infrastructure tests?<br>
-                        IF we would have only one big block of code inside the GenericPipelineStack, this would not be
+                        If we would have only one big block of code inside the GenericPipelineStack, this would not be
                         possible.<br>
                         But now, we can just overwrite the method #get_infrastructure_tests_commands<br>
                         <br>
@@ -450,6 +464,7 @@
                     <h3>Tests</h3>
                     The example project shows also the following concepts :<br>
                     <b>Infrastructure</b> (cdk ) tests.<br>
+                    pytest -vvvv -s generic/infrastructure/tests<br>
                     these tests are executed first, before deploying the Stacks<br>
                     Note: <br>
                     CDK Tests are easy to write if you have a Stack . See the examples on how to test Stacks.<br>
@@ -473,8 +488,10 @@
                     account.<br>
                     you can see the code for this inside the integration tests CodeBuildStep
                     of course the integration tests must run after the deployment of the stacks<br>
+                    pytest -vvvv -s tests/integration/<br>
                     <br>
                     <b>Acceptance tests.</b><br>
+                    tests/acceptance/tests.sh <br>
                     These are only implemented as dummy tests in this project. feel free to implement these<br>
                     <br>
                     <h3>Setup Summary:</h3><br>
@@ -483,6 +500,7 @@
                     -Create your own Stacks and adapt the Stages ( AppDeploy, BootstrapDeploy)<br>
                     -Deploy Roles to Dev, QA & Prod<br>
                     -Bootstrap the Pipeline Project<br>
+                    -Your Code must be pushed to the Git Repo of Pipeline before deploying the pipeline<br>
                     -Deploy the Pipeline the very first time manually with CLI : cdk deploy<br>
                     -By now changes in you repo will trigger the pipeline, including self-mutate of the pipeline<br>
                     <p></p>
