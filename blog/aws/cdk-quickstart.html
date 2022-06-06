@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger</title>
+    <meta name="description"
+        content="SCC Brasil Software Cloud Consulting Blumenau Santa Catarina Brasil Cloud Training Consulting Engineering AWS Devops Software Development Wolfgang Unger os cloud gurus #sccbrasil #oscloudgurus cloud software shoring aws java jee javascript">
+    <meta name="author" content="SCC Brasil Wolfgang Unger">
+    <meta name="og:title" property="og:title"
+        content="SCC Brasil Software Cloud Consulting #sccbrasil #oscloudgurus cloud">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get started with the AWS CDK </h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+                    <p>In this short tutorial let's give a quick overview on how to get started with the CDK ( this
+                        example is for Python). For all of those who don't have yet big experience on this.<br>
+                        How to setup our first cdk project and also some important links to find informations on the
+                        next steps.<br>
+                        <br>
+                        The first link you should know is the official AWS Documentation for the CDK<br>
+
+
+                        <li><a href="https://docs.aws.amazon.com/cdk/index.html" class="page-scroll" target="_blank">AWS
+                                AWS CDK Documentation</a></li><br>
+                        <br>
+                        Please have a look, you find many informations there, from the setup to concepts and examples
+                        and howTos .<br>
+                        before we can create our first project, there are of yourse some prerequisites.<br>
+                        Of course you need to have Python (including pip and virtualenv) and the AWS CDK installed on
+                        your computer.<br>
+                        You find everything to setup the prerequisites in the getting started section of the just
+                        mentioned Docu.<br>
+                        <li><a href="https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html" class="page-scroll"
+                                target="_blank">AWS
+                                AWS CDK Documentation- Getting started</a></li>
+                        <br>
+                        The importand command to install the aws cdk:<br>
+                        npm install -g aws-cdk<br>
+                        <br>
+
+                        Once you have everything setup, you should definitly take a look in the AWS CDK Workshop:<br>
+
+                        <li><a href="https://cdkworkshop.com/" class="page-scroll" target="_blank">AWS
+                                CDK Workshop</a></li><br>
+                        This is a very HowTo on getting started with the CDK for each of the supported languages like
+                        Python, Typescript, Java, .NET .<br>
+                        We we take a look in the Python Workshop and follow the instructions there.<br>
+                        Here is a quick summary of the commands you have to execute to create and initialize your first
+                        CDK Project.<br>
+                        First we create a new folder for our first cdk project ( and change directory inside this
+                        folder)<br>
+                        <b>mkdir cdk_workshop && cd cdk_workshop</b><br>
+                        Now we can init the project inside our new cdk_workshop folder<br>
+                        <b>cdk init sample-app --language python</b><br>
+                        Now our folder should look like this ( please ignore the .git folder):<br>
+                        <img src="img/cdk-workshop.jpg" alt="folder" width="700"> <br>
+                        <br>
+                        A short summary on the files :<br>
+                        the folder <b>cdk_workshop</b> is supposed to have the cdk stacks. there is by now only on
+                        generated<br>
+                        stack inside : cdk_workshop_stack.py<br>
+                        If you create more stacks, you can locate them here, or feel free to structure the single
+                        folder<br>
+                        with more subfolders.<br>
+                        The folder <b>.venv</b> is for the virtual environment, normally you can ignore this folder ( as
+                        long
+                        it is there and everything is working)<br>
+                        The folder tests is of course for ...tests. Feel free to write your cdk unit tests there.<br>
+                        The following files are important :<br>
+                        the <b>app.py</b> is the main python file, which will be called when you execute cdk commands (
+                        like
+                        cdk ls, cdk synth etc) <br>
+                        It includes the stacks which should be deployed ( or include a pipeline which includes the
+                        stacks inside the stages, but this is more advanced)<br>
+                        so for this simple example, it is just the one stack from the already mentioned cdk_workshop
+                        folder . And then does the synthesize . <br>
+                        <em>
+                            app = cdk.App()<br>
+                            CdkWorkshopStack(app, "cdk-workshop")<br>
+                            app.synth()<br>
+                        </em>
+                        <br>
+                        The cdk.json is also an important file, here you can define all the configurations for your
+                        project, like the accounts, the account nunbers,<br>
+                        codestar connections, emails for sns and much more. But for now, we can just leave it the way it
+                        is by now.<br>
+                        <br>
+                        Furthermore you must know the requirements.txt, it will all pip modules, your app is going to
+                        need . After the init it only contains 2 lines:<br>
+                        <em> aws-cdk-lib==2.22.0<br>
+                            constructs>=10.0.0<br>
+                        </em>
+                        <br>
+                        Now me must activate our virtual environment. On windows you have to execute<br>
+                        <b>.venv\Scripts\activate.bat</b>
+                        <br>
+                        Next we can install the our dependencies, which we already know from the requirements.txt<br>
+                        <b>pip install -r requirements.txt</b><br>
+                        Once this succeeded, you can finally synthesize your project, which will create the cloud
+                        formations template in the folder cdk.out.<br>
+                        Please look inside this folder, you should the cloud formation for the cdk_workshop_stack in
+                        json format.<br>
+                        <b>cdk synth </b><br>
+                        <br>
+                        If you want to deploy this stack ( and cloud formation) by now to your account, you must first
+                        set your aws credentials in the command line.<br>
+                        This command looks like ( in Linux): <br>
+                        <b>export AWS_ACCESS_KEY_ID="ASIA........"<br>
+                            export AWS_SECRET_ACCESS_KEY="iNazu/............................"<br>
+                            export AWS_SESSION_TOKEN="IQoJb3.......</b><br>
+                        or in Windows:<br>
+                        <b>$Env:AWS_ACCESS_KEY_ID="ASIA............"<br>
+                            $Env:AWS_SECRET_ACCESS_KEY="iNaR..............."<br>
+                            $Env:AWS_SESSION_TOKEN="IQoJb......"</b><br>
+                        <br>
+                        Now you can deploy your code with<br>
+                        <b>cdk deploy </b><br>
+                        Switch to CloudFormation in the AWS Console and you should see your stack being deployed
+                        currently.<br>
+                        <b>Congratualations! You have successfully created your first cdk project and deployed to your
+                            account.</b><br>
+                        <br>
+                        Now your start to write your own cdk code, your own stacks with resources you need for your
+                        project.<br>
+                        <br>
+                        Please take a look to the aws samples, this will help you a lot, if you are not so familiar with
+                        cdk coding yet<br>
+                        <li><a href="https://github.com/aws-samples/aws-cdk-examples" class="page-scroll"
+                                target="_blank">AWS
+                                CDK Samples on Github</a></li><br>
+
+
+                        Take also a look into my github account, you might find some interesting stuff there also
+                        <li><a href="https://github.com/wolfgangunger" class="page-scroll" target="_blank">AWS
+                                wolfgangunger Github</a></li><br>
+
+
+                        Also a very important link, you will need a lot in the future , the CDK Reference
+                        Dokumentation<br>
+                        <li><a href="https://docs.aws.amazon.com/cdk/api/v2/" class="page-scroll" target="_blank">AWS
+                                CDK API Reference Dokumentation</a></li><br>
+                        <br>
+
+                    <p></p>
+                </div>
+
+
+                <p></p>
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>4 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
