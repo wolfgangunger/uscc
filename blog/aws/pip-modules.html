@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger</title>
+    <meta name="description"
+        content="SCC Brasil Software Cloud Consulting Blumenau Santa Catarina Brasil Cloud Training Consulting Engineering AWS Devops Software Development Wolfgang Unger os cloud gurus #sccbrasil #oscloudgurus cloud software shoring aws java jee javascript">
+    <meta name="author" content="SCC Brasil Wolfgang Unger">
+    <meta name="og:title" property="og:title"
+        content="SCC Brasil Software Cloud Consulting #sccbrasil #oscloudgurus cloud">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Pip modules for your generic, reusable cdk constructs</h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+                    <p>If you have worked with cdk for a while and also in several projects, you might have already
+                        asked yourself, how
+                        to reuse some of the code you have already written ( and tested) for a similar requirement in
+                        the next project.<br>
+                        If you use an object oriented language like for example Python with the CDK, one option might be
+                        create reuse Superclasses
+                        and adapt the behaviour if needed in a project subclass.<br>
+                        This a great approach to avoid copy and paste code and reuse code.<br>
+                        There is one disadvantage here. How to include the generic superclasses into different
+                        projects?<br>
+                        If you just copy the code into the new project, you have all disadvantages of copy/paste ... for
+                        example how
+                        to keep the code up2date on different projects.<br>
+                        A better solution would be extracting the super classes in one repo and include this repo in
+                        your other projects
+                        for example as git submodule.<br>
+                        This approach avoids the copy/paste anti-pattern but again there is one disadvantage:<br>
+                        Projects with git Submodules will introduce more complexity in your projects.<br>
+                        For example in AWS CodePipeline you will need some extra adaptions to enable git submodules.<br>
+                        See my blog on how to use Git Submodules on this:<br>
+                        <li><a href="git-submodule.html" class="page-scroll">Using Git Submodules in CodePipeline</a>
+                        </li><br>
+                        Also your developers will always have to update also the git submodule, not only the main
+                        repo.<br>
+                        <br>
+                        But there is a different approach on how to reuse you cdk constructs ( or stack, but I recommend
+                        do it for constructs).<br>
+                        You can create you own pip pacakges, push them to a repository ( pypi or you artifactory) and
+                        now install and use in your projects!<br>
+                        Lets see how to do this:<br>
+                        Please see my github repo with the example project .<br>
+                        <li><a href="https://github.com/wolfgangunger/cdk-pip-modules" class="page-scroll"
+                                target="_blank">Github
+                                Wolfgang Unger - Pip Modules</a></li>
+                    <p></p><br>
+
+
+                    The project creates a simple example of a cdk construct, package it into a pip module, uploads to
+                    pypi and uses this module<br>
+                    again in the project as dependency in the requirements.txt<br>
+                    <br>
+                    The project structure looks like this:<br>
+                    <img src="img/pip0.jpg" alt="SMM" width="600"> <br>
+                    <br>
+                    cdk_pip_modules<br>
+                    ├── LICENSE<br>
+                    ├── wunger_cdk_constructs ( folder with the constructs, content will be packaged as pip module)<br>
+                    │ ├── __init__.py<br>
+                    │ ├── cdk classes<br>
+                    │ ├── ...<br>
+                    ├── stacks (wrapper stacks to test the constructs before creating the pip module)<br>
+                    ├── usage ( stacks that will import and use the final pip modules)<br>
+                    ├── README.md<br>
+                    ├── app.py ( main python file, entry point )<br>
+                    └── setup.py<br>
+
+                    <br>
+                    - the package wunger_cdk_constructs contains the cdk constructs we want to generalize, package and
+                    reuse in other projects.<br> the sample project only contains a simple ECR construct, please feel
+                    free to create your own cdk constructs for EC2, RDS, ECS or whatever<br>
+                    - the package stacks contains some cdk stacks to include and tests our cdk constructs during
+                    development. this way we can include them into the app.py<br>
+                    - the package usage shows how to use the pacakged modules in a client project. before you can use
+                    this package you first have to either<br>
+                    install the packages locally or remote, meaning setting up your .pypirc file and setup your repo
+                    .<br>
+                    - the file app.py includes the stack to synthesize. please comment out the stacks inside usage
+                    folder, once you have the modules ready<br>
+                    - requirements.txt includes our pip module<br>
+                    aws-cdk-lib==2.21.1<br>
+                    constructs>=10.0.0<br>
+                    wunger-cdk==0.0.2<br>
+                    <br>
+                    After you have cloned this project, do the following:<br>
+                    first you must have a file named .pypirc in your user folder .<br>
+                    content must be some like this (for pypi):<br>
+                    <br>
+                    [distutils]<br>
+                    index-servers=pypi<br>
+                    <br>
+                    [pypi]<br>
+                    repository = https://upload.pypi.org/legacy/<br>
+                    username=change2yourusername<br>
+                    password=change2yourpassword<br>
+                    <br>
+                    Next, adapt the setup.py , change the packages folder etc <br>
+                    <br>
+                    Now you can develop your cdk constructs inside the folder wunger_cdk_constructs ( or your own
+                    folder)<br>
+                    <br>
+                    Test these constructs with stacks, you write in folder 'stacks'<br>
+                    Include the stack in the app.py to be able to execute a 'cdk synth'
+                    Once this is working, you can build your modules.<br>
+                    <br>
+                    Create the wheel with this command<br>
+                    <b>python setup.py bdist_wheel</b><br>
+                    <br>
+                    Install the package locally ( you might need to change the wheel name of course)<br>
+                    <b>python -m pip install dist/wunger_cdk-0.0.2-py3-none-any.whl</b><br>
+
+                    By now you can already use the modules, inside this project . This is the intentation of the
+                    folder
+                    'usage'. Please comment out the usage stack in app.py,to test this.<br>
+                    <br>
+                    Now you can upload the module to the remote repo ( .pypirc file and repo must be setup
+                    correctly)<br>
+                    <b>twine upload -r pypi dist/wunger_cdk-0.0.2-py3-none-any.whl</b><br>
+                    <br>
+                    Once uploaded, on pypi this would be your package:<br>
+
+                    <img src="img/pip1.jpg" alt="SMM" width="600"> <br>
+                    <br>
+
+                    Once deployed in the repo you can use your pip module in your next projects, just include inside
+                    requirements.txt<br>
+                    <b>aws-cdk-lib==2.21.1<br>
+                        constructs>=10.0.0<br>
+                        wunger-cdk==0.0.2</b><br>
+                    <br>
+                    So, write your own cdk constructs and have fun.<br>
+                </div>
+
+
+                <p></p>
+
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>4 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
