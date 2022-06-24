@@ -110,154 +110,156 @@
                         <br>
                         But let's first skip this kind of construct and continue with our just created Stack. <br>
                         <br>
-                        This Stack class represents a CloudFormation Stack. This will be synthized to a JSon File in
-                        cdk.out to be published as CloudFormation Stack,<br>
-                        which you can find in the CloudFormation Console in 'Active Stacks'<br>
-                        Any resoure you add in this stack class you will find in the CloudFormation Stack in the Tab
-                        'Resources'<br>
+                    <h4>Stacks</h4><br>
+                    This Stack class represents a CloudFormation Stack. This will be synthized to a JSon File in
+                    cdk.out to be published as CloudFormation Stack,<br>
+                    which you can find in the CloudFormation Console in 'Active Stacks'<br>
+                    Any resoure you add in this stack class you will find in the CloudFormation Stack in the Tab
+                    'Resources'<br>
 
-                        So now we can add AWS Resources inside our Stack class:
-                        <em>
-                            from aws_cdk import Stack<br>
-                            <br>
-                            class MyFirstStack(Stack):<br>
-                            &ensp; def __init__(<br>
-                            &ensp; &ensp; self,<br>
-                            &ensp; &ensp; scope: Construct,<br>
-                            &ensp; &ensp; id: str,<br>
-                            &ensp; &ensp;config,<br>
-                            &ensp; &ensp;**kwargs,<br>
-                            ) -> None:<br>
-                            <br>
-                            &ensp; &ensp;s3Bucket1 = s3.Bucket(self, "MyFirstBucket", versioned=True)<br>
-                            &ensp; &ensp;s3Bucket2 = s3.Bucket(self, "MySecondBucket", versioned=True)<br>
-
-                        </em><br>
-                        In a diagram this would look like this, the CDK code will be used to generate the Cfn
-                        Template with 2 S3 resources:<br>
-                        <img src="img/cdk1b.jpg" alt="SMM" width="600"> <br>
+                    So now we can add AWS Resources inside our Stack class:
+                    <em>
+                        from aws_cdk import Stack<br>
                         <br>
-                        How should you organize / structure these Stacks?<br>
-                        You should structure them the same way would do when writing Cfn Stacks directly in Yaml or
-                        Json.<br>
-                        See the documentation about <br>
-                        <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/best-practices.html"
-                            class="page-scroll" target="_blank"> AWS Cloud Formation best-practices </a><br>
-                        This means for example to organize your stacks by lifecycle and ownership. or by functional
-                        layers.<br>
-                        You should not create a huge CloudFormation Template createing a VPC, also creating a ECS
-                        Cluster, a ECS Service, the Loadbalancers for it,
-                        the RDS behind it and maybe also a API Gateway to expose the Rest methods.<br>
-                        This would be the same anti pattern as writing 'god-classes' for example in Java.<br>
-                        You must separate and strucucture your infrastructure in layers to be able to update the stacks
-                        in smaller units and therefore also
-                        allow for example the microservice developer only upate the Service stack and not the whole
-                        infrastructure stack including everything.<br>
-                        This could mean:<br>
-                        You first create the roles and other IAM resources in one or multiple IAM stacks.<br>
-                        Then you create the VPC and other networking resources in its own stacks.<br>
-                        On the next layer you could for example create storage resources like S3.<br>
-                        Next RDS databases. <br>
-                        Next for example common security groups.<br>
-                        Next compute resources like ECS and Fargate or EC2 instances.<br>
-                        Next API Gateway or related services.<br>
-                        Finally monitoring and alerting.<br>
-                        So for only on the first principle, please read and apply all of them.
-                        These principles are valid if you write Cfn Code directly with Yaml or Json but also for your
-                        CDK code inside the stack classes<br><br>
-
-
-
-
-                        Now we can have a closer look on constructs.
-                        Please read also the AWS documentation :
-                        <a href="https://docs.aws.amazon.com/cdk/v2/guide/constructs.html" class="page-scroll"
-                            target="_blank">Constructs AWS CDK </a><br>
-                        A construct represents a "cloud component" and encapsulates everything AWS CloudFormation needs
-                        to create the component.
-                        You should look a look into the API documentation for all available CDK Constructs: <br>
-
-                        <a href="https://docs.aws.amazon.com/cdk/api/v2/python/index.html" class="page-scroll"
-                            target="_blank">AWS CDK Reference API </a><br>
-
-
-                        It is important to knwo there are 3 kind of Constrcuts. L1, L2 and L3 ( L is short for
-                        Layer)<br>
-                        L1 have a PreFix Cfn for Example <br>
-                        batch.CfnComputeEnvironment<br>
-                        These L1 are very close to the CloudFormation Definition and its parameters for a AWS
-                        Resource.<br>
-                        This normally requires to pass more parameters to create a resource with a L1 construct.<br>
+                        class MyFirstStack(Stack):<br>
+                        &ensp; def __init__(<br>
+                        &ensp; &ensp; self,<br>
+                        &ensp; &ensp; scope: Construct,<br>
+                        &ensp; &ensp; id: str,<br>
+                        &ensp; &ensp;config,<br>
+                        &ensp; &ensp;**kwargs,<br>
+                        ) -> None:<br>
                         <br>
-                        "The next level of constructs, L2, also represent AWS resources, but with a higher-level,
-                        intent-based API. <br>
-                        They provide similar functionality, but provide the defaults, boilerplate, and glue logic you'd
-                        be writing yourself with a CFN Resource construct"<br>
-                        This means with this L2 constructs it is often easier and faster to create resoures, you can
-                        create resources with less obrigatory parameters, <br>
-                        the optional parameters are preset with a default value.<br>
-                        You will often create AWS resources with this L2 constructs, it is the best approach in CDK.<br>
+                        &ensp; &ensp;s3Bucket1 = s3.Bucket(self, "MyFirstBucket", versioned=True)<br>
+                        &ensp; &ensp;s3Bucket2 = s3.Bucket(self, "MySecondBucket", versioned=True)<br>
+
+                    </em><br>
+                    In a diagram this would look like this, the CDK code will be used to generate the Cfn
+                    Template with 2 S3 resources:<br>
+                    <img src="img/cdk1b.jpg" alt="SMM" width="600"> <br>
+                    <br>
+                    How should you organize / structure these Stacks?<br>
+                    You should structure them the same way would do when writing Cfn Stacks directly in Yaml or
+                    Json.<br>
+                    See the documentation about <br>
+                    <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/best-practices.html"
+                        class="page-scroll" target="_blank"> AWS Cloud Formation best-practices </a><br>
+                    This means for example to organize your stacks by lifecycle and ownership. or by functional
+                    layers.<br>
+                    You should not create a huge CloudFormation Template createing a VPC, also creating a ECS
+                    Cluster, a ECS Service, the Loadbalancers for it,
+                    the RDS behind it and maybe also a API Gateway to expose the Rest methods.<br>
+                    This would be the same anti pattern as writing 'god-classes' for example in Java.<br>
+                    You must separate and strucucture your infrastructure in layers to be able to update the stacks
+                    in smaller units and therefore also
+                    allow for example the microservice developer only upate the Service stack and not the whole
+                    infrastructure stack including everything.<br>
+                    This could mean:<br>
+                    You first create the roles and other IAM resources in one or multiple IAM stacks.<br>
+                    Then you create the VPC and other networking resources in its own stacks.<br>
+                    On the next layer you could for example create storage resources like S3.<br>
+                    Next RDS databases. <br>
+                    Next for example common security groups.<br>
+                    Next compute resources like ECS and Fargate or EC2 instances.<br>
+                    Next API Gateway or related services.<br>
+                    Finally monitoring and alerting.<br>
+                    So for only on the first principle, please read and apply all of them.
+                    These principles are valid if you write Cfn Code directly with Yaml or Json but also for your
+                    CDK code inside the stack classes<br><br>
+
+
+                    <h4>AWS Construct Library</h4><br>
+
+                    Now we can have a closer look on constructs.
+                    Please read also the AWS documentation :
+                    <a href="https://docs.aws.amazon.com/cdk/v2/guide/constructs.html" class="page-scroll"
+                        target="_blank">Constructs AWS CDK </a><br>
+                    A construct represents a "cloud component" and encapsulates everything AWS CloudFormation needs
+                    to create the component.
+                    You should look a look into the API documentation for all available CDK Constructs: <br>
+
+                    <a href="https://docs.aws.amazon.com/cdk/api/v2/python/index.html" class="page-scroll"
+                        target="_blank">AWS CDK Reference API </a><br>
+
+
+                    It is important to knwo there are 3 kind of Constrcuts. L1, L2 and L3 ( L is short for
+                    Layer)<br>
+                    L1 have a PreFix Cfn for Example <br>
+                    batch.CfnComputeEnvironment<br>
+                    These L1 are very close to the CloudFormation Definition and its parameters for a AWS
+                    Resource.<br>
+                    This normally requires to pass more parameters to create a resource with a L1 construct.<br>
+                    <br>
+                    "The next level of constructs, L2, also represent AWS resources, but with a higher-level,
+                    intent-based API. <br>
+                    They provide similar functionality, but provide the defaults, boilerplate, and glue logic you'd
+                    be writing yourself with a CFN Resource construct"<br>
+                    This means with this L2 constructs it is often easier and faster to create resoures, you can
+                    create resources with less obrigatory parameters, <br>
+                    the optional parameters are preset with a default value.<br>
+                    You will often create AWS resources with this L2 constructs, it is the best approach in CDK.<br>
+                    <br>
+                    "Finally, the AWS Construct Library includes L3 constructs, which we call patterns. These
+                    constructs are designed to help you complete common tasks <br>
+                    in AWS, often involving multiple kinds of resources. For example, the aws-ecs-patterns.
+                    "<br><br>
+                    Besides these ready to use CDK constructs you can create your own construct classes.
+                    You have seen a example for this at the beginning of this tutorial.<br>
+                    <h4>Constructs</h4><br>
+                    Why should you actually use the construct class? You can use the AWS L1,L2,L3 constructs in your
+                    Stacks.<br>
+                    Well for a simple S3 Bucket there is no need to write an additional Construct class to create
+                    it. <br>
+                    Just code in your stack as in the example above.<br>
+                    But for more complicated resources and resource compositions it might be really useful.
+                    For example a Batch Compute CfnComputeEnvironment. <br>
+                    For this resource you might need - if specifiying the details, not unly using the simple default
+                    constructor - a bunch
+                    of resources :<br>
+                    A launch configuration (aws_ec2.CfnLaunchTemplate.LaunchTemplateDataProperty) for the EC2
+                    Instances uses as batch machines, <br>
+                    where you define CfnLaunchTemplate.InstanceRequirementsProperty like vCPU count, Memory, Block
+                    Device Mappings etc <br>
+                    You define your own Security Group for the Batch CfnComputeEnvironment<br>
+                    You need a aws_batch.CfnJobQueue and finally the aws_batch.CfnComputeEnvironment<br>
+                    This whole composition might be 200 lines of code. <br>
+                    Of course you could code this directly in your Stack class, but what if you need 2 different
+                    Batch
+                    Environments which differ in little details.
+                    (And of course you shouldn't blow up your stack classes which too many lines of code)<br>
+                    So better create a BatchEnvironment Construct where your define all these (here L1) constructs
+                    and create a nice Constructor with the
+                    parameters you want to pass to create the resources.<br>
+                    Now inside your Stack class you will only have a few lines of code.<br>
+                    <br>
+
+                    <em>
+                        from aws_cdk import Stack<br>
                         <br>
-                        "Finally, the AWS Construct Library includes L3 constructs, which we call patterns. These
-                        constructs are designed to help you complete common tasks <br>
-                        in AWS, often involving multiple kinds of resources. For example, the aws-ecs-patterns.
-                        "<br><br>
-                        Besides these ready to use CDK constructs you can create your own construct classes.
-                        You have seen a example for this at the beginning of this tutorial.<br>
-                        Why should you actually use the construct class? You can use the AWS L1,L2,L3 constructs in your
-                        Stacks.<br>
-                        Well for a simple S3 Bucket there is no need to write an additional Construct class to create
-                        it. <br>
-                        Just code in your stack as in the example above.<br>
-                        But for more complicated resources and resource compositions it might be really useful.
-                        For example a Batch Compute CfnComputeEnvironment. <br>
-                        For this resource you might need - if specifiying the details, not unly using the simple default
-                        constructor - a bunch
-                        of resources :<br>
-                        A launch configuration (aws_ec2.CfnLaunchTemplate.LaunchTemplateDataProperty) for the EC2
-                        Instances uses as batch machines, <br>
-                        where you define CfnLaunchTemplate.InstanceRequirementsProperty like vCPU count, Memory, Block
-                        Device Mappings etc <br>
-                        You define your own Security Group for the Batch CfnComputeEnvironment<br>
-                        You need a aws_batch.CfnJobQueue and finally the aws_batch.CfnComputeEnvironment<br>
-                        This whole composition might be 200 lines of code. <br>
-                        Of course you could code this directly in your Stack class, but what if you need 2 different
-                        Batch
-                        Environments which differ in little details.
-                        (And of course you shouldn't blow up your stack classes which too many lines of code)<br>
-                        So better create a BatchEnvironment Construct where your define all these (here L1) constructs
-                        and create a nice Constructor with the
-                        parameters you want to pass to create the resources.<br>
-                        Now inside your Stack class you will only have a few lines of code.<br>
+                        class MyFirstStack(Stack):<br>
+                        &ensp; def __init__(<br>
+                        &ensp; &ensp; self,<br>
+                        &ensp; &ensp; scope: Construct,<br>
+                        &ensp; &ensp; id: str,<br>
+                        &ensp; &ensp;config,<br>
+                        &ensp; &ensp;**kwargs,<br>
+                        ) -> None:<br>
                         <br>
+                        &ensp; &ensp;myBatchEnv1 = MyBatchConstructGPU(self, "MyBatchConstruct", vcpus=8, gpus=1,
+                        gbs=160, image_type="ECS_AL2_NVIDIA")<br>
+                        &ensp; &ensp;myBatchEnv2 = MyBatchConstruct(self, "MyBatchConstruct", vcpus=8, gpus=0,
+                        gbs=500, image_type="ECS_AL2")<br>
 
-                        <em>
-                            from aws_cdk import Stack<br>
-                            <br>
-                            class MyFirstStack(Stack):<br>
-                            &ensp; def __init__(<br>
-                            &ensp; &ensp; self,<br>
-                            &ensp; &ensp; scope: Construct,<br>
-                            &ensp; &ensp; id: str,<br>
-                            &ensp; &ensp;config,<br>
-                            &ensp; &ensp;**kwargs,<br>
-                            ) -> None:<br>
-                            <br>
-                            &ensp; &ensp;myBatchEnv1 = MyBatchConstructGPU(self, "MyBatchConstruct", vcpus=8, gpus=1,
-                            gbs=160, image_type="ECS_AL2_NVIDIA")<br>
-                            &ensp; &ensp;myBatchEnv2 = MyBatchConstruct(self, "MyBatchConstruct", vcpus=8, gpus=0,
-                            gbs=500, image_type="ECS_AL2")<br>
+                    </em><br>
+                    <br>
+                    And there is one more advantage . You can better re-use your Construct for future projects, even
+                    creating your own pip module to
+                    import in projects with the requirements.txt . See my blog on<br>
+                    <li><a href="pip-modules.html" class="page-scroll">How to create your own pip modules for your
+                            generic, reusable cdk consrtucts</a></li><br>
 
-                        </em><br>
-                        <br>
-                        And there is one more advantage . You can better re-use your Construct for future projects, even
-                        creating your own pip module to
-                        import in projects with the requirements.txt . See my blog on<br>
-                        <li><a href="pip-modules.html" class="page-scroll">How to create your own pip modules for your
-                                generic, reusable cdk consrtucts</a></li><br>
-
-                        I hope you have won a good overview about how to organize your code within the CDK.
-                        <br>
+                    I hope you have won a good overview about how to organize your code within the CDK.
+                    <br>
 
 
 
@@ -271,7 +273,7 @@
 
 
 
-                        <br><br><br><br>
+                    <br><br><br><br>
 
 
                     <p></p>
