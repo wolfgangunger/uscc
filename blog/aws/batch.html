@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger</title>
+    <meta name="description"
+        content="SCC Brasil Software Cloud Consulting Blumenau Santa Catarina Brasil Cloud Training Consulting Engineering AWS Devops Software Development Wolfgang Unger os cloud gurus #sccbrasil #oscloudgurus cloud software shoring aws java jee javascript">
+    <meta name="author" content="SCC Brasil Wolfgang Unger">
+    <meta name="og:title" property="og:title"
+        content="SCC Brasil Software Cloud Consulting #sccbrasil #oscloudgurus cloud">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>AWS Batch - A deep dive</h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+                    <p> Working with AWS Batch to run container in parallel is not quite simple.
+                        There are a bunch of configurations you must set up correct to launch the right instance types
+                        and amount of instances.<br>
+                        This tutorial will try to clarify the imporant configurations and parameters you need to run
+                        batch as expected.<br>
+                        <br>
+                    <h3>Job Definition</h3>
+                    The first important resource is the Job Definition of the Batch Job.<br>
+                    These are the most important parameters<br>
+                    <b>Image</b><br>
+                    Pointing to the ecr docker image ( will have no affect on the compute env and number of
+                    instances)<br>
+                    <br>
+                    <b>Memory</b><br>
+                    Required RAM<br>
+                    <br>
+                    <b>vCPUs</b><br>
+                    How many vCPUs the single job will need to run<br>
+                    <br>
+                    <b>Number of GPUs</b><br>
+                    How many GPU(s) the single job will need to run<br>
+                    <br>
+                    In CDK code these values can be configered like this<br>
+                    <em>
+                        resource_requirements = [<br>
+                        batch.CfnJobDefinition.ResourceRequirementProperty(type="VCPU", value="4"),<br>
+                        batch.CfnJobDefinition.ResourceRequirementProperty(<br>
+                        &ensp; type="MEMORY", value="8192"<br>
+                        ),<br>
+                        batch.CfnJobDefinition.ResourceRequirementProperty(type="GPU", value="1"),<br>
+                        ]<br>
+                    </em>
+                    <br>
+                    <h3>Batch Compute Environment</h3><br>
+                    For the Batch Compute Environment the following settings are important:<br>
+                    <b>Instance Types</b><br>
+                    The allowed instance types you want to launch. You can define only the family (g4dn or c5d) or also
+                    include the size (g4dn.xlarge)<br>
+                    You can define a list of allowed instances(c5d, m5ad, m5d, r5d) or ( g4dn.xlarge, p2.xlarge ) <br>
+                    <img src="img/batch1.jpg" alt="SMM" width="900"> <br>
+                    <br>
+                    You need to select the instance types on the requirements of your workloads.<br>
+                    So if you have memory intensive or compute intensive jobs running, please adapt these instance types
+                    to your needs.<br>
+                    Just take a look on the AWS documentation<br>
+                    <a href="https://aws.amazon.com/de/ec2/instance-types/" class="page-scroll">AWS Docu Instance
+                        Types</a><br><br>
+                    If you need for example NVidia GPUs you can select the G4 or the P2 instances.<br>
+                    We will see some examples on how the GPU value on the job-def and the instance type will affect the
+                    number of launched instances.<br>
+                    <br>
+                    <b>Maximum vCPUs</b><br>
+                    You can limit the max vCPU and therefor the amount of launched instances with this value. If
+                    limited<br>
+                    for example to 16, this value should not be exceeded even though the calculated desired count could
+                    be higher<br>
+                    <br>
+                    <b>Desired vCPUs</b><br>
+                    this value is not be configured, it will be calculated by AWS when sending jobs to Batch. See
+                    more<br>
+                    informations to this number on conclusions<br>
+                    <br>
+                    <b>Allocation Strategy</b><br>
+                    For example BEST_FIT_PROGRESSIVE<br>
+                    for more informations please read<br>
+                    <a href="https://docs.aws.amazon.com/batch/latest/userguide/allocation-strategies.html"
+                        class="page-scroll">AWS Docu Allocation Strategies
+                        Types</a><br><br>
+                    <br>
+                    <b>Provisioning model</b><br>
+                    EC2, Fargate. If you need concrete instance types, set to EC2<br>
+                    <br>
+                    <b>EC2 configuration</b><br>
+                    For GPU and NVidia this is important and must be set to ECS_AL2_NVIDIA<br>
+                    In CDK code this is :<br>
+                    <em>
+                        compute_resources=aws_batch.CfnComputeEnvironment.ComputeResourcesProperty(<br>
+                        &ensp; type=compenvtype,<br>
+                        &ensp; allocation_strategy="BEST_FIT_PROGRESSIVE",<br>
+                        &ensp; ec2_configuration=[<br>
+                        &ensp; &ensp; aws_batch.CfnComputeEnvironment.Ec2ConfigurationObjectProperty(<br>
+                        &ensp; &ensp; &ensp; image_type="ECS_AL2_NVIDIA",<br>
+                        &ensp; &ensp; ),<br>
+                        &ensp; ],<br>
+                    </em>
+                    <br>
+                    <h3>Service Quotas</h3><br>
+                    In each account there are service quotas ( limits) on the EC2 machines, allowed to launch in
+                    parallel.<br>
+                    <img src="img/quotas.jpg" alt="SMM" width="900"> <br>
+                    <br>
+                    It is not possible to launch more EC2 instances on the dedicated Instance Types of the quota even
+                    though the submitted jobs and the desired vCPU count would require a higher amount of instances.<br>
+                    This behaviour can be confusing, when triggering jobs, the desired vCPU count is set correctly but
+                    he correct number of launched EC2 instances is not reached. I will not exceed the amount of the
+                    quota.<br>
+                    In batch this means, for example only 8 G4dn Instances will be launched, the desired vCPU would
+                    demand 16, but this value will be irrelevant in this case.<br>
+                    The jobs will then be queued and only processed once another job was finished<br>
+                    <br>
+                    <h3>Test and Results when running Batch Jobs</h3><br>
+                    <b>Service Quotas</b><br>
+                    See the point above, the AWS Service quotas will prohibit to launch the expected amount of EC2
+                    instances and this can be quite confusing when observing the behaviour of the Compute
+                    environment.<br>
+                    The soft limit can easily be increase by a request on the site 'Service Quotas' and should be set to
+                    a value to allow launch enough instances<br>
+                    <br>
+                    <b>Desired vCPUs</b><br>
+                    When sending jobs to Batch the Batch Compute Environment will first calculate the desired vCPU count
+                    to scale up the compute resources <br>
+                    This value is not only calculated by the vCPU of a single job ( defined in the job-def) and the
+                    amount of jobs , meaning for example we have 4 vCPU in the job-def and are sending 4 jobs to batch,
+                    this would end up in 16 vCPUs ( 4x)<br>
+                    Also the allowed instance types for the compute env will be considered by AWS Batch when calcuating
+                    this value. <br>
+                    If only a family is defined in the allowed types (g4dn ) or the correct instance and size is defined
+                    ( g4dn.xlarge for a 4 vCPU job-def) the compute environment will set this value to 16, which is fine
+                    and the exected value<br>
+                    But if you only allow bigger instances, for example g4dn.2xlarge ( which have 8 vCPUs) and the
+                    settings of job end compute env ( for example the GPU) require to launch 1 instance per job, this
+                    means the desired vCPU count will then be set to 32. <br>
+                    Because 4 instances must be launched and each instance got 8 vCPU. In this case the caluculation
+                    job-def vCPU x number of jobs will be overwritten by instance vCPU x number of jobs<br>
+                    <br>
+                    <b>Amount of launched instances</b><br>
+                    After AWS Batch calculated the desired vCPUs it will launch the EC2 instances for the batch
+                    jobs.<br>
+                    Therefor a number of aspects will affect this number and this can be confusing .<br>
+                    <b>Service Quotas</b><br>
+                    can prohibit to launch enough instance, see above, always increase to sufficient amount !<br>
+                    <br>
+                    <b>Relationship Hardware requirements JobDef - Allowed Instances in Compute Env</b><br>
+                    The definition of hardware resource in the job-def in combination with the amount of jobs will be
+                    the most important factor for the number of launched instances<br>
+                    If 4 jobs can be run a 1 allowed instance type, only 1 will be launched. but all hardware
+                    requirements must combine with this . Meaning<br>
+                    Memory<br>
+
+                    vCPU<br>
+
+                    GPU - if defined and required <br>
+                    <br>
+                    <h3>Example 1 - None GPUS</h3><br>
+                    so ( first example without GPU) if vCPU in job-def is 4 and memory is 16 this would allow to launch
+                    the following instance types and number of instances<br>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>allowed instance type</th>
+                                <th>instance type hardware</th>
+                                <th>number of jobs</th>
+                                <th>desired vCPUs</th>
+                                <th>number of launched istances</th>
+                                <th>Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>g4dn.xlarge</td>
+                                <td>4 vCPU - 16 GB</td>
+                                <td>1</td>
+                                <td>4</td>
+                                <td>1</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.xlarge</td>
+                                <td>4 vCPU - 16 GB</td>
+                                <td>2</td>
+                                <td>8</td>
+                                <td>2</td>
+                                <td>vCPU (2x4) requires a 2nd instance</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.xlarge</td>
+                                <td>4 vCPU - 16 GB</td>
+                                <td>4</td>
+                                <td>16</td>
+                                <td>4</td>
+                                <td>vCPU (4x4) require 4 instances</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.xlarge &amp; g4dn.2xlarge</td>
+                                <td>4/8 vCPU - 16/32 GB</td>
+                                <td>1</td>
+                                <td>4</td>
+                                <td>1</td>
+                                <td>desired vCPU count still 4, because a g4dn.xlarge can be launched</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.2xlarge</td>
+                                <td>8 vCPU - 32 GB</td>
+                                <td>1</td>
+                                <td>8</td>
+                                <td>1</td>
+                                <td>desired vCPU count is 8 not 4, because only a g4dn.2xlarge can be launched which
+                                    already got the 8 vCPU</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.2xlarge</td>
+                                <td>8 vCPU - 32 GB</td>
+                                <td>2</td>
+                                <td>8</td>
+                                <td>1</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.2xlarge</td>
+                                <td>8 vCPU - 32 GB</td>
+                                <td>4</td>
+                                <td>16</td>
+                                <td>2</td>
+                                <td>vCPU (4x4) requires a 2nd instance</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.4xlarge</td>
+                                <td>16 vCPU - 64 GB</td>
+                                <td>1</td>
+                                <td>16</td>
+                                <td>1</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.4xlarge</td>
+                                <td>16 vCPU - 64 GB</td>
+                                <td>2</td>
+                                <td>16</td>
+                                <td>1</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.4xlarge</td>
+                                <td>16 vCPU - 64 GB</td>
+                                <td>4</td>
+                                <td>16</td>
+                                <td>1</td>
+                                <td>all jobs can run on one machine</td>
+                            </tr>
+                        </tbody>
+                    </table><br>
+                    Please notice the combination RAM and vCPU must allow to ran 2 jobs or more on one instance. if vCPU
+                    would only be 2 in the job-def but memory still 16 GB, this would still remain in the same results
+                    as in the table above<br>
+                    <br>
+                    <h3>Example 2 - With GPU</h3><br>
+                    No taking a look on JobDefinitions which require GPU=1<br>
+                    The GPU will not be shared, meaning if a job requires 1 GPU it will always need one instance ( if
+                    not using multi GPU instances like g4dn.12xlarge) even though the memory and vCPU would allow to run
+                    more jobs on one instance<br>
+                    Only with  it is then possible to run multiple containers on one machine, but actually the
+                    configurations of these machine doesn't combine with the RAM and vCPUs, so I would not recommend to
+                    use them<br>
+                    <br>
+                    JobDef : 4 vCPUs, 1 GPU, 16 GB memory<br>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>allowed instance type</th>
+                                <th>instance type hardware</th>
+                                <th>number of jobs</th>
+                                <th>desired vCPUs</th>
+                                <th>number of launched istances</th>
+                                <th>Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>g4dn.xlarge</td>
+                                <td>4 vCPU - 16 GB - 1 GPU</td>
+                                <td>1</td>
+                                <td>4</td>
+                                <td>1</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.xlarge</td>
+                                <td>4 vCPU - 16 GB - 1 GPU</td>
+                                <td>2</td>
+                                <td>8</td>
+                                <td>2</td>
+                                <td>vCPU, RAM and GPU require to launch a 2nd instance<br></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.xlarge</td>
+                                <td>4 vCPU - 16 GB - 1 GPU</td>
+                                <td>4</td>
+                                <td>16</td>
+                                <td>4</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.2xlarge</td>
+                                <td>8 vCPU - 32 GB - 1 GPU</td>
+                                <td>1</td>
+                                <td>8</td>
+                                <td>1</td>
+                                <td>desired vCPU count is 8 not 4, because only a g4dn.2xlarge can be launched which
+                                    already got the 8 vCPU</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.2xlarge</td>
+                                <td>8 vCPU - 32 GB- 1 GPU</td>
+                                <td>2</td>
+                                <td>8</td>
+                                <td>2<br></td>
+                                <td>2 instances launched because of GPU</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.2xlarge</td>
+                                <td>8 vCPU - 32 GB - GPU</td>
+                                <td>4</td>
+                                <td>16</td>
+                                <td>4<br></td>
+                                <td>4 instances launched because of GPU</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.4xlarge</td>
+                                <td>16 vCPU - 64 GB - 1 GPU</td>
+                                <td>1</td>
+                                <td>16</td>
+                                <td>1</td>
+                                <td>desired vCPU count is 16 not 4 because no smaller instance can be launched</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.4xlarge</td>
+                                <td>16 vCPU - 64 GB -1 GPU</td>
+                                <td>2</td>
+                                <td>16</td>
+                                <td>1</td>
+                                <td>2 instances are launched because of GPU</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.4xlarge</td>
+                                <td>16 vCPU - 64 GB - 1 GPU</td>
+                                <td>4</td>
+                                <td>16</td>
+                                <td>1</td>
+                                <td>4 instances are launched because of GPU<br></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.12xlarge</td>
+                                <td>48 vCPU - 192 GB- 4 GPU</td>
+                                <td>1</td>
+                                <td>48</td>
+                                <td>1</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.12xlarge</td>
+                                <td>48 vCPU - 192 GB- 4 GPU</td>
+                                <td>2<br></td>
+                                <td>48</td>
+                                <td>1</td>
+                                <td>all jobs can run on one instance ( but waste of vCPU and RAM)</td>
+                            </tr>
+                            <tr>
+                                <td>g4dn.12xlarge</td>
+                                <td>48 vCPU - 192 GB- 4 GPU</td>
+                                <td>4</td>
+                                <td>48</td>
+                                <td>1</td>
+                                <td>all jobs can run on one instance ( but waste of vCPU and RAM)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p></p>
+                </div>
+
+
+                <p></p>
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>4 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
