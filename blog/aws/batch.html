@@ -221,14 +221,18 @@
                     <h3>Example 1 - None GPUS</h3><br>
                     so ( first example without GPU) if vCPU in job-def is 4 and memory is 16 this would allow to launch
                     the following instance types and number of instances<br>
-                    <table>
+                    I am using g4dn instances in this example ( to compare with example 2 ) but the GPUs are of no
+                    relevance in the first example . <br>
+                    This example would also work for example with instance types like m5 (m5.xlarge, m5.2xlarge,
+                    m5.4xlarge)<br>
+                    <table style="width:100%">
                         <thead>
                             <tr>
-                                <th>allowed instance type</th>
-                                <th>instance type hardware</th>
-                                <th>number of jobs</th>
-                                <th>desired vCPUs</th>
-                                <th>number of launched istances</th>
+                                <th width="200">allowed instance type</th>
+                                <th width="200">instance type hardware</th>
+                                <th width="100">no of jobs</th>
+                                <th width="120">desired vCPUs</th>
+                                <th width="240">number of launched istances</th>
                                 <th>Comment</th>
                             </tr>
                         </thead>
@@ -330,14 +334,14 @@
                     use them<br>
                     <br>
                     JobDef : 4 vCPUs, 1 GPU, 16 GB memory<br>
-                    <table>
+                    <table style="width:100%">
                         <thead>
                             <tr>
-                                <th>allowed instance type</th>
-                                <th>instance type hardware</th>
-                                <th>number of jobs</th>
-                                <th>desired vCPUs</th>
-                                <th>number of launched istances</th>
+                                <th width="200">allowed instance type</th>
+                                <th width="200">instance type hardware</th>
+                                <th width="100">no of jobs</th>
+                                <th width="120">desired vCPUs</th>
+                                <th width="240">number of launched istances</th>
                                 <th>Comment</th>
                             </tr>
                         </thead>
@@ -441,6 +445,19 @@
                             </tr>
                         </tbody>
                     </table>
+                    <h3>Conclusion</h3><br>
+                    Running Containers in AWS Batch is not quite simple. You need to investigate, which is the best
+                    combination of the hardware requirements of the Job-Definition and the hardware setup of
+                    the batch compute environment.<br>
+                    Try to tune the allowed instance type(s) to the Job-Definition Hardware Settings.<br>
+                    If you would only allow big instances, which can run for example 4 or 8 containers, they would be
+                    oversized in the moment, only one job will be finished while the other 3 are already completed.<br>
+                    If you need GPU, be aware the defined GPU in the Job-Definition is not being shared, so running 2
+                    Jobs with GPU=1 in the Job-Definition, require to run on 2 EC2 instances ( with hardware GPU=1)
+                    even if the vCPUs and memory would allow to run 2 or more jobs.<br>
+                    If you run a lot of jobs, don't get confused, if not enough EC2 instances are launched. Take a look
+                    in the service quotas of your account.<br>
+
                     <p></p>
                 </div>
 
