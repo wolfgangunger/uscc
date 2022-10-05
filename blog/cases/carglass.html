@@ -67,116 +67,102 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>Deploy a Elastic Beanstalk Application in 1 min ( by commandline)</h2>
+                <h2>Carglass</h2>
                 <hr>
             </div>
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
+                    <p></p>
+                    <p>For about 1 year SCC Brasil worked together with the Carglass internal IT Team to improve their
+                        Cloud Infrastructure<br>
+                        The first action was analyze the current setup and define epics to optimize the aws
+                        infrastructure
+                        There where issues identified and priorized to bring their hybrid infrastructure on another
+                        quality level<br>
+                        The first epics based on the Review were: Security, Account Structure, Improve RPO and RTO,
+                        IaC<br>
+                        In this blog let's have a look on 3 maior epics<br>
+                        -Reorganize AWS Account Strucure<br>
+                        -Improve Desaster Recovery Strategy and therefore RPO and RTO<br>
+                        -Strict usage of IaC<br>
 
-                    <p></p>
-                    <h4>By Wolfgang Unger</h4><br>
-                    <p>This short tutorial shows how to deploy a simple ElasticBeanstalk application ( and environment
-                        )<br>
-
-                        Install the EB commandline<br>
-                        If you don't have the EB CLI yet installed, please take a look in this docu and install <br>
-
-                        <li><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html"
-                                class="page-scroll" target="_blank">Install EB CLI</a></li>
-                        Basically you have to execute <br>
-                        <em>pip install awsebcli --upgrade --user</em><br>
-                        and add %USERPROFILE%\AppData\Roaming\Python\Python37\Scripts to you PATH variable ( on
-                        windows)<br>
-                    <p>
-                    </p>
-                    <b>Setup the Application with CLI</b><br>
-                    First switch to your workspace folder ( for example eb-cli-test) and execute the following commands
-                    :<br>
-                    <em><b>eb init</b></em><br>
-                    this will give you the list of aws-regions to choose from ( for install your eb-application)<br>
-                    <img src="img/eb-cli1.png" alt="SMM" width="500"> <br>
-                    choose your region, I will choose 4<br>
-                    <p></p>
-                    For the option <br>
-                    Select an application to use<br>
-                    you can keep 3 and create a new application <br>
-                    <p></p Enter Application Name<br>
-                    Let's type HelloWorld<br>
-                    <p></p Now you are asked to Select a platform.<br>
-                    <img src="img/eb-cli2.png" alt="SMM" width="500"> <br>
-                    Let's select PHP (8)<br>
-                    <p></p>
-                    Select a platform branch. You can stick to 1<br>
-                    <p></p>
-                    Next: Do you want to setup SSH? <br>
-                    For this simple example let's say no, of course for a real application you want to setup this<br>
-                    <p></p This should create the application.<br>
-                    Take a look in the new .elasticbeanstalk folder, you should a config.yaml with this content<br>
-                    <p></p <em>
-                    <pre>
-                        branch-defaults:
-                          default:
-                            environment: null
-                            group_suffix: null
-                        global:
-                            application_name: HelloWorld
-                            branch: null
-                            default_ec2_keyname: null
-                            default_platform: PHP 8.0 running on 64bit Amazon Linux 2
-                            default_region: eu-central-1
-                            include_git_submodules: true
-                            instance_profile: null
-                            platform_name: null
-                            platform_version: null
-                            profile: null
-                            repository: null
-                            sc: null
-                            workspace_type: Application                        
-                                        </pre></em>
-                    <p></p>
-                    Please have a look the region and name confirms you your earlier inputs.<br>
-                    <p></p>
-                    Next we are going to create a index.html file<br>
-                    Just type <br>
-                    echo "Hello AWS Friends" > index.html<br>
-                    which will create the html file<br>
-                    <p></p>
-                    Next we will create the environment and application with this command:<br>
-                    <em><b>eb create int-env</b></em><br>
-                    <p></p>
-                    Now you can already have a look in your AWS Account -> ElasticBeanstalk <br>
-                    and you should be able to see this environment (can take a minute)<br>
-                    <p></p>
-                    Please have a look to the created resources ( EC2 instance, Autocaling Group, etc )<br>
-                    <p></p>
-                    If you update your application files, for example you can modify the index.html, you have to
-                    execute<br>
-                    <em><b>eb deploy</b></em><br>
-                    <p></p>
-                    <b>Some more commands you can use:</b><br>
-                    Open the application (here open a browser with the application URL)<br>
-                    <em><b>eb open</b></em> <br>
-                    <p></p>
-                    Check the application status<br>
-                    <em><b>eb status</b></em> <br>
-                    <p></p>
-                    check the app health <br>
-                    <em><b>eb health</b></em><br>
-                    <p></p>
-                    Finally let's terminate our application to avoid further costs:<br>
-                    <em><b>eb terminate</b></em><br>
+                    <h4>Reorganize AWS Account Strucure</h4><br>
+                    The current setup was a Master Account and 3 Stage Accounts (DEV, QA & PROD) .<br>
+                    It is already a good practice to separate the stages in separate accounts, but since it was
+                    neccessary to grant acess to
+                    external service providers to the accounts, the separation of all these parties on IAM level to
+                    grant only rights to their servers and resources,
+                    following the principle of least privilage, was difficult.<br>
+                    Too much administrator policies where granted, allowing changes on networking and also on actions on
+                    other domain resources.<br>
+                    The better approach was to define the account structure more granular and define more dedicated
+                    accounts with its on IAM roles.<br>
+                    The AWS Whitepaper gives an example for a multi-account scenario.<br>
+                    <img src="img/multi-account.jpg" alt="SMM" width="500"> <br>
                     <br>
+                    We followed this example with small changes, defining the following account strucuture with AWS
+                    Organizations :<br>
+                    <b>Organizations Account</b> - Master account with the IAM Users to login<br>
+                    <b>Networking Account</b> - Transit Gateway and Direct Connect , Adminstrator Access only for the
+                    Network
+                    Administator<br>
+                    <b>Shared Services Account</b> - Account for shared resoures and services to avoid too much VPC
+                    peerings
+                    between the other accounts<br>
+                    <b>Main Stage Accounts DEV, QA & PROD</b><br>
+                    <b>Stage Accounts for external service providers</b><br>
+                    <b>Stage Accounts for Oracle and its servie provider</b><br>
+
+
+                    The separation in these dedicated accounts helped to apply the principle of least privilage,
+                    allowing the different roles
+                    only access to their resources.<br>
+                    The dedicated accounts where much more neatly, allowing the admins to stop or teminate manual
+                    created test/poc resources.
+                    Also consolidated billing helped the management to monitor the aws costs on a better
+                    granularity.<br>
+
+                    <h4>Improve Desaster Recovery Strategy and therefore RPO and RTO</h4><br>
+                    All RDS instances where already creating daily snapshots, also EBS volumes, so the RPO was in most
+                    cases acceptable, here were only small improvements neccessary,
+                    but there a TODO with the RTO.<br>
+                    Not all resources where created with IaC (CloudFormation was used in general), some where created
+                    manually on the AWS Console
+                    and many of the resources created with IaC were modified over the time manually on the AWS Console
+                    ( and not the Cfn Stack),<br>
+                    which caused drifts on many Stacks and therefore possible problems when updating or re-creating
+                    these resources.
+                    To allow the team to re-create all resources in the case of a desaster recovery, the strict usage of
+                    IaC
+                    must be implemented.<br>
+
+
+                    <h4>Strict usage of IaC and deployment with CI/CD</h4><br>
+
+                    The CloudFormation Stacks were re-structured :<br>
+                    -The stacks were layered to better separate the logical and strucutural elements:<br>
+                    <img src="img/cfn-layering.jpg" alt="SMM" width="500"> <br>
+                    A VPC Stack would now only contain VPC and Network resources, but no other resources like for
+                    example S3 Buckets.<br>
+                    Therefore the application developers never had to touch VPC or Route53 Stacks, but only their
+                    Application Layer Stacks.<br>
+                    -The stacks were ordered in the git repo by their layers to allow them to re-deploy in the correct
+                    orders.<br>
+                    Cross-References with Outputs in Inputs Values were used, but in this case of course the Stack
+                    containing the Output must be
+                    deployed first.<br>
+                    -The Stacks used in 3 Stage Accounts were unified to a single stack and parameterized instead of
+                    having 3
+                    stacks almost being 95% equaly.<br>
+                    - All Stacks were deployed by Jenkins<br>
+                    -Drift detection problems were sent by SNS Notifications<br>
+                    <br>
+                    <p></p>
+
                 </div>
 
-                <br>
-                <p></p>
-                <p></p>
-                See also this video about SSM on my youtube channel<br>
 
-                <li><a href="https://www.youtube.com/watch?v=H13Wr8L80wA" class="page-scroll" target="_blank">AWS
-                        Channel Wolfgang Unger - EB-CLI</a></li>
-                <p></p>
             </div>
         </div>
         <center>
