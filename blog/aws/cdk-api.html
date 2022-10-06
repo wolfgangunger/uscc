@@ -126,12 +126,12 @@
                     Now we can create our resources and methods.<br>
                     First the base resources:<br>
                     <em>
-                        api_resource = workflow_api.root.add_resource("api")<br>
+                        api_resource = api.root.add_resource("api")<br>
                         v1_resource = api_resource.add_resource("v1")<br>
                     </em><br>
                     Now the api specific resources we want to define using the lambda integraion:<br>
                     <em>
-                        itmes_resource = v1_resource.add_resource("items")<br>
+                        items_resource = v1_resource.add_resource("items")<br>
                         items_resource.add_method(<br>
                         &ensp; "GET",<br>
                         &ensp; lambda_integration,<br>
