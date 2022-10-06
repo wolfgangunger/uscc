@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger</title>
+    <meta name="description" content="AWS Blog Wolfgang Unger">
+    <meta name="author" content="AWS Blog Wolfgang Unger">
+    <meta name="og:title" property="og:title" content="AWS Blog Wolfgang Unger">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Api Gateway with CDK</h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+                    <p> Lets have a look how to create a API Gateway with CDK (Python)<br>
+                        The first approach is using the RestApi Class and code the resources and methods.<br>
+                        The second by using a Swagger/Open API file.<br>
+                        Both APIs will use lambda integrations.<br>
+                        We will also see how to use Authorizers with Cognito and Custom Lambda.<br>
+                        <br>
+                    <h3>RestApi CDK Class</h3><br>
+                    To create a Rest API you basically can use the following code:<br>
+                    <em>
+                        api = aws_apigateway.RestApi(<br>
+                        &ensp;self,<br>
+                        &ensp; f"{stage}-cdk-api",<br>
+                        &ensp; deploy_options=deploy_options,<br>
+                        &ensp; default_cors_preflight_options={<br>
+                        &ensp; &ensp; "allow_origins": aws_apigateway.Cors.ALL_ORIGINS,<br>
+                        &ensp; &ensp; "allow_methods": aws_apigateway.Cors.ALL_METHODS,<br>
+                        &ensp; },<br>
+                        )<br>
+                    </em><br>
+                    The deploy_options are not mandatory, if used like in this example you need to define them
+                    first.<br>
+                    <em><br>
+                        log_group = aws_logs.LogGroup(self, "CDK-Api-Logs")<br>
+                        deploy_options = aws_apigateway.StageOptions(<br>
+                        &ensp; access_log_destination=aws_apigateway.LogGroupLogDestination(log_group),<br>
+                        &ensp; access_log_format=aws_apigateway.AccessLogFormat.json_with_standard_fields(<br>
+                        &ensp;&ensp; caller=False,<br>
+                        &ensp;&ensp; http_method=True,<br>
+                        &ensp;&ensp; ip=True,<br>
+                        &ensp;&ensp; protocol=True,<br>
+                        &ensp;&ensp;request_time=True,<br>
+                        &ensp;&ensp; resource_path=True,<br>
+                        &ensp;&ensp; response_length=True,<br>
+                        &ensp;&ensp; status=True,<br>
+                        &ensp;&ensp;user=True,<br>
+                        &ensp; ),<br>
+                        &ensp; metrics_enabled=True,<br>
+                        )<br>
+                    </em><br>
+
+                    For the lambda integration you need of course a lambda function.<br>
+                    This function is not part of this tutorial.<br>
+                    Let's assume it was created ahead of this stack and the function is passed as
+                    a parameter to the API stack:<br>
+                    <em>
+                        lambda_integration = aws_apigateway.LambdaIntegration(<br>
+                        &ensp; handler.fn<br>
+                        )<br>
+                    </em><br>
+
+                    Now we can create our resources and methods.<br>
+                    First the base resources:<br>
+                    <em>
+                        api_resource = workflow_api.root.add_resource("api")<br>
+                        v1_resource = api_resource.add_resource("v1")<br>
+                    </em><br>
+                    Now the api specific resources we want to define using the lambda integraion:<br>
+                    <em>
+                        itmes_resource = v1_resource.add_resource("items")<br>
+                        items_resource.add_method(<br>
+                        &ensp; "GET",<br>
+                        &ensp; lambda_integration,<br>
+                        &ensp; authorizer=authorizer,<br>
+                        &ensp; authorization_type=aws_apigateway.AuthorizationType.COGNITO,<br>
+                        )<br>
+                    </em>
+                    Now we can add more resources and methods. We can also use path variables:<br>
+                    <em>
+                        item_name_resource = items_resource.add_resource("{item_id}")<br>
+                        item_name_resource.add_method(<br>
+                        &ensp; "GET",<br>
+                        &ensp; lambda_integration,<br>
+                        &ensp; authorizer=authorizer,<br>
+                        &ensp; authorization_type=aws_apigateway.AuthorizationType.COGNITO,<br>
+                        )<br>
+
+                    </em>
+                    This is basically the API, there is just one thing missing, as you might have noticed.<br>
+                    I am using a congnito authorizer here, of course we must initialize this class first.<br>
+                    <em>
+                        user_pool = aws_cognito.UserPool.from_user_pool_id(<br>
+                        &ensp; self, "auth-user-pool", "eu-west-1_xxxxx"<br>
+                        )<br>
+
+                        authorizer = aws_apigateway.CognitoUserPoolsAuthorizer(<br>
+                        &ensp; self, id="api-authorizer", cognito_user_pools=[user_pool]<br>
+                        )<br>
+                    </em><br>
+
+                    This is all we need to do to create the API by cdk code.<br>
+                    There is one problem here, if we have a bigger API with a lots of methods and resources,
+                    the cdk code might grow and become less clear.<br>
+                    <br>
+                    <h3>SpecRestApi CDK Class</h3><br>
+                    To avoid this you can use the SpecRestApi Class and define your API resources and methods
+                    with Swagger or Open API.<br>
+                    <em>
+                        api = aws_apigateway.SpecRestApi(<br>
+                        &ensp; self,<br>
+                        &ensp; "dev-workflow-poc-api-swagger",<br>
+                        &ensp; api_definition=aws_apigateway.ApiDefinition.from_asset(<br>
+                        &ensp;&ensp; os.path.abspath(<br>
+                        &ensp;&ensp;&ensp; os.path.join(<br>
+                        &ensp;&ensp;&ensp;&ensp; os.path.dirname(__file__), "swagger/api-oas30-apigateway.yaml"<br>
+                        &ensp;&ensp;&ensp; )<br>
+                        &ensp;&ensp; )<br>
+                        &ensp; ),<br>
+                        &ensp; deploy_options = deploy_options<br>
+                        )<br>
+                    </em><br>
+                    With this approach the cdk code becomes much shorter, the definition of the resources and
+                    methods is no longer
+                    required in the python cdk class.<br>
+                    It will be defined with the Swagger / OpenAPI json or yaml file.<br>
+                    Lets have a look on a OpenAPI 3.0 definition yaml.<br>
+                    <em>
+                        openapi: "3.0.1"<br>
+                        info:<br>
+                        &ensp; title: "dev-workflow-poc-api-swagger"<br>
+                        &ensp; version: "2022-09-23T14:26:52Z"<br>
+                        servers:<br>
+                        - url: "https://juve9837c65.execute-api.eu-west-1.amazonaws.com/{basePath}"<br>
+                        &ensp; variables:<br>
+                        &ensp;&ensp; basePath:<br>
+                        &ensp;&ensp;&ensp; default: "/prod"<br>
+                        paths:<br>
+                        <br>
+                        /api/v1/items:<br>
+                        &ensp; get:<br>
+                        &ensp;&ensp; security:<br>
+                        &ensp;&ensp; - AuthCustomAuthorizer: []<br>
+                        &ensp;&ensp; x-amazon-apigateway-integration:<br>
+                        &ensp;&ensp;&ensp; type: "aws_proxy"<br>
+                        &ensp;&ensp;&ensp; httpMethod: "POST"<br>
+                        &ensp;&ensp;&ensp; uri:
+                        "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::Account}:function:item-handler/invocations"<br>
+                        &ensp;&ensp;&ensp; passthroughBehavior: "when_no_match"<br>
+                        &ensp;&ensp;&ensp; contentHandling: "CONVERT_TO_TEXT"<br>
+                        &ensp;options:<br>
+                        &ensp;&ensp; responses:<br>
+                        &ensp;&ensp;&ensp; "204":<br>
+                        &ensp;&ensp;&ensp;&ensp; description: "204 response"<br>
+                        &ensp;&ensp;&ensp;&ensp; content: {}<br>
+                        &ensp; &ensp; x-amazon-apigateway-integration:<br>
+                        &ensp; &ensp;&ensp; type: "aws_proxy"<br>
+                        &ensp; &ensp; &ensp;responses:<br>
+                        &ensp; &ensp;&ensp;&ensp; default:<br>
+                        &ensp; &ensp;&ensp;&ensp;&ensp; statusCode: "204"<br>
+                        &ensp; &ensp;&ensp;&ensp; responseParameters:<br>
+                        &ensp; &ensp;&ensp;&ensp;&ensp; method.response.header.Access-Control-Allow-Methods:
+                        "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'"<br>
+                        &ensp; &ensp;&ensp;&ensp;&ensp; method.response.header.Access-Control-Allow-Headers:
+                        "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"<br>
+                        &ensp; &ensp;&ensp;&ensp;&ensp; method.response.header.Access-Control-Allow-Origin:
+                        "'*'"<br>
+                        &ensp; &ensp; &ensp; requestTemplates:<br>
+                        &ensp; &ensp;&ensp;&ensp; application/json: "{ statusCode: 200 }"<br>
+                        &ensp; &ensp;&ensp; passthroughBehavior: "when_no_match"<br>
+                    </em><br>
+                    There is aws specific code in this yaml (if you need lambda proxy integration), for example
+                    x-amazon-apigateway-integration.<br>
+                    You can use also variables like ${AWS::Region} and ${AWS::Account}.<br>
+                    Also there is a authorizer used, this time a custom authorizer, not a cognito
+                    authorizer.<br>
+                    It must be defined also in the yaml file:<br>
+                    <em><br>
+                        components:<br>
+                        &ensp; securitySchemes:<br>
+                        &ensp; &ensp; AuthCustomAuthorizer:<br>
+                        &ensp; &ensp; &ensp; type: "apiKey"<br>
+                        &ensp; &ensp; &ensp; name: "Authorization"<br>
+                        &ensp; &ensp; &ensp; in: "header"<br>
+                        &ensp; &ensp; &ensp; x-amazon-apigateway-authtype: "custom"<br>
+                        &ensp; &ensp; &ensp; x-amazon-apigateway-authorizer:<br>
+                        &ensp; &ensp; &ensp; &ensp; type: "token"<br>
+                        &ensp; &ensp; &ensp; &ensp; authorizerUri:<br>
+                        "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::Account}:my-function:-access-control-CustomAuthorizor/invocations"<br>
+                        &ensp; &ensp; &ensp; &ensp; authorizerResultTtlInSeconds: 300<br>
+                    </em><br>
+                    <br><br>
+                    Of yourse we must first create this Custom Authorizer in the CDK Code before we can use it
+                    in<br>
+                    the API definition (please replace the region by a variable):<br>
+                    <em>
+                        custom_authorizer_arn =<br>
+                        &ensp;"arn:aws:lambda:eu-west-1:111111111111:function:my-api-access-control-CustomAuthorizor"<br>
+                        authorizer_uri="arn:aws:apigateway:{}:lambda:path/2015-03-31/functions/{}/invocations".format(<br>
+                        &ensp; "eu-west-1", custom_authorizer_arn)<br>
+                        <br>
+                        custom_authorizer_cfn = aws_apigateway.CfnAuthorizer(self, 'AuthCustomAuthorizer',<br>
+                        &ensp; rest_api_id=api.rest_api_id,<br>
+                        &ensp;name='AuthCustomAuthorizer',<br>
+                        &ensp; type='TOKEN',<br>
+                        &ensp; authorizer_uri=authorizer_uri,<br>
+                        &ensp; identity_source='method.request.header.Authorization',<br>
+                        &ensp; authorizer_result_ttl_in_seconds=300<br>
+                        )<br>
+                    </em><br>
+                    <p></p>
+                </div>
+                <br>
+                This way you can create Rest APIs either with Swagger/OpenAPi or directly by cdk code and you can use
+                a Cognito Authorizer or also your own Custom Authorizer. Have fun with it !<br>
+                <p></p>
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>5 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
