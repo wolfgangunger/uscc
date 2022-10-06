@@ -172,7 +172,7 @@
                     <em>
                         api = aws_apigateway.SpecRestApi(<br>
                         &ensp; self,<br>
-                        &ensp; "dev-workflow-poc-api-swagger",<br>
+                        &ensp; "api-swagger",<br>
                         &ensp; api_definition=aws_apigateway.ApiDefinition.from_asset(<br>
                         &ensp;&ensp; os.path.abspath(<br>
                         &ensp;&ensp;&ensp; os.path.join(<br>
@@ -191,10 +191,10 @@
                     <em>
                         openapi: "3.0.1"<br>
                         info:<br>
-                        &ensp; title: "dev-workflow-poc-api-swagger"<br>
+                        &ensp; title: "api-swagger"<br>
                         &ensp; version: "2022-09-23T14:26:52Z"<br>
                         servers:<br>
-                        - url: "https://juve9837c65.execute-api.eu-west-1.amazonaws.com/{basePath}"<br>
+                        - url: "https://juxxxxxxc65.execute-api.${AWS::Region}.amazonaws.com/{basePath}"<br>
                         &ensp; variables:<br>
                         &ensp;&ensp; basePath:<br>
                         &ensp;&ensp;&ensp; default: "/prod"<br>
