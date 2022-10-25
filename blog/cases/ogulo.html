@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger</title>
+    <meta name="description" content="SCC Brasil Blog">
+    <meta name="author" content="SCC Brasil Blog">
+    <meta name="og:title" property="og:title" content="Blog SCC Brasil">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ogulo</h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <p>For about 1 year SCC Brasil worked together with the Ogulo internal IT Team to improve their
+                        Cloud Infrastructure.<br>
+                        Ogulo was already using AWS, all services for 3 stages were running in one account.<br>
+                        Services used were: Fargate, ElasticBeanstalk, RDS, Lambda, S3, CloudFront and more. <br>
+                        Also not all of these resources were created by IaC (CloudFormation) and/or pipeline, but
+                        created manually on the web-console.<br>
+                        We focused together with Ogulo on deploying the services into 3 dedicated stage accounts and
+                        also deploy every resource strict with IaC ( mostly CloudFormation ), using the
+                        same Stacks for all 3 accounts and stages.<br>
+                        Also in the process to enhance the RTO AND RPO some other small changes where introduced,
+                        like usage of Loadbalancers, Snapshots, Replication and so on.<br>
+                        In this blog let's have a look on 3 epics<br>
+                        -Migrate and Optimize to new AWS Account Strucure<br>
+                        -Strict usage of IaC<br>
+                        -Improve Desaster Recovery Strategy and therefore RPO and RTO<br>
+
+                    <h4>Migrate and Optimize to new AWS Account Strucure</h4><br>
+                    The current setup was basically one account for all 3 stages (DEV, SANDBOX & LIVE) .<br>
+                    It is a good practice to separate the stages in separate accounts, so this was
+                    performed and while setting up the first account, the DEV Account, each
+                    resource was setup with CloudFormation.
+                    The Stacks where parameterized to be re-used for SANDBOX and LIVE Account.
+                    The original account was left to be used as master and Organizations account.
+                    The stage accounts where accessed by swithing roles.
+                    The AWS Whitepaper gives an example for a multi-account scenario.<br>
+                    <img src="img/multi-account.jpg" alt="SMM" width="500"> <br>
+                    <br>
+                    We followed this example with small changes to keep it simple, defining the following account
+                    strucuture with AWS
+                    Organizations :<br>
+                    <b>Organizations Account</b> - Master account with the IAM Users to login<br>
+                    <b>Stage Account DEV</b><br>
+                    <b>Stage Account SANDBOX</b><br>
+                    <b>Stage Account LIVE</b><br>
+
+                    The separation in these dedicated accounts helped to apply the principle of least privilage,
+                    for example restricting the permissions for the LIVE Account to only selected users<br>
+                    Also consolidated billing helped the management to monitor the aws costs on a better
+                    granularity.<br>
+
+
+
+
+                    <h4>Strict usage of IaC</h4><br>
+
+                    The CloudFormation Stacks were re-structured :<br>
+                    -The stacks were layered to better separate the logical and strucutural elements:<br>
+                    <img src="img/cfn-layering.jpg" alt="SMM" width="500"> <br>
+                    A VPC Stack would now only contain VPC and Network resources, but no other resources like for
+                    example S3 Buckets.<br>
+                    Therefore the application developers never had to touch VPC or Route53 Stacks, but only their
+                    Application Layer Stacks.<br>
+                    -The stacks were ordered in the git repo by their layers to allow them to re-deploy in the correct
+                    orders.<br>
+                    Cross-References with Outputs in Inputs Values were used, but in this case of course the Stack
+                    containing the Output must be
+                    deployed first.<br>
+                    The structure of the Stacks was defined like this:<br>
+                    000-099 IAM ( Roles, Users, Policies)<br>
+                    100-199 Network (VPC, Transit Gateways, Peering, R53 Hosted Zones, Certificates )<br>
+                    200-299 Common used resources (common Security Groups, KMS Keys, Secrets, Parameter Store)<br>
+                    300-399 Storage ( S3, EFS, EBS, Redis & RDS Databases)<br>
+                    400-499 Computing ( EC2, LBs, SGs)<br>
+                    500-599 Container Services (ECS/Fargate)<br>
+                    600-699 CDN-Content Delivery Network (Cloudfront)<br>
+                    <br>
+                    The Stacks used in 3 Stage Accounts were unified to a single stack and parameterized.
+                    <br>
+                    The existing MariaDB RDS was migrated to a Aurora RDS using the DMS .<br>
+                    The ElasticBeanstalk Apps where created on the WebConsole, they where now deployed by CloudFormation
+                    and
+                    updated by a Jenkins Pipeline.
+                    All Applications, like EB and Fargate where modified to use secretsmanager for the credentials.<br>
+
+                    <h4>Improve Desaster Recovery Strategy and therefore RPO and RTO</h4><br>
+                    Strict usage of IaC is already an important step to a better RTO.<br>
+                    Also Loadbalancers were introcuced to the ElasticBeanstalk Applications.<br>
+                    The Fargate Service was already loadbalanced and setup with autoscaling.<br>
+                    The Route53 setup allowed a switch to a second environment (SANDBOX or DEV) in case of a desaster on
+                    the PROD account.<br>
+                    All RDS instances where configured for daily snapshots, also EBS volumes.<br>
+                    S3 Bucket Lifecycle Policies where used, also cross region replication for critical data.<br>
+                    All code (lambdas, eb apps, fargate) was stored and maintained in git.<br>
+                    <p></p>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>5 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
