@@ -61,9 +61,10 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>Ogulo</h2>
-                <hr>
+                <h2>Ogulo GmbH</h2>
+                <hr><img src="img/ogulo.png" alt="Ogulo" width="90">
             </div>
+            <br>
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
@@ -72,30 +73,30 @@
                         Cloud Infrastructure.<br>
                         Ogulo was already using AWS, all services for 3 stages were running in one account.<br>
                         Services used were: Fargate, ElasticBeanstalk, RDS, Lambda, S3, CloudFront and more. <br>
-                        Also not all of these resources were created by IaC (CloudFormation) and/or pipeline, but
+                        So far not all of these resources were created by IaC (CloudFormation) and/or pipeline, but
                         created manually on the web-console.<br>
                         We focused together with Ogulo on deploying the services into 3 dedicated stage accounts and
                         also deploy every resource strict with IaC ( mostly CloudFormation ), using the
-                        same Stacks for all 3 accounts and stages.<br>
+                        same (parameterized) Stacks for all 3 accounts and stages.<br>
                         Also in the process to enhance the RTO AND RPO some other small changes where introduced,
                         like usage of Loadbalancers, Snapshots, Replication and so on.<br>
                         In this blog let's have a look on 3 epics<br>
                         -Migrate and Optimize to new AWS Account Strucure<br>
                         -Strict usage of IaC<br>
-                        -Improve Desaster Recovery Strategy and therefore RPO and RTO<br>
+                        -Define Desaster Recovery Strategy and improve RPO and RTO<br>
 
                     <h4>Migrate and Optimize to new AWS Account Strucure</h4><br>
                     The current setup was basically one account for all 3 stages (DEV, SANDBOX & LIVE) .<br>
-                    It is a good practice to separate the stages in separate accounts, so this was
-                    performed and while setting up the first account, the DEV Account, each
-                    resource was setup with CloudFormation.
+                    It is a good practice to separate the stages in separate accounts, so this was<br>
+                    performed and while setting up the first account, the DEV Account, each<br>
+                    resource was setup with CloudFormation.<br>
                     The Stacks where parameterized to be re-used for SANDBOX and LIVE Account.
-                    The original account was left to be used as master and Organizations account.
-                    The stage accounts where accessed by swithing roles.
+                    The original account was left to be used as master and Organizations account.<br>
+                    The stage accounts where accessed by swithing roles.<br>
                     The AWS Whitepaper gives an example for a multi-account scenario.<br>
                     <img src="img/multi-account.jpg" alt="SMM" width="500"> <br>
                     <br>
-                    We followed this example with small changes to keep it simple, defining the following account
+                    We simplified this setup, defining the following account
                     strucuture with AWS
                     Organizations :<br>
                     <b>Organizations Account</b> - Master account with the IAM Users to login<br>
@@ -107,13 +108,15 @@
                     for example restricting the permissions for the LIVE Account to only selected users<br>
                     Also consolidated billing helped the management to monitor the aws costs on a better
                     granularity.<br>
+                    In this state of the project a dedicated networking account or shared services account was not
+                    required.<br>
 
 
 
 
                     <h4>Strict usage of IaC</h4><br>
 
-                    The CloudFormation Stacks were re-structured :<br>
+                    The CloudFormation Stacks were structured :<br>
                     -The stacks were layered to better separate the logical and strucutural elements:<br>
                     <img src="img/cfn-layering.jpg" alt="SMM" width="500"> <br>
                     A VPC Stack would now only contain VPC and Network resources, but no other resources like for
@@ -143,14 +146,21 @@
                     All Applications, like EB and Fargate where modified to use secretsmanager for the credentials.<br>
 
                     <h4>Improve Desaster Recovery Strategy and therefore RPO and RTO</h4><br>
-                    Strict usage of IaC is already an important step to a better RTO.<br>
+                    We defined together with the client a strategy of pilote lite and backup and restore.<br>
+
+                    Strict usage of IaC is already an important step to a better RTO for re-creating the resources.<br>
                     Also Loadbalancers were introcuced to the ElasticBeanstalk Applications.<br>
                     The Fargate Service was already loadbalanced and setup with autoscaling.<br>
-                    The Route53 setup allowed a switch to a second environment (SANDBOX or DEV) in case of a desaster on
+                    The Route53 setup in the master account in conjunction with the 3 stage accounts allowed a switch to
+                    a second environment (SANDBOX or DEV) in
+                    case of a desaster on
                     the PROD account.<br>
-                    All RDS instances where configured for daily snapshots, also EBS volumes.<br>
-                    S3 Bucket Lifecycle Policies where used, also cross region replication for critical data.<br>
-                    All code (lambdas, eb apps, fargate) was stored and maintained in git.<br>
+                    All RDS instances were configured for daily snapshots, also EBS volumes.<br>
+                    The Live RDS instances were setup with read replicas.<br>
+                    S3 Bucket Lifecycle Policies where used, also cross region replication for critical data of
+                    dedicated buckets.<br>
+                    All code (lambdas, eb apps, fargate) was stored and maintained in git and deployed via Github
+                    Pipeline.<br>
                     <p></p>
 
                 </div>
