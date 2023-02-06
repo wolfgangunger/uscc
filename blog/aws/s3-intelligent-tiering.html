@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger</title>
+    <meta name="description" content="AWS Blog Wolfgang Unger">
+    <meta name="author" content="AWS Blog Wolfgang Unger">
+    <meta name="og:title" property="og:title" content="AWS Blog Wolfgang Unger">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2><B>Save money</B> on storage with <B>S3 Intelligent-Tiering</B></h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <h4>By Daniel do Nascimento</h4><br>
+                    <p>Since the 1990s, the cost of storage per MB has been decreasing very rapidly, and this assumption that we don't have to think about the cost 
+                        of storage has permeated most developers minds for a while.<br>
+                        But in the age of big data and cloud services, this issue has come back well, especially when we use pay-as-you-go services like S3, 
+                        the next month's bill may remind us of a large amount of data that we forget to clean, or it is not being used.<br>
+                        Fortunately for us, AWS has some tools to deal with this situation and save some money.<br>
+                    </p><br>
+                    <h5>Options</h5><br>
+                        <li>
+                            <B>S3 Standard</B> : Designed for frequently accessed data.
+                        </li><br>
+                        <li>
+                            <B>S3 Intelligent-Tiering</B> : Data with changing or unknown access patterns.
+                        </li><br>
+                        <li>
+                            <B>S3 Standard-IA</B> : Designed for long-lived, infrequently accessed data.
+                        </li><br>
+                        <li>
+                            <B>S3 One Zone-IA</B> : Designed for long-lived, infrequently accessed, non-critical data.
+                        </li><br>
+                        <li>
+                            <B>S3 Reduced redundancy</B> : Frequently accessed, non-critical data.
+                        </li><br>
+                        <li>
+                            <B>S3 Glacier Instant Retrieval</B> : Designed for archive data accessed once a quarter with instant retrieval in milliseconds.
+                        </li><br>
+                        <li>
+                            <B>S3 Glacier Flexible Retrieval</B> : Designed for infrequently accessed, archived critical data.
+                        </li><br>
+                        <li>
+                            <B>S3 Glacier Deep Archive</B> : Long-term data archiving with retrieval times within 12 hours.
+                        </li><br>
+
+
+                    <p>As you can see there are many options, the problem is that most companies using S3 don't do all the research on the correct tier to choose when 
+                        they upload the objects, and end up using S3 Standard for everything, primary because storage should be simple (Simple Storage Service), 
+                        not (Complicated Storage Service).<br>
+                        <br>
+                        The problem with this approach is obvious, we tend to pay for a service we don't really need, but aws offers between these tiers an option that
+                        solves most cases at a good discount, and this should be the new standard in my opinion. <br>
+                        <br>
+                        The <B>S3 Intelligent-Tiering</B> moves objects from S3 Standard to S3 Infrequent Access, for objects that are not used in 30 days, and moves the objects 
+                        not used for 90 days to Archive Instant Access Tier(Same characteristics as S3 Glacier Instant Retrieval), <B>saving up to 68%</B> on these objects.<br>
+                    </p>  <br>
+                    <img src="img/s3-IT.jpg" alt="SMM" width="600"> <br>
+                    <br>
+                    <h5>How it works?</h5>
+                    <p>S3 Intelligent-Tiering monitors the age of your objects (larger than 128KB), and since they achieve a determined life(in days) without access, 
+                        the Intelligent-Tiering change the object tier configuration, putting the object in appropriate tier e also retrieving from the tier when the object is accessed, 
+                        so continuously optimizing your object tier configuration.<br>
+                    </p><br>
+                    <h5>How much does it cost?</h5>
+                    <p>In order to allocate the objects in the correct tier, S3 Intelligent-Tiering keeps track of the age of your objects and this creates the additional cost. 
+                        But this cost is very low when compared to the savings that he generates.<br>
+                        The additional cost of S3 Intelligent-Tiering Monitoring and Automation today(february/2023) is 0.0025$ per 1000 objects. 
+                        You can check out the total cost using: <a href="https://aws.amazon.com/s3/pricing/" >S3 Pricing</a> <br>
+                    </p><br>
+                    <h5>How to use S3 Intelligent-Tiering</h5>
+                    <p>There are 2 ways to configure your objects to use Intelligent-Tiering, the first and simpler way is just specify the INTELLIGENT_TIERING in the PUT API request header. Ex:<br>
+                    <img src="img/s3-IT-PUT.jpg" alt="SMM" width="600"> <br>                       
+                    </p><br>
+                    <p>But, as you guessed, this method only works for one object at the time. What if you want to convert all the objects that already are in a bucket, to S3 Intelligent-Tiering? 
+                        Then you have to create a S3 Lifecycle Rule in your bucket, you can apply this rule to the bucket or folder/prefix level.<br>
+                    </p>
+                    <img src="img/intelligent-config1.jpg" alt="SMM" width="600"> <br>  <br> 
+                    <img src="img/intelligent-config2.jpg" alt="SMM" width="600"> <br>    
+                    <p>You can go further with your optimization and activate the Archive Access Tier and Deep Archive Access Tier, but these two options require you to make a better analysis on 
+                        your objects and use, because they don’t allow for real-time access, they have retrieve times from minutes to hours.<br>
+                        This simple configuration doesn't substitute a careful analysis of your application needs, but helps you to save big without much complexity in configuration.<br>
+                    </p>                      
+                    
+                </div>
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/perfilDaniel.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Daniel do Nascimento</h3>
+                            <p>AWS Developer</p>
+                            <p>2 x AWS Certified </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
