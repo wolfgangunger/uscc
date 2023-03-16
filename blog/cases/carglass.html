@@ -121,7 +121,7 @@
                     The dedicated accounts where much more neatly, allowing the admins to stop or teminate manual
                     created test/poc resources.
                     Also consolidated billing helped the management to monitor the aws costs on a better
-                    granularity.<br>
+                    granularity.<br><br>
 
                     <h4>Improve Desaster Recovery Strategy and therefore RPO and RTO</h4><br>
                     All RDS instances where already creating daily snapshots, also EBS volumes, so the RPO was in most
@@ -136,7 +136,7 @@
                     To allow the team to re-create all resources in the case of a desaster recovery, the strict usage of
                     IaC
                     must be implemented.<br>
-
+                    <br>
 
                     <h4>Strict usage of IaC and deployment with CI/CD</h4><br>
 
@@ -159,6 +159,28 @@
                     -Drift detection problems were sent by SNS Notifications<br>
                     <br>
                     <p></p>
+
+                    <h4>Cost Optimizations</h4><br>
+                    The map programm was applied to the customer.<br>
+                    Since the customer migrated existing VMs/Servers from OnPremise to AWS, the AWS Migration
+                    Acceleration Program
+                    was a real good fit to save costs for Carglass.<br>
+                    See more infos on<br>
+                    <a href="https://aws.amazo<br>n.com/migration-acceleration-program/" class="page-scroll"
+                        target="_blank">AWS Migration Acceleration Program</a><br>
+                    After you create your server list in the migration hub and migrate to EC2, you can get discounts on
+                    basically any
+                    resource on aws which is tagged with the correct map tags:<br>
+                    - Key: "aws-migration-project-id"<br>
+                    Value: "MPE06XX"<br>
+                    - Key: "map-migrated"<br>
+                    Value: "d-server-01zt13xxxxxxxxx"<br>
+
+                    <br>
+                    The EC2 instance sizes were optimized and Lambdas created to shut down and restart instances which
+                    were not <br>
+                    needed 24/7, but only during business hours.<br>
+
 
                 </div>
 
