@@ -76,9 +76,18 @@
                     <p></p>
                     <p>For about 1 year SCC Brasil worked together with the Carglass internal IT Team to improve their
                         Cloud Infrastructure<br>
+                        Carglass is the biggest company in germany for windshield repair and replacement.<br>
                         The first action was analyze the current setup and define epics to optimize the aws
-                        infrastructure
-                        There where issues identified and priorized to bring their hybrid infrastructure on another
+                        infrastructure.<br>
+                        Carglass was already in progress to migrate their On Premise infrastructre to AWS.
+                        They used EC2 to migrate VMs, which for example had 3rd party software running for various
+                        internal applications.<br>
+                        The main business application was running on a Kubernets cluster, also on EC2 machines. Setup by
+                        kubectl, so far EKS was not used.<br>
+                        RDS was also used as backend for various applications.<br>
+                        AWS Lambda was used for processing of small tasks, basically for maintenance of the AWS
+                        infrastructe, not for business logic yet.<br>
+                        The issues were identified and priorized to bring their hybrid infrastructure on another
                         quality level<br>
                         The first epics based on the Review were: Security, Account Structure, Improve RPO and RTO,
                         IaC<br>
@@ -180,8 +189,17 @@
                     The EC2 instance sizes were optimized and Lambdas created to shut down and restart instances which
                     were not <br>
                     needed 24/7, but only during business hours.<br>
-
-
+                    <br>
+                    <h4> Training and documentation</h4><br>
+                    SCC Brasil held a couple of AWS training sessions to the infrastructe team to enable them to
+                    maintain the AWS infrastructe all
+                    alone in the future.
+                    Also a lot of documentation was written in the company Confluence, including Runbooks, Best
+                    practices, Troube Shooting etc<br>
+                    <br>
+                    At the end of the project the account structure was cleaned up, IaC was strictly used, this way a
+                    lot of problems removed, the
+                    costs were optimized and the customer was enabled to manage its AWS platform .
                 </div>
 
 
