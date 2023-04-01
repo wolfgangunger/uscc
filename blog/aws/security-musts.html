@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger | Security Best practices on AWS</title>
+    <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
+    <meta name="keywords"
+        content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
+    <meta name="author" content="AWS Blog Wolfgang Unger">
+    <meta name="og:title" property="og:title" content="AWS Blog Wolfgang Unger & SCC Brasil">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Security Best practices on AWS</h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+                    <p> As you might already know, AWS works with the shared responsibility model to secure your cloud
+                        resources.
+                        This means, AWS is responsible for protecting the infrastructure that runs all of the services
+                        offered in the AWS Cloud.
+                        This infrastructure is composed of the hardware, software, networking, and facilities that run
+                        AWS Cloud services.
+                        <br>
+                        <img src="img/aws_srm.jpg" alt="Shared Responsibility Model AWS" width="600"> <br>
+                        <br>
+                        But this also means, you are responsible for the Security in the cloud. It is your
+                        responsibility to take care of the security of
+                        the login process, secure your data in the cloud, encrypt data in rest and in transit and so on.
+                        We will have a look on the most importing best practices you have to follow :<br><br>
+                    <h4>IAM Rules :</h4><br>
+                    <br>
+                    1. Avoid using the AWS root account user for daily tasks.<br>
+                    You need this user only for a couple of actions ( like changing the credit card), so always use a
+                    IAM user for daily tasks, not the root user<br>
+                    <br>
+                    2. Avoid using AWS root account user access keys as it gives full access to all resources.<br>
+                    The root user don't need access keys for the CLI. Use your IAM user for this purpose.<br>
+                    <br>
+                    3. MFA authentication is enabled for the root account to provide two-factor authentication<br>
+                    <br>
+                    4. Assign individual IAM users with necessary permissions to enable login
+                    Ensure these User Accounts also have MFA authentication.<br>
+                    It is good to have a Master Account for your IAM users and access the other accounts, holding the
+                    resources, by IAM roles in these accounts.<br>
+                    <br>
+                    5. Always ensure a strong password policy for users<br>
+                    <br>
+                    6. IAM Access Keys must be rotated at periodic intervals<br>
+                    <br>
+                    7. Provide access to a resource through IAM Roles, use Instance Roles for EC2, EB and ECS<br>
+                    <br>
+                    8. Provide access to other company accounts through IAM Roles.<br>
+                    Create Roles in your Stage accounts and perform a switch role after login in the Master Account with
+                    your IAM User.<br>
+                    <br>
+                    9. Grant least access while creating IAM Policies, to perform only the necessary actions.<br>
+                    Don't assign the Adminstrator Policy to anybody ! Only assign rights which are really needed. In the
+                    Prod Stage Account this is of highest priority .<br>
+                    <br>
+                    10. Conditions can be defined for Policies under which access is granted to a
+                    resource. This way you can limit the access even more fine granular.<br>
+                    <br><br>
+                    <h4>S3 Rules:</h4><br>
+                    1. Ensure S3 buckets are not publicly accessible (public read or write permissions). S3 Buckets
+                    serving as static webside of course need public read permissions<br>
+                    <br>
+                    2. Make use of object-level or bucket-level permissions in addition to IAM Policies to grant
+                    access to resources<br><br>
+                    <br>
+                    3. Enable MFA Delete to prevent accidental deletion of buckets ( not possible if data in the
+                    bucket must be deleted or cleaned up by functionality)
+                    <br>
+                    4. Consider encryption of stored data, which can be done in two ways — server-side and
+                    client-side encryption<br>
+                    <br>
+                    5. Enable encryption of inbound and outbound data traffic, through SSL endpoints<br>
+                    <br>
+                    6. Configure S3 lifecycle management through rule-based actions and use versioning to store and
+                    retrieve multiple versions of an object in a bucket, to deal with accidental deletions<br>
+                    <br>
+                    7. Ensure S3 access logging is enabled<br>
+                    <br>
+                    <br>
+                    <h4>EC2, SGs & Computing Rules:</h4><br>
+
+                    1. Restrict access to instances from limited IP ranges using Security Groups
+                    Limit the range of open ports on EC2 security groups, to prevent exposure to vulnerabilities<br>
+                    <br>
+                    2. Ensure data and disk volumes in EBS are encrypted with AES-256, the industry standard
+                    algorithm<br>
+                    <br>
+                    3. Ensure ALBs/ELBs have a valid security group attached to it<br>
+                    <br>
+                    4. Monitor and optimize default security groups, as they allow unrestricted access for inbound
+                    and outbound traffic ( you can use Trusted advisor)<br>
+                    <br>
+                    5. Ensure restricted inbound access to SSH, FTP, SMTP, MySQL, PostgreSQL, MongoDB, MSSQL, CIFS,
+                    etc; to required entities only<br>
+                    <br>
+                    6. Use IAM roles to grant access to EC2, instead of access keys for temporary requirements<br>
+                    <br>
+                    7. Always place non internet-facing servers ( application servers for example) in private subnets,
+                    allow access only from inside the VPC.<br><br>
+
+                    <h4>RDS Rules:</h4><br>
+                    1. Ensure encryption of the RDS instances and snapshots, using AES-256 level encryption<br>
+                    <br>
+                    2. Ensure RDS security groups do not allow unrestricted access<br>
+                    <br>
+                    3. Protect data in transit to RDS through SSL endpoints<br>
+                    <br>
+                    4. Monitor control to RDS using AWS KMS and Customer Managed Keys<br>
+                    <br>
+                    5. Ensure RDS database instances and snapshots are not publicly accessible<br>
+                    <br>
+                    6. Always place Databases in private subnets, allow access only from inside the VPC.<br>
+                    <br>
+                    7. Enable the auto minor upgrade feature for RDS<br>
+
+
+
+
+
+                    <p></p>
+                </div>
+
+
+                <p></p>
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>6 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
