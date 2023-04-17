@@ -99,7 +99,7 @@
                         You will init the project for the environment you want to address:<br>
                         <b>terraform init -backend-config="env/qa-backend.conf"</b><br>
                         The plan, apply or delete commands you will execute with the tfvars file:<br>
-                        <b>terraform plan -var-file dev.tfvars</b><br>
+                        <b>terraform plan -var-file env/qa.tfvars</b><br>
                         <br>
                         The main.tf file will include all the modules you want to create for your environment.<br>
                         This modules are in the subfolder 'modules'<br>
@@ -115,13 +115,18 @@
                         This should give you a good idea and also a basic project to start with.You can use the project
                         from my github
                         and adapt <br>
-                        for your needs. <br>
+                        for your needs. <br><br>
+                        The sample projects creates roles for your environments ( AdminRole and ReadOnlyRole) and <br>
+                        it will create a VPC for you, you can define ClassB as a variable. <br>
+                        Thus it creates the first two layers (IAM and Networking) for your new project.
+                        Feel free to add more modules with your databases, applications etc
                         <br><br>
                         The github project for this blog<br>
 
                         <a href="https://github.com/wolfgangunger/aws-terraform" class="page-scroll"
                             target="_blank">Github
-                            Wolfgang Unger - Terraform</a>
+                            Wolfgang Unger - Terraform</a><br>
+                        Take a look into the Readme for setting up the project in your account(s)<br>
                     <p></p>
 
                     <p></p>
