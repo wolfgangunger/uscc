@@ -47,9 +47,18 @@ p {
 	line-height: 24px
 }
 
+.paragraphSCC {
+	font-size: 140px;
+	font-family: Source Sans Pro, sans-serif;
+	font-weight: bolder;
+	margin: 2;
+	margin-bottom: 46px;
+	color: #9DC3E6
+}
+
 .paragraph1 {
-	font-size: 116px;
-	font-family: Source Sans Pro Black;
+	font-size: 140px;
+	font-family: Source Sans Pro, sans-serif;
 	font-weight: bolder;
 	margin: 2;
 	margin-bottom: 46px;
