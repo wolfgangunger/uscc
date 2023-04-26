@@ -13,7 +13,7 @@
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AWS Blog Wolfgang Unger | Deploy a Elastic Beanstalk Application in 1 min ( by commandline)</title>
+    <title>AWS Blog Wolfgang Unger | 7 Cloud Migration strategies</title>
     <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
     <meta name="keywords"
         content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
@@ -77,118 +77,108 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>Deploy a Elastic Beanstalk Application in 1 min ( by commandline)</h2>
+                <h2>7 R's - Cloud Migration strategies</h2>
                 <hr>
             </div>
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
-
                     <p></p>
                     <h4>By Wolfgang Unger</h4><br>
-                    <p>This short tutorial shows how to deploy a simple ElasticBeanstalk application ( and environment
-                        )<br>
+                    <p> Lets have a look on the 7 R's, the 7 cloud migration strategies.<br>
+                        If you plan to migrate your On Premise workloads to the cloud, it is essential to know the
+                        options and choose the best one for your use case.<br>
+                        <br>
+                        The 7 R's are:<br>
+                        1. Retire<br>
+                        <br>
+                        2. Retain<br>
+                        <br>
+                        3. Relocate<br>
+                        <br>
+                        4. Rehost<br>
+                        <br>
+                        5. Repurchase<br>
+                        <br>
+                        6. Replatform<br>
+                        <br>
+                        7. Refactor<br>
+                        <br>
 
-                        Install the EB commandline<br>
-                        If you don't have the EB CLI yet installed, please take a look in this docu and install <br>
+                    <h4>1. Retire</h4><br>
+                    Turn it off <br>
+                    The first one is also the most easy to handle.<br>
+                    If you have a redundant or no longer needed legacy app, you don't have to migrate to the cloud, you
+                    will simply turn it off in the moment you switch to the cloud.<br>
+                    Of course this will be only possible in a few use cases, where the application or service is indeed
+                    no longer
+                    required. <br>
+                    This means a minimal effort in time and money.<br>
 
-                        <li><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html"
-                                class="page-scroll" target="_blank">Install EB CLI</a></li>
-                        Basically you have to execute <br>
-                        <em>pip install awsebcli --upgrade --user</em><br>
-                        and add %USERPROFILE%\AppData\Roaming\Python\Python37\Scripts to you PATH variable ( on
-                        windows)<br>
-                    <p>
-                    </p>
-                    <b>Setup the Application with CLI</b><br>
-                    First switch to your workspace folder ( for example eb-cli-test) and execute the following commands
-                    :<br>
-                    <em><b>eb init</b></em><br>
-                    this will give you the list of aws-regions to choose from ( for install your eb-application)<br>
-                    <img src="img/eb-cli1.png" alt="SMM" width="500"> <br>
-                    choose your region, I will choose 4<br>
-                    <p></p>
-                    For the option <br>
-                    Select an application to use<br>
-                    you can keep 3 and create a new application <br>
-                    <p></p Enter Application Name<br>
-                    Let's type HelloWorld<br>
-                    <p></p Now you are asked to Select a platform.<br>
-                    <img src="img/eb-cli2.png" alt="SMM" width="500"> <br>
-                    Let's select PHP (8)<br>
-                    <p></p>
-                    Select a platform branch. You can stick to 1<br>
-                    <p></p>
-                    Next: Do you want to setup SSH? <br>
-                    For this simple example let's say no, of course for a real application you want to setup this<br>
-                    <p></p This should create the application.<br>
-                    Take a look in the new .elasticbeanstalk folder, you should a config.yaml with this content<br>
-                    <p></p <em>
-                    <pre>
-                        branch-defaults:
-                          default:
-                            environment: null
-                            group_suffix: null
-                        global:
-                            application_name: HelloWorld
-                            branch: null
-                            default_ec2_keyname: null
-                            default_platform: PHP 8.0 running on 64bit Amazon Linux 2
-                            default_region: eu-central-1
-                            include_git_submodules: true
-                            instance_profile: null
-                            platform_name: null
-                            platform_version: null
-                            profile: null
-                            repository: null
-                            sc: null
-                            workspace_type: Application                        
-                                        </pre></em>
-                    <p></p>
-                    Please have a look the region and name confirms you your earlier inputs.<br>
-                    <p></p>
-                    Next we are going to create a index.html file<br>
-                    Just type <br>
-                    echo "Hello AWS Friends" > index.html<br>
-                    which will create the html file<br>
-                    <p></p>
-                    Next we will create the environment and application with this command:<br>
-                    <em><b>eb create int-env</b></em><br>
-                    <p></p>
-                    Now you can already have a look in your AWS Account -> ElasticBeanstalk <br>
-                    and you should be able to see this environment (can take a minute)<br>
-                    <p></p>
-                    Please have a look to the created resources ( EC2 instance, Autocaling Group, etc )<br>
-                    <p></p>
-                    If you update your application files, for example you can modify the index.html, you have to
-                    execute<br>
-                    <em><b>eb deploy</b></em><br>
-                    <p></p>
-                    <b>Some more commands you can use:</b><br>
-                    Open the application (here open a browser with the application URL)<br>
-                    <em><b>eb open</b></em> <br>
-                    <p></p>
-                    Check the application status<br>
-                    <em><b>eb status</b></em> <br>
-                    <p></p>
-                    check the app health <br>
-                    <em><b>eb health</b></em><br>
-                    <p></p>
-                    Finally let's terminate our application to avoid further costs:<br>
-                    <em><b>eb terminate</b></em><br>
+                    <h4>2. Retain</h4><br>
+                    Don't migrate the application and revisit later<br>
+                    Sometimes it will just not be possible ( at least at reasonable time and effort) to migrate
+                    a application to the cloud. Just think of mainframe applications.<br>
+                    In this case you keep your On Premise application until it will be finally shut down.<br>
+                    This also means a minimal effort in time and money. But will not allow you to completly turn off
+                    your On Premise physical resources.<br>
                     <br>
+                    <h4>3. Relocate</h4><br>
+                    Switching locations.<br>
+                    This is often done on hypervisor level, running a VM in the cloud instead of your OnPremise
+                    servers.<br>
+                    Advantage : Minimal downtime. No Code changes required. No functionality changes . Functional tests
+                    not neccessary. Almost no training for your staff required.<br>
+                    This also means a minimal effort in time and money.<br>
+                    <br>
+                    <h4>4. Rehost</h4><br>
+                    Lift and shift.<br>
+                    Lifting the application as it is from on-premises to cloud environment.
+                    It’s required to scale quickly to meet business requirement
+                    servers.<br>
+                    On AWS you can use the Server Migration Service (SMS) for this approach.<br>
+                    Example : Migrate a Postgres DB On Premise to a Postgres DB on EC2 on AWS.<br>
+                    This also means a minimal effort in time and money.<br>
+                    <br>
+                    <h4>5. Repurchase</h4><br>
+                    Choose a different solution or version of your application<br>
+                    For example if a software vendor now offers a cloud ready SaaS platform and you don't have no
+                    longer to run this software on your own servers.<br>
+                    Or you choose a different solution, but when bringing it live, you set it up in your cloud
+                    environment.<br>
+                    This might bring some efforts on testing the new solution<br>
+                    <br>
+                    <h4>6. Replatform</h4><br>
+                    Lift and reshape. Small adaptions on your software<br>
+                    Optimizing and adapting an application while migrating it to a cloud
+                    in order to take full advantage of its features to improve performance or reduce costs.<br>
+                    Examples: Migrating a On Premise DB to RDS ( Managed Relational Database Service) on AWS.
+                    Migrating VM's into Containers and run it on Fargate or EKS, K8.<br>
+                    Advantage: Less code changes required as for refactor.<br>
+                    <br>
+                    <h4>7. Refactor</h4><br>
+                    Refactor your application.<br>
+                    The re-architecture of applications in order to gain cloud-native capabilities
+                    that allow for greater performance, agility, and scalability. Medium adaptions on your software<br>
+                    The functional code will probably not change too much, but non-functional code.<br>
+                    This can also mean moving from a monolith application to microservices or move from an application
+                    to smaller
+                    Lambda functions.<br>
+                    This is the most expensive and time consuming approach but it will be neccessary for some use
+                    cases.<br>
+                    You might save a lot of money on hardware costs if you refactore your application into smaller
+                    serverless
+                    functions or resources which don't have to run 24/7 ( like AWS Batch or Fargate).<br>
+
+
+
                 </div>
 
-                <br>
-                <p></p>
-                <p></p>
-                See also this video about SSM on my youtube channel<br>
 
-                <li><a href="https://www.youtube.com/watch?v=H13Wr8L80wA" class="page-scroll" target="_blank">AWS
-                        Channel Wolfgang Unger - EB-CLI</a></li>
-                <p></p>
+                <br>
             </div>
         </div>
+        <br>
         <center>
             <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
         </center>
@@ -209,7 +199,7 @@
                         <div class="caption">
                             <h3>Wolfgang Unger</h3>
                             <p>AWS Architect & Developer</p>
-                            <p>5 x AWS Certified </p>
+                            <p>6 x AWS Certified </p>
                             <p>1 x Azure Certified </p>
                             <p>A Cloud Guru Instructor</p>
                             <p>Certified Oracle JEE Architect</p>
