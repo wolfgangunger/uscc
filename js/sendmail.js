@@ -39,7 +39,9 @@ function submitToAPI(e) {
         body: JSON.stringify(data),
         //body: 'hallo',
         headers: {
-            //'Accept': '*',
+            'Accept': '*',
+            'Connection': 'keep-alive',
+            'Accept-Encoding': 'gzip, deflate, br',
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': '*',
