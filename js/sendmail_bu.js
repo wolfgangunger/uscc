@@ -1,6 +1,6 @@
-async function submitToAPI(e) {
+function submitToAPI(e) {
     e.preventDefault();
-
+    var URL = "https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact";
 
     var Namere = /[A-Za-z]{1}[A-Za-z]/;
     if (!Namere.test($("#name-input").val())) {
@@ -28,39 +28,47 @@ async function submitToAPI(e) {
     var phone = $("#phone-input").val();
     var email = $("#email-input").val();
     var desc = $("#description-input").val();
-
     var data = {
         name: name,
         phone: phone,
         email: email,
         desc: desc
     };
-    try {
-        //res = await fetch('https://api.sccbrasil.com/contact', {
-        res = await fetch('https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact', {
-            method: 'post',
-            headers: {
-                "Content-Type": "application/json",
+    var data = {
+        "name": "name6",
+        "photoUrls": [
+            "photoUrls1"
+        ]
+    };
+    //fetch("https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact", {
+    //fetch("https://api.sccbrasil.com/contact", {
+    fetch("https://petstore.swagger.io/v2/pet", {
 
-            },
-            body: JSON.stringify(data)
-        })
 
-        const response = await res;
-        //alert(response.status)
-        console.log(`my data ${data}`);
-
-        if (response) {
-            //window.alert('Customer registered successfully');
-            //alert(response)
-            window.location = './confirmation.html'
+        method: 'POST',
+        body: JSON.stringify(data),
+        //body: 'hallo',
+        headers: {
+            'Accept': '*',
+            'Connection': 'keep-alive',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*',
+            'Access-Control-Allow-Headers': '*'
         }
-
-    } catch (error) {
-        //alert(error)
-        window.alert('Registration failed');
-        console.log(error);
-    }
+    }).then((response) => {
+        alert('success')
+        //return response.json()
+    }).then((res) => {
+        if (res.status === 201) {
+            console.log("Post successfully created!")
+        }
+    }).catch((error) => {
+        console.log(error)
+        alert(error)
+        //alert("UnSuccessfull !!!")
+    })
     /*
     $.ajax({
         type: "POST",
