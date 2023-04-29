@@ -1,6 +1,6 @@
 function submitToAPI(e) {
     e.preventDefault();
-    var URL = " https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact";
+    var URL = "https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact";
 
     var Namere = /[A-Za-z]{1}[A-Za-z]/;
     if (!Namere.test($("#name-input").val())) {
@@ -34,7 +34,30 @@ function submitToAPI(e) {
         email: email,
         desc: desc
     };
-
+    fetch("https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        //body: 'hallo',
+        headers: {
+            //'Accept': '*',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*',
+            'Access-Control-Allow-Headers': '*'
+        }
+    }).then((response) => {
+        alert('success')
+        //return response.json()
+    }).then((res) => {
+        if (res.status === 200) {
+            console.log("Post successfully created!")
+        }
+    }).catch((error) => {
+        console.log(error)
+        alert(error)
+        //alert("UnSuccessfull !!!")
+    })
+    /*
     $.ajax({
         type: "POST",
         url: "https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact",
@@ -61,4 +84,5 @@ function submitToAPI(e) {
         }
     });
     //window.location = './confirmation.html'
+    */
 }
