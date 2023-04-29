@@ -34,7 +34,9 @@ function submitToAPI(e) {
         email: email,
         desc: desc
     };
-    fetch("https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact", {
+    //fetch("https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact", {
+    fetch("https://api.sccbrasil.com/contact", {
+
         method: 'POST',
         body: JSON.stringify(data),
         //body: 'hallo',
