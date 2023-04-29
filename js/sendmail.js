@@ -48,11 +48,17 @@ function submitToAPI(e) {
             // clear form and show a success message
             alert("Successfull");
             document.getElementById("contact-form").reset();
-            location.reload();
+            //location.reload();
+            window.location = './confirmation.html'
         },
-        error: function () {
+        //error: function () {
+        error: function (jqXHR, exception) {
             // show an error message
-            alert("UnSuccessfull");
+            //console.error(error, error.stack);
+            //alert("UnSuccessfull ");
+            alert(jqXHR.status);
+            //window.location = './confirmation.html'
         }
     });
+    //window.location = './confirmation.html'
 }
