@@ -112,7 +112,7 @@
             <div class="space"></div>
             <div class="row">
                 <br>
-                <h4>Contact us</h4>
+                <h4>How can we help you?</h4>
                 </p>
                 </p>
                 <br>
@@ -126,13 +126,18 @@
                     <h4>Email:</h4>
                     <input type="email" style="height:35px;" id="email-input" placeholder="Enter email here…"
                         class="form-control" style="width:100%;" /><br />
-                    <h4>How can we help you?</h4>
+                    <h4>Enter your message</h4>
                     <textarea id="description-input" rows="3" placeholder="Enter your message…" class="form-control"
                         style="width:100%;"></textarea><br />
+                    <input type="checkbox" id="confirm-input" name="confirm">
+                    <h4>I am aware and agree to make my personal data available to this website.</h4>
                     <div class="g-recaptcha" data-sitekey="6Lc7cVMUAAAAAM1yxf64wrmO8gvi8A1oQ_ead1ys"
                         class="form-control" style="width:100%;"></div>
-                    <button type="button" onClick="submitToAPI(event)" class="btn btn-lg"
-                        style="margin-top:20px;">Submit</button>
+                    <!--<button type="button" onClick="submitToAPI(event)" class="btn btn-lg"-->
+                    <center>
+                        <button type="button" onClick="submitToAPI(event)" class="btn btn-default"
+                            style="margin-top:20px;">Submit</button>
+                    </center>
                 </form>
 
             </div>

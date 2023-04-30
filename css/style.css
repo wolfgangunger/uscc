@@ -121,6 +121,30 @@ a:focus {
 	color: #222;
 }
 
+a.button {
+
+	border: 1px solid #71bd46;
+	border-radius: 4px;
+	margin: 0 8px;
+	font-size: 30px;
+	font-family: Source Sans Pro, sans-serif;
+	font-weight: bolder;
+	border-bottom: 1px solid #b8dea2;
+	box-shadow: inset 0 1px 0 #606f7f;
+	/*color: rgb(27, 3, 136);*/
+	/*background-color: #9DC3E6;*/
+	background-color: transparent;
+	/*background-color: #71bd46;*/
+	border: 1px solid #71bd46;
+	color: #71bd46;
+}
+
+.a.button:hover,
+.a.button:focus {
+	background: #71bd46;
+	color: #fff;
+}
+
 .clearfix:after {
 	visibility: hidden;
 	display: block;
@@ -278,7 +302,6 @@ header p {
 }
 
 .btn-default {
-	/*color: #71bd46;*/
 	color: #00d900;
 	font-family: 'Open Sans', sans-serif;
 	background-color: transparent;

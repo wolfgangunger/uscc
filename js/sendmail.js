@@ -24,6 +24,10 @@ async function submitToAPI(e) {
         return;
     }
 
+    if (!$("#confirm-input").is(":checked")) {
+        alert("Please confirm ");
+        return;
+    }
     var name = $("#name-input").val();
     var phone = $("#phone-input").val();
     var email = $("#email-input").val();
@@ -61,32 +65,5 @@ async function submitToAPI(e) {
         window.alert('Registration failed');
         console.log(error);
     }
-    /*
-    $.ajax({
-        type: "POST",
-        url: "https://a0k2pjfioa.execute-api.eu-central-1.amazonaws.com/prod/contact",
-        dataType: "json",
-        crossDomain: "true",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data),
 
-
-        success: function () {
-            // clear form and show a success message
-            alert("Successfull");
-            document.getElementById("contact-form").reset();
-            //location.reload();
-            window.location = './confirmation.html'
-        },
-        //error: function () {
-        error: function (jqXHR, exception) {
-            // show an error message
-            //console.error(error, error.stack);
-            //alert("UnSuccessfull ");
-            alert(jqXHR.status);
-            //window.location = './confirmation.html'
-        }
-    });
-    //window.location = './confirmation.html'
-    */
 }
