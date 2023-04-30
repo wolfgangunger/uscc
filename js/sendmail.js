@@ -4,7 +4,7 @@ async function submitToAPI(e) {
 
     var Namere = /[A-Za-z]{1}[A-Za-z]/;
     if (!Namere.test($("#name-input").val())) {
-        alert("Name can not less than 2 char");
+        alert("Name can not be less than 2 char");
         return;
     }
     //var mobilere = /[0-9]{10}/;
@@ -14,7 +14,7 @@ async function submitToAPI(e) {
         return;
     }
     if ($("#email-input").val() == "") {
-        alert("Please enter your email id");
+        alert("Please enter your email");
         return;
     }
 
@@ -25,7 +25,7 @@ async function submitToAPI(e) {
     }
 
     if (!$("#confirm-input").is(":checked")) {
-        alert("Please confirm ");
+        alert("Please confirm the agreement");
         return;
     }
     var name = $("#name-input").val();
