@@ -6,8 +6,39 @@ html {
   color: rgb(27, 3, 136);
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 h1 strong {
   font-weight: 900;
+}
+
+.section-title h2 {
+  line-height: 120%;
+}
+
+#team-section .thumbnail img {
+  border-radius: 50%;
+  border: 2px solid #76b531;
+}
+
+.panel-primary {
+  border-color: rgba(27, 3, 136, 0.9);
+}
+
+.panel {
+  transition: all 0.2s;
+}
+
+.panel:hover {
+  transform: scale(1.03);
+}
+
+.panel-primary > .panel-heading {
+  background-color: rgba(27, 3, 136, 0.9);
 }
 
 h2 {
@@ -102,10 +133,20 @@ video {
   max-width: 640px;
 }
 
+div.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .ready-to-cloud {
   width: 100%;
   height: auto;
   max-width: 390px;
+}
+
+.ready-to-cloud.contact {
+  max-width: 690px;
 }
 
 .aws-service-delivery {
@@ -116,6 +157,14 @@ video {
 
 #certs-section {
   padding: 3rem 0;
+}
+
+#contact-form {
+  padding: 2rem;
+}
+
+#faq {
+  padding-top: 9rem;
 }
 
 .certificates-container {
@@ -130,6 +179,54 @@ video {
   width: 120px;
 }
 
+.youtube-banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 0px 38px -18px rgba(0, 0, 0, 0.75);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.youtube-banner > img {
+}
+
+.youtube-banner > i {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 5rem;
+  color: #c00;
+}
+
+.youtube-banner .youtube-body {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 2rem;
+  justify-content: space-between;
+}
+
+.youtube-banner .youtube-body > a {
+  background-color: #ec3232;
+  color: white;
+}
+
+.youtube-banner .youtube-body .youtube-channel-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.youtube-banner .youtube-body .youtube-channel-info > a {
+}
+
+.youtube-banner .youtube-body .youtube-channel-info > img {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+}
+
 .paragraph2 {
   font-size: 28px;
   font-family: verdana;
@@ -140,7 +237,7 @@ a {
   color: rgb(123, 93, 136);
 }
 
-div.navbar-collapse.collapse.in li.active a.page-scroll {
+div.navbar-collapse.collapse li.active a.page-scroll {
   color: #222222 !important;
 }
 
@@ -619,10 +716,36 @@ a:focus,
   outline-offset: none;
 }
 
+.color-secondary {
+  color: #00d900;
+}
+
+.color-primary {
+  color: rgb(27, 3, 136);
+}
+
+.text-md {
+  font-size: 2.5rem;
+}
+
+.text-lg {
+  font-size: 4rem;
+}
+
+.article-preview span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
 /* Social Section */
 #social-section {
   padding: 30px 0;
   background-color: #fff;
+  margin-top: auto;
 }
 
 #social-section .social ul li {
@@ -773,5 +896,10 @@ a:focus,
 
   .aws-service-delivery {
     max-width: 300px;
+  }
+
+  #social-section .social ul {
+    display: flex;
+    justify-content: center;
   }
 }
