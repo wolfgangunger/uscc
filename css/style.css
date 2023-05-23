@@ -164,7 +164,7 @@ div.center {
 }
 
 #faq {
-  padding-top: 9rem;
+  padding: 9rem 0;
 }
 
 .certificates-container {
@@ -182,19 +182,21 @@ div.center {
 .youtube-banner {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   box-shadow: 1px 0px 38px -18px rgba(0, 0, 0, 0.75);
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 640px;
+  margin: 56px auto;
+  height: 360px;
 }
 
 .youtube-banner > img {
+  height: 70%;
 }
 
 .youtube-banner > i {
   position: absolute;
   right: 1rem;
-  top: 1rem;
+  bottom: 1rem;
   font-size: 5rem;
   color: #c00;
 }
@@ -205,6 +207,7 @@ div.center {
   background-color: white;
   padding: 2rem;
   justify-content: space-between;
+  flex: auto;
 }
 
 .youtube-banner .youtube-body > a {
@@ -847,6 +850,18 @@ a:focus,
   -webkit-box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.15);
 }
 
+video,
+iframe,
+img.ready-to-cloud {
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+#social-section .social ul {
+  display: flex;
+  justify-content: center;
+}
+
 /* -------------*/
 
 @media (max-width: 768px) {
@@ -898,12 +913,11 @@ a:focus,
     max-width: 300px;
   }
 
-  #social-section .social ul {
-    display: flex;
-    justify-content: center;
-  }
-
-  #about-section, #services-section, #certs-section, #contact-section {
+  #about-section,
+  #services-section,
+  #certs-section,
+  #contact-section,
+  #team-section {
     padding: 48px 0;
   }
 
