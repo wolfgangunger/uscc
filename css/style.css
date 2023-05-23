@@ -186,11 +186,10 @@ div.center {
   box-shadow: 1px 0px 38px -18px rgba(0, 0, 0, 0.75);
   max-width: 640px;
   margin: 56px auto;
-  height: 360px;
 }
 
 .youtube-banner > img {
-  height: 70%;
+  height: auto;
 }
 
 .youtube-banner > i {
@@ -208,6 +207,7 @@ div.center {
   padding: 2rem;
   justify-content: space-between;
   flex: auto;
+  gap: 1rem;
 }
 
 .youtube-banner .youtube-body > a {
