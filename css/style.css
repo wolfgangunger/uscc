@@ -366,7 +366,7 @@ hr {
 }
 
 .section-title {
-  padding-bottom: 50px;
+  padding-bottom: 56px;
 }
 
 /* Home Style */
@@ -641,7 +641,7 @@ ol.type li a:hover {
 
 #contact-section i.fa {
   color: #71bd46;
-  margin-right: 20px;
+  margin-right: 8px;
 }
 
 label {
@@ -901,5 +901,13 @@ a:focus,
   #social-section .social ul {
     display: flex;
     justify-content: center;
+  }
+
+  #about-section, #services-section, #certs-section, #contact-section {
+    padding: 48px 0;
+  }
+
+  .section-title {
+    padding-bottom: 16px;
   }
 }
