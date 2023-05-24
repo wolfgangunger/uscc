@@ -38,6 +38,13 @@ function main() {
         offset: 80
     })
 
+    var menuEl = document.getElementById('menu')
+
+    var myEvent = new onClickOutside(menuEl, function() {
+      if($(".navbar-collapse").hasClass("in")){
+        $('.navbar-collapse').collapse('hide');
+      }
+    })
 
   	/*====================================
     Portfolio Isotope Filter
@@ -81,3 +88,4 @@ function main() {
 
 }
 main();
+

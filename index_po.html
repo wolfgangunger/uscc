@@ -1,267 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LVLG7ZQ88K"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LVLG7ZQ88K"
+    ></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
 
-        gtag('config', 'G-LVLG7ZQ88K');
+      gtag('config', 'G-LVLG7ZQ88K');
     </script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SCC Brasil | Sua empresa para Cloud, AWS e Consultoria</title>
-    <meta name="description"
-        content="A SCC é uma empresa de software, cloud e consultoria localizada em Blumenau, Santa Catarina. SCC Brasil oferece qualidade e eficiência alemã">
-    <meta name="keywords"
-        content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, Devops, Shoring, Security, Serverless, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
-    <meta name="author" content="SCC Brasil | Wolfgang Unger">
-    <meta NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
-    <meta name="og:title" property="og:title" content="SCC Brasil Software Cloud Consulting">
+    <meta
+      name="description"
+      content="A SCC é uma empresa de software, cloud e consultoria localizada em Blumenau, Santa Catarina. SCC Brasil oferece qualidade e eficiência alemã"
+    />
+    <meta
+      name="keywords"
+      content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, Devops, Shoring, Security, Serverless, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, "
+    />
+    <meta name="author" content="SCC Brasil | Wolfgang Unger" />
+    <meta name="ROBOTS" content="INDEX, FOLLOW" />
+    <meta
+      name="og:title"
+      property="og:title"
+      content="SCC Brasil Software Cloud Consulting"
+    />
 
     <!-- Favicons
             ================================================== -->
-    <link rel="shortcut icon" href="img/SCC.ico" type="image/x-icon">
-    <link rel="icon" href="img/SCC.ico">
-    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="img/SCC.ico" type="image/x-icon" />
+    <link rel="icon" href="img/SCC.ico" />
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="img/apple-touch-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="img/apple-touch-icon-114x114.png"
+    />
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="fonts/font-awesome/css/font-awesome.css"
+    />
 
     <!-- Stylesheet
             ================================================== 
         <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
         
         -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/prettyPhoto.css">
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap" rel="stylesheet"
-        type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/prettyPhoto.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,700,900,300"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script type="text/javascript" src="js/modernizr.custom.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script
+      src="http://code.jquery.com/jquery-latest.min.js"
+      type="text/javascript"
+    ></script>
     <script src="script.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-            <![endif]-->
-</head>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-<body>
+  <body>
     <!-- Navigation
             ==========================================-->
     <nav id="menu" class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span
-                        class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                <a class="navbar-brand" href="index.html">SCC</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <!--<ul class="nav navbar-nav navbar-right">-->
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#home" class="page-scroll">Home</a></li>
-                    <li><a href="#about-section" class="page-scroll">About</a></li>
-                    <li><a href="#services-section" class="page-scroll">Services</a></li>
-                    <!--    <li><a href="#works-section" class="page-scroll">Portfolio</a></li> -->
-                    <li><a href="./blog/aws/blog.html" class="page-scroll">Blog</a></li>
-                    <li><a href="./faq_po.html#fag" class="page-scroll">FAQ</a></li>
-                    <li><a href="#contact-section" class="page-scroll">Contact</a></li>
-                    <li class="has-sub"><a href="#">Language</a>
-                        <ul>
-                            <li><a href="index.html">Inglês</a></li>
-                            <li><a href="index_po.html">Português</a></li>
-                            <li class='last'><a href="index_de.html">Alemão</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-
-            </div>
-            <!-- /.navbar-collapse -->
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span> <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">SCC</a>
         </div>
-        <!-- /.container-fluid -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <!--<ul class="nav navbar-nav navbar-right">-->
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#home" class="page-scroll">Home</a></li>
+            <li><a href="#about-section" class="page-scroll">About</a></li>
+            <li>
+              <a href="#services-section" class="page-scroll">Services</a>
+            </li>
+            <!--    <li><a href="#works-section" class="page-scroll">Portfolio</a></li> -->
+            <li><a href="./blog/aws/blog.html" class="page-scroll">Blog</a></li>
+            <li><a href="./faq_po.html#faq" class="page-scroll">FAQ</a></li>
+            <li><a href="#contact-section" class="page-scroll">Contact</a></li>
+
+            <li role="presentation" class="dropdown">
+              <a
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                href="#"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >Language</a
+              >
+              <ul class="dropdown-menu">
+                <li><a href="index.html">Inglês</a></li>
+                <li><a href="index_po.html">Português</a></li>
+                <li class="last"><a href="index_de.html">Alemão</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
     </nav>
 
     <!-- Header -->
     <header class="text-center" name="home">
-        <div class="intro-text">
-            <!--<h1>We are <span class="color">Optics</span></h1>
+      <div class="intro-text">
+        <!--<h1>We are <span class="color">Optics</span></h1>
                 
                 <h1>SCC</h1>
                 -->
-            <p class="paragraph1">SCC</p>
-            <p class="paragraph1b">Brasil</p>
-            <p class="paragraph1c">os cloud gurus </p>
-            <tr align="right">
-                <img src="img/aws/SelectPartnerBadge_Dark.png" alt="AWS" width="120"> <br>
-            </tr>
-            <p></p>
-            <p class="paragraph1d">Software Cloud Consulting</p>
-            <p class="paragraph1e">sua empresa para desenvolvimento de software, cloud e consultoria</p>
-            <p class="paragraph1e"><img src="img/germany.png" alt="Germany" width="20"> Eficiência e qualidade alemã do
-                Brasil <img src="img/brasil.webp" alt="Germany" width="20"></p>
-            <div class="clearfix"></div>
-            <a href="#about-section" class="btn btn-default btn-lg page-scroll">Saiba mais</a>
-            <p></p>
-            <tr align="right">
-                <img src="img/aws/AWS_Service-Delivery_Logo_white_text.png" alt="AWS" width="420"> <br>
-            </tr>
-        </div>
+        <p class="paragraph1">SCC</p>
+        <p class="paragraph1b">Brasil</p>
+        <p class="paragraph1c">os cloud gurus</p>
+        <img
+          src="img/aws/SelectPartnerBadge_Dark.png"
+          class="partner-badge"
+          alt="AWS"
+          loading="lazy"
+        />
+        <br />
+        <p></p>
+        <p class="paragraph1d">Software Cloud Consulting</p>
+        <p class="paragraph1e">
+          sua empresa para desenvolvimento de software, cloud e consultoria
+        </p>
+        <p class="paragraph1e">
+          <img loading="lazy" src="img/germany.png" alt="Germany" width="20" />
+          Eficiência e qualidade alemã do Brasil
+          <img loading="lazy" src="img/brasil.webp" alt="Germany" width="20" />
+        </p>
+        <div class="clearfix"></div>
+        <a href="#about-section" class="btn btn-default btn-lg page-scroll"
+          >Saiba mais</a
+        >
+        <p></p>
+
+        <img
+          class="aws-service-delivery"
+          src="img/aws/AWS_Service-Delivery_Logo_white_text.png"
+          alt="AWS"
+          loading="lazy"
+        />
+
+        <br />
+      </div>
     </header>
     <!-- About Section -->
 
-
-
     <div id="about-section">
-        <a href="https://www.designrush.com/agency/software-development/trends/proof-of-concept-in-software-development"
-            target="_blank"><img src="img/designRush/logo.svg" width="146" align="right" /></a>
-        <div class="container">
-            <div class="section-title">
-                <h2>Sobre a SCC</h2>
-                <hr>
-            </div>
-            <div class="space"></div>
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>Quem somos</h4>
-                    <p>A SCC é uma empresa de software, cloud e consultoria localizada em Blumenau, Santa Catarina.
-                        Fundada por Wolfgang Unger, possuindo experiência em desenvolvimento de software,
-                        arquitetura e consultoria há mais de 20 anos em Munique, Alemanha, em projetos para empresas
-                        grandes
-                        e medias
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <h4>O que fazemos</h4>
-                    <p>Temos nosso foco em três áreas principais: desenvolvimento de software, arquitetura cloud e
-                        engenharia &
-                        consultoria e treinamento. Desenvolvimento de software ágil, full stack do frontend para o
-                        backend.
-                        Desenvolvimento offshore para clientes alemães e europeus, e também para clientes locais no
-                        Brasil.
-                        Tecnologias cloud, focadas em Amazon Web Services, mas também em Azure e outros, para sua mais
-                        tranquila transição para a nuvem. Consultoria e coaching em todas as áreas de TI,
-                        apoiando a transformação de seus negócios digitais.</p>
-                </div>
-                <div class="col-md-4">
-                    <h4>Por que escolher a gente</h4>
-                    <p>Com base em uma excelente experiência em grandes projetos de software para empresas de pequeno e
-                        grande porte, garantimos soluções profissionais de alto nível para o seu empreendimento.
-                        Somos o colaborador ideal na prestação de serviços remotos para clientes alemães e europeus,
-                        bem como seu parceiro de TI local no Vale do Itajaí, em Santa Catarina e no Brasil.</p>
-                </div>
-            </div>
-            <center>
-                <video width="640" height="360" controls>
-                    <source src="video/scc-heaven-pt.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </center>
+      <div class="container" data-aos="fade-up">
+        <a
+          href="https://www.designrush.com/agency/software-development/trends/proof-of-concept-in-software-development"
+          target="_blank"
+        >
+          <img src="img/designRush/logo.svg" width="146" align="right" />
+        </a>
+        <div class="section-title">
+          <h2><b>Sobre a SCC</b></h2>
+          <hr />
         </div>
+        <div class="row">
+          <div class="col-md-4">
+            <h4>Quem somos</h4>
+            <p class="text-justify">
+              A SCC é uma empresa de software, cloud e consultoria localizada em
+              Blumenau, Santa Catarina. Fundada por Wolfgang Unger, possuindo
+              experiência em desenvolvimento de software, arquitetura e
+              consultoria há mais de 20 anos em Munique, Alemanha, em projetos
+              para empresas grandes e medias
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h4>O que fazemos</h4>
+            <p class="text-justify">
+              Temos nosso foco em três áreas principais: desenvolvimento de
+              software, arquitetura cloud e engenharia & consultoria e
+              treinamento. Desenvolvimento de software ágil, full stack do
+              frontend para o backend. Desenvolvimento offshore para clientes
+              alemães e europeus, e também para clientes locais no Brasil.
+              Tecnologias cloud, focadas em Amazon Web Services, mas também em
+              Azure e outros, para sua mais tranquila transição para a nuvem.
+              Consultoria e coaching em todas as áreas de TI, apoiando a
+              transformação de seus negócios digitais.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h4>Por que escolher a gente</h4>
+            <p class="text-justify">
+              Com base em uma excelente experiência em grandes projetos de
+              software para empresas de pequeno e grande porte, garantimos
+              soluções profissionais de alto nível para o seu empreendimento.
+              Somos o colaborador ideal na prestação de serviços remotos para
+              clientes alemães e europeus, bem como seu parceiro de TI local no
+              Vale do Itajaí, em Santa Catarina e no Brasil.
+            </p>
+          </div>
+        </div>
+        <div class="center">
+          <video controls>
+            <source src="video/scc-heaven-pt.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
     </div>
     <!-- Services Section -->
     <div id="services-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nossos serviços</h2>
-                <hr>
-            </div>
-            <div class="space"></div>
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <h1>Cloud</h1><br>
-                    <i class="fa fa-cloud"></i>
-                    <h4>Arquitetura e engenharia AWS</h4>
-                    <p>Nosso maior foco em tecnologias cloud está na Amazon Web Services. Muitos anos de experiência
-                        em AWS, em inúmeros serviços como Cloudformation, EC2, S3, ECS, EKS, API Gateway, Code-Pipeline
-                        e
-                        Code-Build, CloudWatch e muito mais. Seja qual for sua demanda em AWS, nós temos a know-how
-                        para projetar e implementar esses recursos. </p>
-                    <!-- <i class="fa fa-gears"></i> -->
-                    <h4>Migração para a nuvem</h4>
-                    <p>Auxiliamos seu negócio em trazer suas soluções do legado e on premise para a nuvem. Existem
-                        muitas razões
-                        e vantagens em trazer o seu negócio para a nuvem, assim como novos desafios, a SSC
-                        irá
-                        envolver
-                        você nas etapas desta transformação pela nuvem, e irá simplificar e acelerar esse processo.
-                    </p>
-                    <h4>Revisão e Auditoria em arquiteturas AWS</h4>
-                    <p>Baseado em 10 anos de experiência em projetos utilizando AWS para clientes da indústria
-                        automotiva alemã, fazemos revisão de arquiteturas implementadas na AWS, apontando potenciais
-                        melhorias no custo, problemas de segurança e outros problemas. Indicamos ainda as melhores
-                        práticas para uso da AWS no seu negócio.
-                    </p>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <h1>Software</h1><br>
-                    <i class="fa fa-code"></i>
-                    <h4>Desenvolvimento de software</h4>
-                    <p>Arquitetura e desenvolvimento de aplicações, microsserviços e apps para cloud, utilizando
-                        ferramentas e serviços da AWS, como
-                        Lambda, AWS CDK, ou outra ferramenta de IaC. Python, Java e JavaScript.
-                    </p>
-                    <!-- <i class="fa fa-gears"></i> -->
-                    <h4>DevOps</h4>
-                    <p>Operações são um aspecto importante no processo de desenvolvimento e manutenção de software, bem
-                        como na própria área de TI.
-                        Não somos apenas profissionais no desenvolvimento de software,
-                        mas também na construção, implantação, manutenção e operação de software. Tecnologias:
-                        CI / CD, Jenkins, Build Pipelines, OpenShift, Kubernetes, Docker e muito mais</p>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <h1>Consultoria</h1><br>
-                    <i class="fa fa-desktop"></i>
-                    <h4>Consultoria e Treinamento</h4>
-                    <p>Auxiliamos o seu negócio na sua jornada Cloud, mostrando as melhores práticas e ajudando você a
-                        montar a melhor arquitetura possível para seu negócio.
-                        Contamos também com uma equipe com experiência em treinamentos e em projetos internacionais para
-                        treinar seu time, seja treinado por um AWS trainer autorizado. </p>
-                    <!-- <i class="fa fa-desktop"></i> -->
-                    <h4>Segurança</h4>
-                    <p>Consultoria em todos os aspectos de segurança do seu negócio digital.
-                        Implementação de soluções seguras em autenticação, MFA, criptografia e auditoria em sistemas
-                        existentes. </p>
-                </div>
-                <br>
-
-            </div>
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2><b>Nossos serviços</b></h2>
         </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <h1>Cloud</h1>
+            <br />
+            <i class="fa fa-cloud"></i>
+            <h4>Arquitetura e engenharia AWS</h4>
+            <p class="text-justify">
+              Nosso maior foco em tecnologias cloud está na Amazon Web Services.
+              Muitos anos de experiência em AWS, em inúmeros serviços como
+              Cloudformation, EC2, S3, ECS, EKS, API Gateway, Code-Pipeline e
+              Code-Build, CloudWatch e muito mais. Seja qual for sua demanda em
+              AWS, nós temos a know-how para projetar e implementar esses
+              recursos.
+            </p>
+            <!-- <i class="fa fa-gears"></i> -->
+            <h4>Migração para a nuvem</h4>
+            <p class="text-justify">
+              Auxiliamos seu negócio em trazer suas soluções do legado e on
+              premise para a nuvem. Existem muitas razões e vantagens em trazer
+              o seu negócio para a nuvem, assim como novos desafios, a SSC irá
+              envolver você nas etapas desta transformação pela nuvem, e irá
+              simplificar e acelerar esse processo.
+            </p>
+            <h4>Revisão e Auditoria em arquiteturas AWS</h4>
+            <p class="text-justify">
+              Baseado em 10 anos de experiência em projetos utilizando AWS para
+              clientes da indústria automotiva alemã, fazemos revisão de
+              arquiteturas implementadas na AWS, apontando potenciais melhorias
+              no custo, problemas de segurança e outros problemas. Indicamos
+              ainda as melhores práticas para uso da AWS no seu negócio.
+            </p>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <h1>Software</h1>
+            <br />
+            <i class="fa fa-code"></i>
+            <h4>Desenvolvimento de software</h4>
+            <p class="text-justify">
+              Arquitetura e desenvolvimento de aplicações, microsserviços e apps
+              para cloud, utilizando ferramentas e serviços da AWS, como Lambda,
+              AWS CDK, ou outra ferramenta de IaC. Python, Java e JavaScript.
+            </p>
+            <!-- <i class="fa fa-gears"></i> -->
+            <h4>DevOps</h4>
+            <p class="text-justify">
+              Operações são um aspecto importante no processo de desenvolvimento
+              e manutenção de software, bem como na própria área de TI. Não
+              somos apenas profissionais no desenvolvimento de software, mas
+              também na construção, implantação, manutenção e operação de
+              software. Tecnologias: CI / CD, Jenkins, Build Pipelines,
+              OpenShift, Kubernetes, Docker e muito mais
+            </p>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <h1>Consultoria</h1>
+            <br />
+            <i class="fa fa-desktop"></i>
+            <h4>Consultoria e Treinamento</h4>
+            <p class="text-justify">
+              Auxiliamos o seu negócio na sua jornada Cloud, mostrando as
+              melhores práticas e ajudando você a montar a melhor arquitetura
+              possível para seu negócio. Contamos também com uma equipe com
+              experiência em treinamentos e em projetos internacionais para
+              treinar seu time, seja treinado por um AWS trainer autorizado.
+            </p>
+            <!-- <i class="fa fa-desktop"></i> -->
+            <h4>Segurança</h4>
+            <p class="text-justify">
+              Consultoria em todos os aspectos de segurança do seu negócio
+              digital. Implementação de soluções seguras em autenticação, MFA,
+              criptografia e auditoria em sistemas existentes.
+            </p>
+          </div>
+          <br />
+        </div>
+      </div>
     </div>
     <!-- Certificates -->
     <div id="certs-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nossas Certificações</h2>
-                <hr>
-            </div>
-            <img src="img/certs/AWS-Certified-Solutions-Architect-Professional_badge.png" alt="saprof" width="110">
-            <img src="img/certs/AWS-Certified-DevOps-Engineer-Professional_badge.png" alt="devopsprof" width="110">
-            <img src="img/certs/AWS-Certified-Solutions-Architect-Associate_badge.png" alt="sapas" width="110">
-            <img src="img/certs/AWS-Certified-SysOps-Administrator-Associate_badge.png" alt="sysas" width="110">
-            <img src="img/certs/AWS-Certified-Developer-Associate_badge.png" alt="devas" width="110">
-            <img src="img/certs/AWS-Certified-Cloud-Practitioner_badge.png" alt="cp" width="110">
-            <img src="img/certs/auth-instr2.png" alt="cp" width="104">
-            <img src="img/certs/azure_fund2.png" alt="azurefun" width="105">
-            <img src="img/certs/jee.jpg" alt="azurefun" width="95">
-            <img src="img/certs/java_programmer.jpg" alt="azurefun" width="115">
-            <br>
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2><b>Nossas Certificações</b></h2>
         </div>
-        <br>
+
+        <div class="certificates-container">
+          <img
+            src="img/certs/AWS-Certified-Solutions-Architect-Professional_badge.png"
+            alt="saprof"
+            loading="lazy"
+          />
+          <img
+            src="img/certs/AWS-Certified-DevOps-Engineer-Professional_badge.png"
+            alt="devopsprof"
+            loading="lazy"
+          />
+          <img
+            src="img/certs/AWS-Certified-Solutions-Architect-Associate_badge.png"
+            alt="sapas"
+            loading="lazy"
+          />
+          <img
+            src="img/certs/AWS-Certified-SysOps-Administrator-Associate_badge.png"
+            alt="sysas"
+            loading="lazy"
+          />
+          <img
+            src="img/certs/AWS-Certified-Developer-Associate_badge.png"
+            alt="devas"
+            loading="lazy"
+          />
+          <img
+            src="img/certs/AWS-Certified-Cloud-Practitioner_badge.png"
+            alt="cp"
+            loading="lazy"
+          />
+          <img src="img/certs/auth-instr2.png" alt="cp" loading="lazy" />
+          <img src="img/certs/azure_fund2.png" alt="azurefun" loading="lazy" />
+          <img src="img/certs/jee.jpg" alt="azurefun" loading="lazy" />
+          <img
+            src="img/certs/java_programmer.jpg"
+            alt="azurefun"
+            loading="lazy"
+          />
+        </div>
+      </div>
+      <br />
     </div>
 
     <!-- News 
@@ -290,57 +415,90 @@
 -->
     <!-- Contact Section -->
     <div id="contact-section">
-        <div class="container">
-            <div class="section-title center">
-                <h2>Fale conosco</h2>
-                <hr>
-            </div>
-            <center>
-                <img src="img/ReadyForTheCloud1b.jpg" alt="Ready for the cloud?" width="390"> <br>
-            </center>
-            <br>
-            <center>
-                <a href="./contact.html" class="btn btn-default">Entre em contato</a>
-            </center>
-            <br><br>
-            <div class="col-md-4">
-                <h4>Informações de contato</h4>
-                <div class="space"></div>
-                <p><i class="fa fa-map-marker"></i>Victor Konder 99<br>
-                    Bairro Victor Konder, Blumenau, Santa Catarina</p>
-                <div class="space"></div>
-                <p><i class="fa fa-envelope-o"></i><a href="mailto: info@sccbrasil.com">info@sccbrasil.com</a></p>
-                <div class="space"></div>
-                <!--
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2><b>Fale conosco</b></h2>
+        </div>
+        <div class="center">
+          <img
+            src="img/ReadyForTheCloud1b.jpg"
+            alt="Ready for the cloud?"
+            class="ready-to-cloud"
+            loading="lazy"
+          />
+          <br />
+
+          <a href="/contact.html" class="btn btn-default">Entre em contato</a>
+        </div>
+        <div class="space"></div>
+
+        <br />
+        <div class="col">
+          <h4><b>Informações de contato</b></h4>
+          <div class="space"></div>
+          <p>
+            <i class="fa fa-map-marker"></i>Victor Konder 99<br />
+            Bairro Victor Konder, Blumenau, Santa Catarina
+          </p>
+          <p>
+            <i class="fa fa-envelope-o"></i
+            ><a href="mailto: info@sccbrasil.com">info@sccbrasil.com</a>
+          </p>
+          <div class="space"></div>
+
+          <!-- <div style="width: 100%">
+            <iframe
+              width="100%"
+              height="400"
+              frameborder="0"
+              scrolling="no"
+              marginheight="0"
+              marginwidth="0"
+              title="map address"
+              src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=Victor%20Konder%2099%20Bairro%20Victor%20Konder,%20Blumenau,%20Santa%20Catarina+(SCC%20Brasil)&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+              ><a href="https://www.maps.ie/distance-area-calculator.html"
+                >measure area map</a
+              ></iframe
+            >
+          </div> -->
+          <!--
                     <p><i class="fa fa-phone"></i>+1 123 456 1234</p>
                    -->
-            </div>
         </div>
+      </div>
     </div>
+
     <div id="social-section">
-        <div class="container">
-            <div class="social">
-                <ul>
-                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <!--
+      <div class="container">
+        <div class="social">
+          <ul>
+            <li>
+              <a href="https://www.facebook.com/SCC-Brasil-111049103585600"
+                ><i class="fa fa-facebook"></i
+              ></a>
+            </li>
+            <!--
                     <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                     <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                     -->
-                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
-                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a>
-                    </li>
-                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
-                </ul>
-            </div>
+            <li>
+              <a href="https://github.com/wolfgangunger"
+                ><i class="fa fa-github"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/sccbrasil.insta/"
+                ><i class="fa fa-instagram"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/company/26187795/"
+                ><i class="fa fa-linkedin"></i
+              ></a>
+            </li>
+          </ul>
         </div>
-    </div>
-    <div id="footer">
-        <!--
-            <div class="container">
-                <p>Copyright &copy; Optics. Designed by <a href="http://www.templatewire.com" rel="nofollow">TemplateWire</a></p>
-            </div>
-            -->
+      </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -356,7 +514,11 @@
 
     <!-- Javascripts
             ================================================== -->
+    <script src="js/click-outside.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
-</body>
-
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
 </html>
