@@ -891,10 +891,16 @@ img.ready-to-cloud {
 
   .intro-text .paragraph1 {
     font-size: 10rem;
+    margin-bottom: 32px;
   }
 
   .intro-text .paragraph1b {
     font-size: 3rem;
+    margin: 0 0 8px;
+  }
+
+  .intro-text > a {
+    margin-top: 3rem;
   }
 
   .intro-text .paragraph1c {
@@ -924,4 +930,25 @@ img.ready-to-cloud {
   .section-title {
     padding-bottom: 16px;
   }
+}
+
+#menu li[role='presentation'].open > a {
+  background: transparent;
+}
+
+#menu ul.dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#menu ul.dropdown-menu li a {
+  color: #c59af7;
+}
+
+#menu ul.dropdown-menu > li > a:hover {
+  background-color: #76b531;
+  color: black;
+}
+
+#menu .dropdown:hover .dropdown-menu {
+  display: block;
 }
