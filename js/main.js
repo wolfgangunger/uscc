@@ -38,13 +38,13 @@ function main() {
         offset: 80
     })
 
-    $(document).ready(function () { 
-      $(document).click(function () {
-         if($(".navbar-collapse").hasClass("in")){
-           $('.navbar-collapse').collapse('hide');
-         }
-      });
-    });
+    var menuEl = document.getElementById('menu')
+
+    var myEvent = new onClickOutside(menuEl, function() {
+      if($(".navbar-collapse").hasClass("in")){
+        $('.navbar-collapse').collapse('hide');
+      }
+    })
 
   	/*====================================
     Portfolio Isotope Filter
