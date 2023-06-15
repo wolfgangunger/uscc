@@ -58,7 +58,22 @@
 </head>
 
 <body>
-
+    <!-- Navigation
+            ==========================================-->
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand-scc" href="../../index.html">SCC</a>
+            </div>
+        </div>
+    </nav>
 
 
     <!-- Header -->
@@ -87,13 +102,18 @@
                     <img class="blog-image" src="img/s3BlockPublicAccess-removebg-preview.png" alt="7" loading="lazy" />
                     <p></p>
                     <h4>By Daniel Nascimento</h4><br>
-                    <p>Since April 2023, AWS has change the default configuration of new buckets to "Block public access", 
-                        not only to buckets created using the aws console UI, but also for buckets created using AWS CLI, SDK and 
+                    <p>Since April 2023, AWS has change the default configuration of new buckets to "Block public
+                        access",
+                        not only to buckets created using the aws console UI, but also for buckets created using AWS
+                        CLI, SDK and
                         Cloudformation too.<br>
-                        This change means that if you have a terraform project or a cloudformation template that creates new buckets in your aws accounts, 
+                        This change means that if you have a terraform project or a cloudformation template that creates
+                        new buckets in your aws accounts,
                         you probably have to change your code to deal with this new behavior. <br>
-                        If you simply apply your previous terraform code or cloudformation template, your bucket policies probably are not gonna be effective, 
-                        if you have some kind of public principal (federated users for example) or use a "*" without a condition that filter these principals,
+                        If you simply apply your previous terraform code or cloudformation template, your bucket
+                        policies probably are not gonna be effective,
+                        if you have some kind of public principal (federated users for example) or use a "*" without a
+                        condition that filter these principals,
                         or use ACL's.<br> <br>
 
                         <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html"
@@ -101,15 +121,19 @@
                             AWS Documentation : What AWS consider "Public"</a><br>
                         <br>
 
-                        To return to the previous behavior (without the block public access), you have to do some changes to your code, if you want to have the "Block public access" disable in Terraform just use the "aws_s3_bucket_public_access_block" resource, example :<br>
+                        To return to the previous behavior (without the block public access), you have to do some
+                        changes to your code, if you want to have the "Block public access" disable in Terraform just
+                        use the "aws_s3_bucket_public_access_block" resource, example :<br>
                         <br>
                         <img src="img/terraform_block_public.png" alt="Terraform" width="500"> <br>
                         <br>
-                        In Cloudformation the same can be accomplished using the PublicAccessBlockConfiguration property in the AWS::S3::Bucket resource. example:<br><br>
+                        In Cloudformation the same can be accomplished using the PublicAccessBlockConfiguration property
+                        in the AWS::S3::Bucket resource. example:<br><br>
                         <br>
                         <img src="img/cloudformation_block_public.png" alt="Terraform" width="500"> <br>
                         <br>
-                        This change also can be a opportunity to review the permissions in your buckets and maybe enable some of the block access options, and ensure a secure storage to your data.<br>
+                        This change also can be a opportunity to review the permissions in your buckets and maybe enable
+                        some of the block access options, and ensure a secure storage to your data.<br>
                     <p></p>
 
                     <p></p>
