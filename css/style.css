@@ -185,6 +185,18 @@ div.center {
   width: 120px;
 }
 
+.technologies-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.technologies-container>img {
+  width: 120px;
+}
+
 .youtube-banner {
   position: relative;
   display: flex;
