@@ -415,6 +415,30 @@
           SCC Brasil can train your team with Workshops, trainings and during the implementation.
         </p>
 
+        <br />
+        <h4>How are the costs calculated in AWS?</h4>
+        <p class="text-justify">
+          You pay for compute resources like EC2 instances, Managed Services, Serverless ( indeed a compute resource),
+          for
+          storage like EBS, EFS or S3 and Data transfer. <br>Also some Services like WAF or others are based per
+          hour.<br>
+          Please have a look in the AWS Pricing calculator to get an estimation about the costs you might cause with
+          your services.
+        </p>
+
+        <br />
+        <h4>What are the best practices on AWS to secure your account?</h4>
+        <p class="text-justify">
+          First of all you have to follow the best practices for IAM ( Identity and Access Management ).
+          Don't use the root user for daily business, always use MFA, use roles instead of users or access keys,
+          use the principle of least privilege and more.<br>
+          Secure your Network & Compute resources with Security Groups, use the private subnets if possible and more.
+          Do regular analyses in Trusted Advisor and Security Hub.
+          Have a look in our blog for more informations
+          <br />
+          <a href="./blog/aws/security-musts.html" class="page-scroll">Security Best practices on AWS</a>
+        </p>
+
       </div>
     </div>
   </div>

@@ -400,6 +400,29 @@
           SCC Brasil kann ihre Mitarbeiter in Workshops, mit Schulungen und in der gemeinsamen Implementierung schulen.
         </p>
 
+        <br />
+        <h4>Wie werden die Kosten in AWS berechnet?</h4>
+        <p>
+          Sie zahlen für Compute Services wie EC2, Managed Services, Serverless ( in der Tat auch Compute Resources) ,
+          Speicher wie EBS, EFS und S3.<br>
+          Dienste wie WAF oder weitere werden per Stunde abgerechnet.
+          Sie können die Kosten im AWS Cost Explorer vor ihrer Migration berechnen.
+        </p>
+        <br />
+        <h4>Was muss ich auf AWS beachten um die Sicherheit meines Accounts zu gewährleisten?</h4>
+        <p>
+          Als erstes sollten Sie die Best Practices für IAM ( Identy and Access Management) beachten.
+          Nutzen sie niemals den root user für die tägliche Arbeit, richten sie MFA ein, nutzen sie Rollen anstelle User
+          und Access Keys,
+          beachten sie das Prinzip der geringsten Privilegien.<br />
+          Sichern sie ihre Netzwerk und Compute Ressourcen mit Security Groups, nutzen sie die privaten Subnetze wann
+          immer möglich und mehr.<br />
+          Machen sie regelmäßig eine Prüfung im Trusted Advisor oder Security Hub.<br />
+          Schauen Sie in unseren Blog für mehr Informationen.<br />
+          <br />
+          <a href="./blog/aws/security-musts.html" class="page-scroll">Security Best practices on AWS</a>
+        </p>
+
       </div>
 
     </div>
