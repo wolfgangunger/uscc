@@ -114,11 +114,11 @@
                     There are are lot of filters to get a good overview on your expenses.<br>
                     You can aggregate by Account our AWS Service level on high level but also filter
                     on resource level like EC2 instance ID .<br>
-                    Image Cost explorer<br>
-                    <img class="blog-image" src="img/costs-pig.avif" alt="Pig" loading="lazy" /><br>
+                    <br>
+                    <img class="blog-image" src="img/costexplorer.jpg" alt="Cost Explorer" loading="lazy" /><br>
                     Try to figure out what are the most expensive resources or resource groups, this is where your
                     should try to consider changes. <br>
-                    If you spend 4 $ monthly on Lambdas, it would be a waste of time, to developed or even consider
+                    If you spend 4 $ monthly on Lambdas, it would be a waste of time, to develope or even consider
                     measures to lower these costs.<br>
                     You should for example know after your analyses:<br>
                     <b>EC2 Computing Costs 600$ </b><br>
@@ -132,20 +132,72 @@
                     <h2>Compute</h2>
                     <img class="blog-image" src="img/cpu.avif" alt="CPU" loading="lazy" /><br>
                     <h3>Rightsizing</h3><br>
-                    EC2 RDS Bla bla .<br>
+                    Use Trusted Advisor to find Low Utilization EC2 instances or RDS Idle Instances<br>
+                    Also use the Cloud Watch Metrics to check if your instances are oversized.<br>
+                    On Premise Admistrators tend to keep CPU Utilization low on the servers, to extend the lifespan,
+                    since
+                    the server is company property. <br>The average Utilization there is about 30%.
+                    You don't need to follow this approach with cloud instances, if the instance still performs good
+                    with 90% CPU Utilization, no need to upsize. Keep them under load, you pay for 100% Utilization,
+                    not just
+                    for 35%.<br>
                     <br>
 
                     <h3>Autoscaling</h3><br>
-                    EC2 RDS Bla bla .<br>
+                    Use horizantal scaling, not vertical scaling.<br>
+                    On Premise you cannot just launch new servers if it is Black Friday.<br>
+                    You have to calculate your usage on Peak time and do the guesswork to buy servers for your
+                    racks.<br>
+                    So normally there are oversized, run on low Utilization to be able to still work in the Peak
+                    times.<br>
+                    On AWS you should fine the right instance size for running your application without problems but
+                    with
+                    a high Utilization.<br>
+                    If you need more Compute Power, you can launch new instances with Autoscaling, based on metrics like
+                    CPU or networking or SQS messages for example.<br>
+                    You scale out if more servers are needed and you scale in when there is only a few users on the
+                    platform.<br>
+                    Important numbers to finetune here are Desired Count, Miminum Count and Maximum Count.<br>
                     <br>
 
                     <h3>Reduce usage hours</h3><br>
-                    EC2 Bla bla .<br>
-                    Terminate Any Unused Instances
+                    On Premise nobody shuts down instances.<br>
+                    The only savings would be the electricity bill. You already paid your servers.
+                    In the cloud you pay per usage or demand.<br>
+                    Meaning if you use a instance just 8h a day, you can save 66% costs if you don't let it running 24h
+                    but
+                    just 8h.<br>
+                    Autoscaling was already mentioned you can scale down Groups of severs, who have to be online 24/7
+                    down to
+                    1 instance in the night, when there is low user activity.<br>
+                    Other instances you might shut down completly if there is no requirement for 24/7.<br>
+                    The instances will only be used from 8am to 6pm ? Shut them down the rest of the time.<br>
+                    You can automate this with tagging and lambas, systems manager or other approaches.<br>
+                    <br>
+                    Also Terminate Any Unused Instances. Sometimes people launch an instance for testing something, but
+                    forgot to stop or terminate it. Stop and terminate anything which is not really needed.<br>
+                    For background tasks don't use 24/7 instances.<br>
+                    Use docker and for example AWS Batch. Fargate can also serve if you configure the task to stop
+                    after processing. If the job needs 2h to process, that's all you should pay for it.<br>
+                    Serverless is also a good approach on non-steady workloads.<br>
+                    You pay just for the processed time, not for a 24/7 instance.<br>
+                    This can be perfect for business logic ( from applications into lambda) or Databases linke
+                    Aurora Serverless or Dynamo.<br>
                     <br>
 
                     <h3>Use Sport instances, reserved instance and saving plans</h3><br>
-                    EC2 Bla bla .<br>
+                    Spot instances are unused AWS instances that can cost up to 90% less than on-demand instances.
+                    You can bid on AWS instances, with the price being determined by supply and demand<br>
+                    But don't use them for important workloads which must not be interrupted, Spot instances may be
+                    disconnected.<br>
+                    <br>
+                    With reserved Instances, you make a long-term commitment in return for a significant discount,
+                    You can save significant money using them.<br>
+                    <br>
+                    AWS Savings Plans are a pricing model that offers discounted prices on regular On-Demand Instances
+                    when you commit to one or three years of use.<br>
+                    These are valid for EC2 instances and also for RDS instances.<br>
+                    For serverless computing like Fargate or Lambda your can purchase a Compute Savings Plan.<br>
                     <br>
 
                     <br>
@@ -191,7 +243,9 @@
                     EC2 RDS Bla bla .<br>
                     <br>
 
-
+                    <h3>Setup Cost Alarms</h3><br>
+                    EC2 RDS Bla bla .<br>
+                    <br>
 
 
 
