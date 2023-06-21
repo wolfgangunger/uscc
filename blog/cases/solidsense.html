@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SCC Brasil Case Studies - Solidsense</title>
+    <meta name="description" content="SCC Brasil Case Studies">
+    <meta name=" author" content="SCC Brasil Case Studies">
+    <meta name="og:title" property="og:title" content="SCC Brasil Case Studies">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/SCC.ico" type="image/x-icon" />
+    <link rel="icon" href="../../img/SCC.ico" />
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+    <!-- Navigation
+            ==========================================-->
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand-scc" href="../../index.html">SCC</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Solidsense</h2>
+                <hr><img src="img/solidsense.png" alt="Solidsense" width="290">
+            </div>
+            <br>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p></p>
+                    <p>For about 6 month SCC Brasil worked together with Solidsense to improve their
+                        AWS Cloud Infrastructure and also the Terraform Setup<br>
+                        Solidsense developed a Event Media Streaming Platform build on
+                        ElasticBeanstalk, RDS, Lambda, S3, CloudFront, Cognito, Chime and other services.<br>
+                        <br>
+                        After an initial Architecture Review analyzing the Security, Reliability, Operational Excellence
+                        and also the Terraform Setup and Project Structure,<br>
+                        SCC Brasil was contracted to improve
+                        the cloud infrastructe to follow all best practices and also the 5 pillars of the
+                        Well-Architected Framework.<br>
+                        <br>
+                    <h4>Terraform Project Re-Structuring</h4><br>
+                    The Even Media Streaming Platform was supposed to be installed for various clients in a
+                    3 stage account setup,<br> therefore we adapted the flat Terraform Project Structure to serve for
+                    this purpose.<br>
+                    <br>
+                    Lets first have a look on the new structure of the terraform project.<br>
+                    <br>
+                    <img src="img/terraform.jpg" alt="Terraform" width="300"> <br>
+                    <br>
+
+                    Inside the infrastructure folder you have the main tf file. main.tf, variables.tf, outputs.tf if
+                    needed.<br>
+                    In this folder you will execute your terraform commands.<br>
+                    Inside the subfolder env you have the tfvars file for each environment, in this example dev, qa
+                    and prod. <br>
+                    Also a backend.conf file for each environment (qa-backend.conf etc)<br>
+                    You will init the project with the .conf file for the environment you want to address.<br>
+                    The plan, apply or delete commands you will execute with the tfvars file for the env
+                    (dev,qa,prod).<br>
+
+                    <br>
+                    The diagram shows a simplified infrastructure/env folder.<br>
+                    Indeed there were subfolders under the env folder for each customer and and each of them will
+                    be the tfvars files for the 3 environments.<br>
+                    Having:<br>
+                    -infrastructure<br>
+                    --env<br>
+                    ---customer1<br>
+                    ----dev.tfvars<br>
+                    ----qa.tfvars<br>
+                    ----prod.tfvars<br>
+                    ---customer2<br>
+                    ----dev.tfvars<br>
+                    ----qa.tfvars<br>
+                    ----prod.tfvars<br>
+                    ......more customers
+                    <br>
+                    This way all configuration files for one customer were in one common folder and the
+                    customers were all grouped under the folder env.<br>
+                    The main.tf file in the infrastructure root filder will include all the modules you want to
+                    create
+                    for your environment.<br>
+                    Modules were introduced and these modules were placed in the subfolder 'modules'<br>
+                    This way no copy & paste code was produced, the project structure was kept simple and
+                    supported the multi client deployment requirements.<br>
+                    <br>
+                    <h4>Loadbalancing Optimization</h4><br>
+                    <br>
+                    <br>
+                    <img src="img/aws-alb.jpg" alt="5Pillars" width="300"> <br>
+                    <br>
+
+                    Solidsense scale out requirements were besides the normal Loadbalancing capabilites and
+                    features.<br>
+                    When a event started in the evening, within 1 minute up to 5000 users made their login and
+                    started using the media streaming services and the applications.<br>
+                    A scaling policy based on CPU or Network metrics cannot handle this, from where the scale out events
+                    will be triggered and until the new instances are fully started, it will take more than 3 minutes
+                    and
+                    the users will face a bad user experience.<br>
+                    Saying this, the classical loadbalancing triggers will not work.<br>
+                    Since the events occure on a given time and date and for a given duration, a time based scheduled
+                    Load Balancing is the best approach.
+                    15 min before the event, the desired count for the Elastic Beanstalk Environments will be increased
+                    (based
+                    on a calculation of the number of event users), for example from 1 to 10.
+                    And after the event the desired count will be set back to 1.<br>
+                    Before tests on multiple EC2 instances and higher Load we evaluated the best instance size
+                    for a small number of users based on the hardware requirements of the application.<br>
+                    Solidsense performed new Loadtests and the results were outstanding.<br>
+                    A lambda with API Gateway & a simple UI in the Admin Application was written and deployed the
+                    change the time scheduled Loadbalancing by event data and user number.<br>
+                    <br>
+                    <h4>Security, Reliability & Operational Excellence Improvements</h4><br>
+                    We analyzed the infrastructure, also used SecurityHub and Trusted Advisor and addressed some
+                    Security Issues to resolve.<br>
+                    The ElasticBeanstalk application was adapted to use only role based policies, all credentials
+                    were moved to SecretsManager, Security Group Chaining was introduced, all S3 Buckets for CloudFront
+                    were accessed only with Origin Access Control.<br>
+                    Loggin was enabled for EB, EC2, the Loadbalancers, RDS, VPC Flowlogs, S3 Access and others.<br>
+                    Monitoring was enhanced and alarms created for EC2, RDS, ALB and Lambdas.<br>
+                    A backup strategy was defined and implemented.
+                    Best practices of the 5 pillars were applied.<br>
+                    <br>
+                    <img src="img/5pillars.webp" alt="5Pillars" width="500"> <br>
+                    <br>
+                    Besides the already mentioned measures for Security, Reliability & Operational Excellence<br>
+                    the Perfomance Efficiency had been optimized together with the changes on Loadbalancing and
+                    Lambda configurations.<br>
+                    Cost Optimization was addressed by scaling down the EB environments to 0 when no event was
+                    scheduled, <br>
+                    the correct sizing of the EC2 and RDS instances and use of serveless services like Lambda and API
+                    Gateway.<br>
+
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>5 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
