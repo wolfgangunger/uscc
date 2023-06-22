@@ -130,15 +130,16 @@
                         <b>terraform plan -var-file env/qa.tfvars</b><br>
                         <br>
                         The main.tf file will include all the modules you want to create for your environment.<br>
-                        This modules are in the subfolder 'modules'<br>
+                        These modules are in the subfolder 'modules'<br>
                         you can structure your modules in subfolders depending on the layers you want to define for your
                         project.<br>
                         For example IAM, Network, DB, Storage, Applications, Monitoring, etc<br>
                         For your modules you can use existing modules if these serve for your like :<br>
                         source = "terraform-aws-modules/vpc/aws"<br>
-                        or create your own one. <br>Just take take, you can use a module in all environments and use
+                        or create your own one. <br>
+                        This way you can use a module in all environments and use
                         cases,
-                        this you achieve<br>
+                        you achieve this<br>
                         with defining the correct variables.<br><br>
                         This should give you a good idea and also a basic project to start with.You can use the project
                         from my github

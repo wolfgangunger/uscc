@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LVLG7ZQ88K"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-LVLG7ZQ88K');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger | Cost Optimization strategies</title>
+    <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
+    <meta name="keywords"
+        content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
+    <meta name="author" content="AWS Blog Wolfgang Unger">
+    <meta name="og:title" property="og:title" content="AWS Blog Wolfgang Unger & SCC Brasil">
+
+    <!-- Favicons
+            ================================================== -->
+    <link rel="shortcut icon" href="../../img/SCC.ico" type="image/x-icon" />
+    <link rel="icon" href="../../img/SCC.ico" />
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap" rel="stylesheet"
+        type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+    <!-- Navigation
+            ==========================================-->
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand-scc" href="../../index.html">SCC</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Cost optimization strategies</h2>
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="blog-image" src="img/costs-pig.avif" alt="Pig" loading="lazy" />
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+
+                    <p>
+                        Before we take a look how to save costs on AWS in a generic approach - since any
+                        customer got different services running - your should take a closer look on your costs and
+                        get an overview what are the cost expensive services in your account(s).<br>
+                    <h2>Initial Cost Analysis</h2><br>
+
+                    You can use the AWS Cost Explorer to analyze usage and costs.
+                    There are are lot of filters to get a good overview on your expenses.<br>
+                    You can aggregate by Account our AWS Service level on high level but also filter
+                    on resource level like EC2 instance ID .<br>
+                    <br>
+                    <img class="blog-image" src="img/costexplorer.jpg" alt="Cost Explorer" loading="lazy" /><br>
+                    Try to figure out what are the most expensive resources or resource groups, this is where your
+                    should try to consider changes. <br>
+                    If you spend 4 $ monthly on Lambdas, it would be a waste of time, to develope or even consider
+                    measures to lower these costs.<br>
+                    You should for example know after your analyses:<br>
+                    <b>EC2 Computing Costs 600$ </b><br>
+                    <b>Data transfer costs 120$ </b><br>
+                    <b>Storage Costs 400$ </b><br>
+                    etc
+                    <br><br>
+                    <hr />
+                    Now we can take a closer look on the possibilities to save costs on AWS<br>
+                    <br>
+                    <h2>Compute</h2>
+                    <img class="blog-image" src="img/cpu.avif" alt="CPU" loading="lazy" /><br>
+                    <h3>Rightsizing</h3>
+                    Use Trusted Advisor to find Low Utilization EC2 instances or RDS Idle Instances<br>
+                    Also use the Cloud Watch Metrics to check if your instances are oversized.<br>
+                    On Premise Admistrators tend to keep CPU Utilization low on the servers, to extend the lifespan,
+                    since
+                    the server is company property. <br>The average Utilization there is about 30%.
+                    You don't need to follow this approach with cloud instances, if the instance still performs good
+                    with 90% CPU Utilization, no need to upsize. Keep them under load, you pay for 100% Utilization,
+                    not just
+                    for 35%.<br>
+                    <br>
+
+                    <h3>Autoscaling</h3>
+                    Use horizantal scaling, not vertical scaling.<br>
+                    On Premise you cannot just launch new servers if it is Black Friday.<br>
+                    You have to calculate your usage on Peak time and do the guesswork to buy servers for your
+                    racks.<br>
+                    So normally there are oversized, run on low Utilization to be able to still work in the Peak
+                    times.<br>
+                    On AWS you should fine the right instance size for running your application without problems but
+                    with
+                    a high Utilization.<br>
+                    If you need more Compute Power, you can launch new instances with Autoscaling, based on metrics like
+                    CPU or networking or SQS messages for example.<br>
+                    You scale out if more servers are needed and you scale in when there is only a few users on the
+                    platform.<br>
+                    Important numbers to finetune here are Desired Count, Miminum Count and Maximum Count.<br>
+                    <br>
+
+                    <h3>Reduce usage hours</h3>
+                    On Premise nobody shuts down instances.<br>
+                    The only savings would be the electricity bill. You already paid your servers.
+                    In the cloud you pay per usage or demand.<br>
+                    Meaning if you use a instance just 8h a day, you can save 66% costs if you don't let it running 24h
+                    but
+                    just 8h.<br>
+                    Autoscaling was already mentioned you can scale down Groups of severs, who have to be online 24/7
+                    down to
+                    1 instance in the night, when there is low user activity.<br>
+                    Other instances you might shut down completly if there is no requirement for 24/7.<br>
+                    The instances will only be used from 8am to 6pm ? Shut them down the rest of the time.<br>
+                    You can automate this with tagging and lambas, systems manager or other approaches.<br>
+                    <br>
+                    Also terminate any unused Instances. Sometimes people launch an instance for testing something, but
+                    forgot to stop or terminate it. Stop and terminate anything which is not really needed.<br>
+                    For background tasks don't use 24/7 instances.<br>
+                    Use docker and for example AWS Batch. Fargate can also serve if you configure the task to stop
+                    after processing. If the job needs 2h to process, that's all you should pay for it.<br>
+                    Serverless is also a good approach on non-steady workloads.<br>
+                    You pay just for the processed time, not for a 24/7 instance.<br>
+                    This can be perfect for business logic ( from applications into lambda) or Databases linke
+                    Aurora Serverless or Dynamo.<br>
+                    <br>
+
+                    <h3>Use Sport instances, reserved instance and saving plans</h3>
+                    Spot instances are unused AWS instances that can cost up to 90% less than on-demand instances.
+                    You can bid on AWS instances, with the price being determined by supply and demand<br>
+                    But don't use them for important workloads which must not be interrupted, Spot instances may be
+                    disconnected. They don't serve for Production Databases!<br>
+                    Great use cases are stateless servers ( added by autoscaling to the baseline of reserved or
+                    on-demand servers ), servers for batch processes, anything which might not cause you trouble,
+                    if the servers goes down. Also consider them more in your Dev and QA environments, but not on
+                    Prodcution<br>
+                    <br>
+                    With reserved Instances, you make a long-term commitment in return for a significant discount,
+                    You can save significant money using them.<br>
+                    <br>
+                    AWS Savings Plans are a pricing model that offers discounted prices on regular On-Demand Instances
+                    when you commit to one or three years of use.<br>
+                    These are valid for EC2 instances and also for RDS instances.<br>
+                    For serverless computing like Fargate or Lambda your can purchase a Compute Savings Plan.<br>
+                    <br>
+
+                    <br>
+                    <h2>Storage</h2>
+                    <img class="blog-image" src="img/hd.avif" alt="Harddrive" loading="lazy" /><br>
+
+
+                    <h3>S3 usage and storage type</h3>
+                    For S3 there is not only the Standard Storage Class availible - which is most used, because
+                    Default<br>
+                    S3 Standard-Infrequently Accessed (IA) and S3 One Zone-IA classes are designed for data accessed
+                    less than once a month.<br>
+                    These classes are cheaper than the S3 standard, but you do sacrifice some performance.<br>
+                    You can access your data more quickly if you use the S3 standard storage class, but you'll pay more
+                    for that convenience.<br>
+                    Also Glacier is a great and cheap option for long term archive storage.<br>
+                    Please have a look into our blog for more information on<br>
+                    <a href="s3-intelligent-tiering.html" class="page-scroll"> S3 Storage classes and intelligent
+                        tiering</a>
+                    <br>
+                    <h3>EBS Volumes</h3>
+                    With EBS Volumes you can also save a lot of money.<br>
+                    First, delete unattached EBS Volumes.<br>
+                    Also delete old snapshots if no longer needed.<br>
+                    After stopping or terminating EC2 Instances, the attached block volumes keep running, causing
+                    costs.<br>
+                    You should find the unattached EBS volumes and identify whether they are necessary or not.<br>
+                    Rightsize your volumes, this is not just important for EC2 instances but also for RDS.<br>
+                    If you really run out of diskspace you still can upgrade to a bigger Volume.<br>
+                    Select the Right EBS types.<br>
+                    EBS volumes are divided into two main categories:<br>
+                    HDD-backed storage for throughput intensive workloads.<br>
+                    SSD-backed storage for transactional workloads.<br>
+                    Which one to use depends a lot on your use case and application type.<br>
+                    For example, if you are working on applications that read or write huge volumes of sequential data,
+                    you can consider HDD storage.<br>
+                    Both Cold and Throughput HDD volumes are over 50% cheaper than SSD storage.<br>
+                    Get more informations in detail in the AWS EBS documentation.<br>
+
+                    <br>
+
+                    <br>
+                    <h2>Serverless</h2>
+                    <img class="blog-image" src="img/serverless.png" alt="Serverless" loading="lazy" /><br>
+                    <h3>DynamoDB</h3><br>
+                    DynamoDB can become extremely expensive to use.<br>
+                    There are 2 pricing structures to choose from:<br>
+                    provisioned capacity and on-demand capacity.<br>
+                    <br>
+                    You should use provisioned capacity when:<br>
+                    - You know the maximum workload your application will have<br>
+                    - Your application’s traffic is consistent and does not require scaling (there is also autoscaling
+                    available, but it costs extra)<br>
+                    <br>
+                    You run better with on-demand capacity when:<br>
+                    - You’re not sure about the workload of your application
+                    - You don’t know how consistent your application’s data traffic will be<br>
+                    - The data might be accessed only sporadically<br>
+                    - You only want to pay for what you use<br>
+                    <br>
+                    Bases on this make up your choice with this in mind:<br>
+                    On-demand tables are about five to six times more costly per request than provisioned tables.<br>
+                    So if provisioned capacity is possible, since you have kind of a constant workload, it is
+                    the better choice.<br>
+                    <br>
+
+                    <br>
+                    <h2>Network</h2>
+                    <img class="blog-image" src="img/network.avif" alt="Network" loading="lazy" /><br>
+                    <br>
+
+                    <h3>Use private IPs and endpoints</h3><br>
+                    Traffic inside your VPC is normally without extra cost, but public traffic is always charged.<br>
+                    <i>Note: Data transfer between availability Zones do cost extra, see the next bullet point.</i><br>
+                    S3 Buckets for example are per Default accessed public. Even if you access their content from
+                    within<br>
+                    your VPC, this you will be charged for this traffic.<br>
+                    But you can create a interface VPC endpoint for your S3 Buckets and this way your<br>
+                    AWS resources can now access the data without extra costs.<br>
+                    Not too many use this feature.<br>
+                    <br>
+                    Also EC2 instances should always be placed in the private subnets ( if not internet facing
+                    web-servers).<br>
+                    First this is a must for security but it is also an issue for the network traffic costs.<br>
+                    If you access your instances over a public IP address, you will be charged.<br>
+                    For data transfer via the private IP address not.<br>
+                    <i>Note: Data transfer between availability Zones do cost extra, see the next bullet point.</i><br>
+                    It is always recommended only use private IPs and subnets for communications between your apps and
+                    services or DBs.<br>
+                    <br>
+                    Also have a look in the AWS Documentation about VPC interface and gateway endpoints.
+                    They might also help you saving costs.<br>
+
+                    <br>
+
+                    <h3>Choose availability zones and regions under a cost aspect</h3><br>
+                    Compliance might obrigate you to run your services and store your data in your region.<br>
+                    If not, you should take a look at the prices for AWS services in different regions and compare
+                    them.<br>
+                    They differ from region to region and it might be an option to save your data or run your<br>
+                    services in a near by and not your home region.<br> Keep latency in mind, but this might not
+                    affect
+                    if you for example use CloudFront as Cache, the data cached in Cloudfront will be located in
+                    Edge Locations all over the world.<br>
+                    Data transfer costs within AWS are charged for 2 scenarios.<br>
+                    - Data transfer across regions.<br>
+                    For example if you do S3 cross region replication or got RDS cross region replicas.<br>
+                    - Data tranfer within a region.<br>
+                    Data tranfer from one availability zone to another within a region will cost you money.<br>
+                    Data transfer between two Amazon EC2 instances in different availability zones within the same
+                    region is charged at $0.01 per GB.<br>
+                    Data transfer between an Amazon EC2 instance and an Amazon S3 bucket in the same region is charged
+                    at $0.09 per GB.<br>
+                    Keep this in mind when you design your system architecture.<br>
+                    Multi AZ is important for High availability, but it is not for free.<br>
+                    Try to reduce in between availability zone communication and data transfer.<br>
+                    For your RDS this might not be the best option, but there are use cases where you should
+                    appy this. For example Batch Jobs which will be triggered nightly. <br>
+                    Should the Batch environment really be Multi AZ and high available?<br>
+                    What if you use only 1 AZ and it becomes offline for 2 h. <br>
+                    Your batch jobs just can run a little later. If you can accept this, go for the cost saving
+                    approach.<br>
+                    If you define a Cluster Group for a High Performance Computing use case, it is anyway recommended
+                    to use a 'Cluster Placement Group' and not a 'Spread Placement group' to run your instances
+                    in only one AZ to keep latency low and achieve the maximum perfomance.<br>
+                    If you want to run your application servers only in one AZ, be aware this setup cannot
+                    be considered High Availability. But you could implement a Standy By AZ ( or Standby Region) and
+                    automatic failover. <br>
+                    The right decision here depends of course a lot on your real costs.<br>
+                    Therefor the Initial cost analyses is important. <br>
+                    If data transfer costs are 1 % of your AWS bill, no need to worry.<br>
+                    If it is much more and significant money, consider it also in your Multi AZ architecture.<br>
+                    <br>
+
+                    <hr />
+                    <br>
+                    Once you have optimized everything, don't rest and make a analyses again every month and verify
+                    you still follow all these best practices.<br><br>
+                    <h2>Monthly Analysis</h2>
+                    <img class="blog-image" src="img/analysis.avif" alt="Analysis" loading="lazy" /><br>
+
+                    <h3>Analyse monthly with Trusted Advisor and Cost Explorer</h3><br>
+                    Once you have optimized your costs, don't forget to analyse it again after a while or
+                    best monthly.<br>
+                    Maybe your migration is still ongoing or new services and features are developed and deployed,
+                    so check your infrastructure regularly.
+                    <br>
+                    <br>
+                    <h3>Setup Cost Alarms</h3>
+                    One great way to keep on eye on your costs on AWS is to set up cost alerts which will send a
+                    notification when your
+                    monthly bill reaches a certain amount.
+                    <br>
+                    To do this, navigate to the Billing and Cost Management section of the AWS Management Console. Then,
+                    click on the Preferences tab and choose the Enable Cost Alerts checkbox.<br>
+                    <br>
+
+
+
+
+                </div>
+
+
+                <br>
+            </div>
+        </div>
+        <br>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>6 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
