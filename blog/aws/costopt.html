@@ -13,7 +13,7 @@
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AWS Blog Wolfgang Unger | 7 Cloud Migration strategies</title>
+    <title>AWS Blog Wolfgang Unger | Cost Optimization strategies</title>
     <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
     <meta name="keywords"
         content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
@@ -22,7 +22,8 @@
 
     <!-- Favicons
             ================================================== -->
-    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../img/SCC.ico" type="image/x-icon" />
+    <link rel="icon" href="../../img/SCC.ico" />
     <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
@@ -298,12 +299,42 @@
                     <br>
 
                     <h3>Choose availability zones and regions under a cost aspect</h3><br>
-                    The cost of AWS varies by region. Data transfers between different availability zones are
-                    charged an
+                    Compliance might obrigate you to run your services and store your data in your region.<br>
+                    If not, you should take a look at the prices for AWS services in different regions and compare
+                    them.<br>
+                    They differ from region to region and it might be an option to save your data or run your<br>
+                    services in a near by and not your home region.<br> Keep latency in mind, but this might not
+                    affect
+                    if you for example use CloudFront as Cache, the data cached in Cloudfront will be located in
+                    Edge Locations all over the world.<br>
+                    Data transfer costs within AWS are charged for 2 scenarios.<br>
+                    - Data transfer across regions.<br>
+                    For example if you do S3 cross region replication or got RDS cross region replicas.<br>
+                    - Data tranfer within a region.<br>
+                    Data tranfer from one availability zone to another within a region will cost you money.<br>
                     Data transfer between two Amazon EC2 instances in different availability zones within the same
-                    region is charged at $0.01 per GB.
+                    region is charged at $0.01 per GB.<br>
                     Data transfer between an Amazon EC2 instance and an Amazon S3 bucket in the same region is charged
                     at $0.09 per GB.<br>
+                    Keep this in mind when you design your system architecture.<br>
+                    Multi AZ is important for High availability, but it is not for free.<br>
+                    Try to reduce in between availability zone communication and data transfer.<br>
+                    For your RDS this might not be the best option, but there are use cases where you should
+                    appy this. For example Batch Jobs which will be triggered nightly. <br>
+                    Should the Batch environment really be Multi AZ and high available?<br>
+                    What if you use only 1 AZ and it becomes offline for 2 h. <br>
+                    Your batch jobs just can run a little later. If you can accept this, go for the cost saving
+                    approach.<br>
+                    If you define a Cluster Group for a High Performance Computing use case, it is anyway recommended
+                    to use a 'Cluster Placement Group' and not a 'Spread Placement group' to run your instances
+                    in only one AZ to keep latency low and achieve the maximum perfomance.<br>
+                    If you want to run your application servers only in one AZ, be aware this setup cannot
+                    be considered High Availability. But you could implement a Standy By AZ ( or Standby Region) and
+                    automatic failover. <br>
+                    The right decision here depends of course a lot on your real costs.<br>
+                    Therefor the Initial cost analyses is important. <br>
+                    If data transfer costs are 1 % of your AWS bill, no need to worry.<br>
+                    If it is much more and significant money, consider it also in your Multi AZ architecture.<br>
                     <br>
 
                     <hr />
