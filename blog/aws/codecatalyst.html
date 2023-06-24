@@ -16,7 +16,7 @@
     <title>AWS Blog Wolfgang Unger | AWS Code Catalyst</title>
     <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
     <meta name="keywords"
-        content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
+        content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodeCatalyst, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
     <meta name="author" content="AWS Blog Wolfgang Unger">
     <meta name="og:title" property="og:title" content="AWS Blog Wolfgang Unger & SCC Brasil">
 
@@ -95,7 +95,7 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>Get started with AWS Code Catalyst</h2>
+                <h2>How to get started with AWS Code Catalyst</h2>
                 <hr>
             </div>
             <div class="space"></div>
@@ -106,7 +106,8 @@
                     <h4>By Wolfgang Unger</h4><br>
 
                     <h3>Introduction</h3>
-                    <p> Code Catalyst is a new Service to offer a unified software and development service to
+                    <p> Welcome to this Quickstart and Tutorial on how to get started on AWS Code Catalyst.<br>
+                        Code Catalyst is a new Service to offer a unified software and development service to
                         enable teams to easier develope and deploy their applications on AWS.<br>
                         So far we know already CodeCommit, CodeBuild, CodeDeploy and CodePipeline from
                         the DevTools / DevOps Service Family.<br>
@@ -114,7 +115,9 @@
                         in only one AWS service. <br>
                         Please notice, so far codecatalyst is still in development, only available in Region us-west-2
                         and also not fully integrated into the AWS Web Console, you will access its UI under this <br>
-                        URL: https://codecatalyst.aws/<br>
+                        URL:
+                        <a href="https://codecatalyst.aws/" class="page-scroll">AWS CodeCatalyst UI</a>
+                        <br>
                         Once you opened the Code Catalyst UI you can switch between your spaces and projects.<br>
                         To understand these 2 entities:<br>
                         A Space can have multiple projects and it can be in your AWS account or someone
@@ -128,7 +131,7 @@
                         Under CI/CD are the workflows ( pipelines) and environments.<br>
                         You have a Scrum Board under Issues were can create issues/tasks and track the progress.<br>
                         You might know this from other Scrum Tools are also from Azure Devops.<br>
-                        Issues Scrum Board<br><br>
+                        <br>
                         <img class="blog-image" src="img/cc-board.jpg" alt="codecatalyst-board" loading="lazy" /><br>
                         <br>
                     <h3>Setup</h3><br>
@@ -154,6 +157,7 @@
                     <img class="blog-image" src="img/cc-srv.jpg" alt="codecatalyst-np" loading="lazy" /><br>
                     <br>
                     After defining some names and options in the wizard, the project was created<br>
+                    Btw I have selected Python as the runtime for the Lambdas, but this is up to you<br>
                     <br>
                     <img class="blog-image" src="img/cc-srv1.jpg" alt="codecatalyst-project" loading="lazy" /><br>
                     <br>
@@ -193,7 +197,12 @@
                     <br>
                     Obviously a CDK project was created, the AWS resources will be created with CDK code.
                     Please have also a look into the Readme, were you can find some informations on how to build the
-                    project.
+                    project.<br>
+                    We have a app.py defining the stack to be deployed.<br>
+                    We got a cdk.json for project properties.<br>
+                    A requrirements.txt file for the pip modules.<br>
+                    The cdk classes are in the folder python.<br>
+                    There you find also a sub-folder lambda, with the code for the 5 Lambda functions.<br>
                     Before we create a pipeline ( or workflow how it is named in codecatalyst) to deploy our
                     resources automatically, let's see if we can build and deploy our project inside the IDE.<br>
                     Since it is a CDK project, some KnowHow on CDK projects is requrired, if you are not familiar
@@ -213,7 +222,7 @@
                     <i>env=cdk.Environment(account='xxxxxxxxxxxx', region='us-west-2')</i><br>
                     <br>
                     Now we can bootstrap the project:<br>
-                    <i>cdk bootstrap aws://243277030071/us-west-2</i><br>
+                    <i>cdk bootstrap aws://xxxxxxxxxxxx/us-west-2</i><br>
                     <br>
                     Have a look into your Account and check the CloudFormation Stacks, you will see the
                     new Stack CDKToolkit Stack in the CloudFormation Console.<br>
@@ -230,23 +239,36 @@
                     Gateway.<br>
                     Perfect, the resources were deployed successfully in our account, lets have
                     a look, if everything is in its place and working.<br>
+                    We will find 5 Lamda functions, also a Dynamo table, it was created with only an ID index.<br>
+                    You will see this in the pyhton_stack.py.<br>
+                    You can edit this and adapt the code for your table structure.<br>
+                    Also we can find a API Gateway. Let's test if everything is working.<br>
+                    First we can call the GET (all) method and we should get an empty array as result - since
+                    we still don't have items in the table.<br>
+                    So either you can add an item directly in the DynamoDB to get some results there or
+                    you use the POST method to insert an item. <br>
+                    Once you have added some items, you will also see them in the GET method.<br>
+                    So looks like everything is working perfect.<br>
                     <br>
-                    {"description": "Second Item", "id": "2"}
-                    <br>
-
                     <h3>Worklow Setup</h3><br>
                     Now lets create a Pipeline to deploy our project from Code Catalyst.
                     Switch to workflows and open the Definition Yaml File.<br>
                     We need a CDK Deployment, so lets search for a template example.<br>
                     In the AWS Documentation for Code Catalyst you can find an example<br>
-                    https://docs.aws.amazon.com/codecatalyst/latest/userguide/cdk-dep-action-ref.html<br>
-
+                    <a href="https://docs.aws.amazon.com/codecatalyst/latest/userguide/cdk-dep-action-ref.html"
+                        class="page-scroll">Documentation AWS CDK Deploy Action</a>
+                    <br>
+                    <br>
                     Important: The docu is not this good unfortunately.<br>
-                    Under Compute it is indeed not a list, but only a Item . So it is Type: EC2 and not - Type:<br>
+                    Under Compute it is indeed not a list, but only a Item . So it is 'Type: EC2' and not '- Type:
+                    EC2'<br>
+                    Please change this, or you will get an error on saving the Yaml.<br>
+                    <br>
 
                     Update the required fields like Connection - Name , - StackName etc and also take a look at the role
                     you define
-                    at - Role. <br>It must have the right permissions and Trust Policy. See the documentation about the
+                    at - Role. <br>
+                    It must have the right permissions and Trust Policy. See the documentation about the
                     role
                     at the end of the documentation.<br>
 
@@ -255,17 +277,26 @@
                     We already did a bootstrap from the console, but you should add a bootsrap action to
                     be able to deploy new environments/accounts without a manual bootstrap from your IDE.<br>
                     See the action definition here<br>
-                    https://docs.aws.amazon.com/codecatalyst/latest/userguide/cdk-boot-action-ref.html<br>
-
-                    Build:<br>
+                    <a href="https://docs.aws.amazon.com/codecatalyst/latest/userguide/cdk-boot-action-ref.html"
+                        class="page-scroll">Documentation AWS CDK Bootstrap Action</a>
+                    <br><br>
+                    Once we have defined the workflow with 2 actions, we can start it and it should look like
+                    this:<br>
+                    <br>
                     <img class="blog-image" src="img/cc-build.jpg" alt="codecatalyst-build" loading="lazy" /><br>
+                    <br>
+                    Perfect our workflow is also working now, so the project can be build from within CodeCatalyst
+                    and we don't need the cdk commands in the IDE no longer.<br>
+                    Now you can adapt the project for your needs and deploy to your environment.<br>
+                    Have fun !<br><br>
 
+
+
+                    Have also a look into the Docu of CodeCatalyst on AWS:<br>
+                    <li><a href="https://docs.aws.amazon.com/codecatalyst/latest/userguide/welcome.html"
+                            class="page-scroll">Documentation AWS</a></li>
+                    <br>
                 </div>
-
-
-                Doku AWS:<br>
-                https://docs.aws.amazon.com/codecatalyst/latest/userguide/welcome.html<br>
-
 
                 <br>
             </div>
