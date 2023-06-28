@@ -257,8 +257,11 @@
                     So looks like everything is working perfect.<br>
                     <br>
                     <h3>Workflow Setup</h3><br>
-                    Now lets create a Pipeline to deploy our project from Code Catalyst.
-                    Switch to workflows and open the Definition Yaml File.<br>
+                    Now lets create a Pipeline to deploy our project from Code Catalyst.<br>
+                    Switch to workflows and press Create worklow.<br>
+                    You have to select the source repository and the branch.
+                    You can use here also linked Github repos, I will mention this later on.<br>
+                    Once created open the Definition Yaml File.
                     We need a CDK Deployment, so lets search for a template example.<br>
                     In the AWS Documentation for Code Catalyst you can find an example<br>
                     <a href="https://docs.aws.amazon.com/codecatalyst/latest/userguide/cdk-dep-action-ref.html"
@@ -287,14 +290,34 @@
                         class="page-scroll">Documentation AWS CDK Bootstrap Action</a>
                     <br><br>
                     Once we have defined the workflow with 2 actions, we can start it and it should look like
-                    this:<br>
+                    this once finished:<br>
                     <br>
-                    <img class="blog-image" src="img/cc-build.jpg" alt="codecatalyst-build" loading="lazy" /><br>
+                    <img class="blog-image" src="img/cc-build2.jpg" alt="codecatalyst-build" loading="lazy" /><br>
                     <br>
                     Perfect our workflow is also working now, so the project can be build from within CodeCatalyst
                     and we don't need the cdk commands in the IDE no longer.<br>
                     Now you can adapt the project for your needs and deploy to your environment.<br>
-                    Have fun !<br><br>
+                    Please take a look into the documentation how to adapt your worklow and add more actions, for
+                    example test or deploy.<br>
+                    <br>
+                    <h3>More Features</h3>
+                    As you can see in the left main menu you have some more features:<br>
+                    -You can create Issues and a (Scrum) Board for them.<br>
+                    -A section for your test Reports<br>
+                    -The CI/CD section where you create Worfklows (Pipelines), environments, Secrets and more.<br>
+                    -And the Code Section.<br>
+                    Per default your sources are kept there, you can add git repos there and define as source for your
+                    workflows.<br>
+                    But you can also link an external repo here, currently Github and Jira are supported.
+                    Interesting that AWS own CodeCommit is not supported yet.<br>
+                    To link a Github Repo you first must install an extension and after this you can link your repo into
+                    the Code Section in CodeCatalyst and use it the same way as Source for your worklfows.<br>
+                    As you can see on this image here, I have 2 repos defined, one in CodeCatalyst and a linked Github
+                    repo.<br>
+                    <br>
+                    <img class="blog-image" src="img/cc-repos.jpg" alt="codecatalyst-repos" loading="lazy" /><br>
+                    <br>
+                    Now create your first space and project and have fun with CodeCatalyst!<br><br>
 
 
 
