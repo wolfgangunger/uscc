@@ -106,60 +106,7 @@
                     <p></p>
                     <h4>By Wolfgang Unger</h4><br>
                     <br>
-                    <p> Maybe you already used DMS (Database Migration Service)<br>
-                        If so, you know, you have to provision the EC2 instance on which runs the Database Migration<br>
-                        Service. So you have to research an plan the desired capacity you are going to need.<br>
-                        <br>
-                        By now, June 2023, this is no longer required.<br>
-                        The DMS is now available Serverless.<br>
-                        If you open DMS in the web-console you will now find Serverless Migration in the left main
-                        menu.<br>
-                        <br>
-                        <img src="img/dms1.jpg" alt="DMS1" width="600">
-                        <br>
-                        At launch, AWS DMS Serverless supports Microsoft SQL Server, PostgreSQL, MySQL, and Oracle as
-                        data sources.<br>
-                        For Data Targets even more, Amazon Aurora, Amazon Relational Database Service (Amazon RDS),
-                        Amazon Simple Storage Service (Amazon S3), Amazon Redshift, Amazon DynamoDB and others.<br>
-                        If you Create a new replication, the configuration is by now really easy.<br>
-                        You have to define a name, replication type and the 2 endpoints ( source and target), thats it
-                        basically.<br>
-                        Of course you got still the options for Dropping tables or not, LOB mode, Table Mappings,
-                        etc.<br>
-                        But the guesswork of figuring out, what Instance Type for your DMS would be the best, is now
-                        obsolet.<br>
-                        <img src="img/dms2.jpg" alt="DMS1" width="400"><br>
-                        <br>
-                        For replication type you have these options:<br>
-
-                        - Full load — If I need to migrate all existing data in source database<br>
-                        - Change data capture (CDC) — If I have to replicate data changes from source to target
-                        database.<br>
-                        - Full load and change data capture (CDC) — If I need to migrate existing data and replicate
-                        data changes from source to target database.<br>
-                        <br>
-                        Many sections like Table Mapping have not change, so no need to cover them here.
-
-                        Interesting is the compute section, where you now define only the Capacity Units and lo longer a
-                        instance.<br>
-                        <img src="img/dms3.jpg" alt="DMS1" width="400"><br>
-                        <br>
-                        <img src="img/dms4.jpg" alt="DMS1" width="400"><br>
-                        <br>
-                        Setting the maximum capacity allows you to manage costs by making sure that AWS DMS Serverless
-                        never consumes more resources than you have budgeted for.<br>
-                        <br>
-                        Finally you just press 'Create Replication' and then you can start to replicate your data.<br>
-                        <img src="img/dms5.jpg" alt="DMS1" width="400"><br>
-                        <br>
-                        After you have started the replication you can monitor the progress in the Monitoring tab.<br>
-                        Once the replication is done, the capacity should start to decrease.<br>
-                        This indicates that in addition to AWS DMS Serverless successfully scaling up to the required
-                        capacity,
-                        it can also scale down within the range you have defined<br>
-                        So by now, you only have to verify your data has been successfully replicated to your target
-                        database.<br>
-                        Try it out and enjoy the new feature!<br>
+                    <p> Maybe you already
                 </div>
 
 
