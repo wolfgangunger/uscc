@@ -95,6 +95,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>Reliability</h2>
+                <h3>from the 5 pillars of the Well architected Framework</h3>
                 <hr>
             </div>
             <div class="space"></div>
@@ -105,39 +106,123 @@
                     <h4>By Wolfgang Unger</h4><br>
 
 
-                    <img src="img/cloudformation.png" alt="SMM" width="90"> <br>
+
                     <br>
+                    What means Reliability from the 5 pillars of the Well architected Framework exactly?<br>
+                    Lets have a closer look what Reliability means in the context of AWS or cloud computing.<br>
+                    The AWS documentation describes Reliability like this:<br>
+                    "The reliability pillar encompasses the ability of a workload to perform its intended function
+                    correctly
+                    nd consistently when it’s expected to. <br>
+                    This includes the ability to operate and test the workload through its total lifecycle. <br>
+                    This paper provides in-depth, best practice guidance for implementing reliable workloads on AWS"<br>
+                    <br>
+                    There are 4 maior topics to look in detail:<br>
+                    <li>Shared Responsibility Model for Resiliency</li>
+                    <li>Design principles</li>
+                    <li>Definitions</li>
+                    <li>Understanding availability needs</li>
+                    <br>
+                    <br>
+                    <h4>Shared Responsibility Model for Resiliency</h4><br>
+                    Resiliency is a shared responsibility between AWS and you.<br>
+                    It is important that you understand how disaster recovery (DR) and availability, as part of
+                    resiliency, operate under this shared model.<br>
+                    <br>
+                    <b>AWS responsibility - Resiliency of the cloud</b><br>
+                    AWS is responsible for resiliency of the infrastructure that runs all of the services offered in the
+                    AWS Cloud.<br>
+                    This infrastructure comprises the hardware, software, networking, and facilities that run AWS Cloud
+                    services. <br>
+                    AWS uses commercially reasonable efforts to make these AWS Cloud services available, ensuring
+                    service availability meets or exceeds<br>
+                    <br>
+                    <b>Customer responsibility - Resiliency in the cloud</b><br>
+                    Your responsibility is determined by the AWS Cloud services that you select. <br>
+                    his determines the amount of configuration work you must perform as part of your resiliency
+                    responsibilities.<br>
+                    For example, a service such as Amazon Elastic Compute Cloud (Amazon EC2) requires the customer to
+                    perform all
+                    of the necessary resiliency configuration and management tasks<br>
+                    <br>
+                    <img class="blog-image" src="img/shared-model-resiliency.png" alt="shared-model-res"
+                        loading="lazy" />
 
-                    Reliability pillar ensures that a given system is architected to meet operational thresholds, during
-                    a specific period of time, meet increased workload demands, and recover from failures with minimal
-                    disruption or no disruption.
-
-                    Design Principles
-
-                    Test Recovery Process
-
-                    Use automation to simulate different failures or to recreate scenarios that led to failures. This
-                    reduces the risk of components that are not been tested before failing.
-
-                    Automatic recovery from failure
-
-                    Enable the system monitoring by KPIs, triggering automation when a threshold is reached. Enable
-                    automatic notification and tracking for failures, and automated recovery processes that repair the
-                    failure.
-
-                    Scale horizontally to increase aggregate system availability
-
+                    <br>
+                    <h4>Design principles</h4><br>
+                    In the cloud, there are a number of design principles, which can help you increase reliability.<br>
+                    Lets have a look on 5 of them:<br>
+                    <br>
+                    <b>Automatically recover from failure:</b><br>
+                    By monitoring a workload for key performance indicators (KPIs), you can run automation when a
+                    threshold is breached. <br>
+                    This allows for automatic notification and tracking of failures, and for automated recovery
+                    processes that <br>
+                    work around or repair the failure. With more sophisticated automation, it’s possible to anticipate
+                    and remediate failures before they occur.<br>
+                    <br>
+                    <b>Test recovery procedures:</b><br>
+                    Testing is not typically used to validate recovery strategies. In the cloud, you can test how your
+                    workload fails,
+                    and you can validate your recovery procedures. <br>
+                    You can use automation to simulate different failures or to recreate scenarios that led to failures
+                    before.<br>
+                    <br>
+                    <b>Scale horizontally to increase aggregate workload availability:</b><br>
                     Replace one large resource with multiple small resources to reduce the impact of a single failure on
-                    the overall system.
+                    the overall workload.<br>
+                    Distribute requests across multiple, smaller resources to ensure that they don’t share a common
+                    point of failure.<br>
+                    If these instances are autoscaled by metrics like CPU or others, this will also help you economize
+                    money.<br>
+                    <br>
+                    <b>Stop guessing capacity:</b><br>
+                    In the cloud, you can monitor demand and workload utilization, and automate the addition or removal
+                    of resources
+                    to maintain the optimal level to satisfy demand without over- or under-provisioning.<br>
+                    There are still limits, but some quotas can be controlled and others can be managed.<br>
+                    You do no longer need to do the guesswork of planing your capacity.<br>
+                    <br>
+                    <b>Manage change through automation:</b><br>
+                    Changes to your infrastructure should be made using automation.
+                    The changes that need to be managed include changes to the automation, which then can be tracked and
+                    reviewed.
+                    You should set up a pipeline for your Deployment of IaC with CloudFormation or CDK.
 
-                    Stop guessing capacity
 
-                    Monitor demand and system utilization and automate the addition or removal of resources to maintain
-                    the optimal level.
 
-                    Manage change in automation
+                    <br>
+                    <br>
+                    <h4>Definitions</h4><br>
+                    This whitepaper covers reliability in the cloud, describing best practice for these four areas:
+                    <li>Foundations</li>
+                    <li>Workload Architecture</li>
+                    <li>Change Management</li>
+                    <li>Failure Management</li><br>
+                    Take a look in the PDF for more details:<br>
+                    <a href="https://docs.aws.amazon.com/pdfs/wellarchitected/latest/reliability-pillar/wellarchitected-reliability-pillar.pdf#definitions"
+                        target="_blank" class="page-scroll">Definitions</a>
 
-                    Changes to infrastructure should be done via automation.
+                    <br>
+                    <br>
+                    <h4>Understanding availability needs</h4><br>
+                    Most applications today aren’t monolithic systems with a single availability target.<br>
+                    Generally speaking, you can break an application down into several components, each with different
+                    availability requirements.<br>
+                    The microservice architecture established in the last years replaced the monolitic desing
+                    pattern.<br>
+                    By breaking your systems down into these component pieces, you can better understand your
+                    availability needs,
+                    and design your systems to meet those targets in a cost-effective way.<br>
+                    Many AWS customers take a similar approach to critically evaluating their applications and
+                    identifying subcomponents
+                    with different availability needs. <br>
+                    Availability design goals are then tailored to the different aspects, and the appropriate work
+                    efforts are performed to engineer
+                    the system. <br>AWS has significant experience engineering applications with a range of availability
+                    design goals,
+                    including services with 99.999% or greater availability.<br>
+                    <br>
 
                 </div>
 
