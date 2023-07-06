@@ -102,11 +102,220 @@
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
-                    <img src="img/multi1.jpg" alt="DMS" width="600">
+                    <img class="blog-image" src="img/multi1.jpg" alt="Mulit Account 1" loading="lazy" /><br>
                     <p></p>
                     <h4>By Wolfgang Unger</h4><br>
                     <br>
-                    <p> Maybe you already
+                    <h2>Introduction</h2>
+                    <p> Maybe you still run all of your AWS Services in just one account.<br>
+                        This is of course possible, but this is not recommended and you should consider distributing
+                        your
+                        services in various accounts.<br>
+                        Lets have a look on strategies to implement this in this blog.<br>
+                        First let's have a look on the benefits of the usage of various accounts instead of just
+                        one.<br>
+                    <h3>Better access control and implementation of the principle of least privilege.</h3>
+                    You can of control access to resources for IAM users also in just account, but this is
+                    going to be much more complicated as for separate accounts.<br>
+                    You will have to define fine-granular policies with explicite defined resources or deny
+                    statements.<br>
+                    If you separate your stages, for example Dev, QA and Prod you can control much easier who can
+                    access each stage with the defined roles per account.<br>
+                    For example for the Dev Accounts all Developers can have PowerUser rights, but you don't want this
+                    for the production account.<br> In Production just your Seniors and DevOps got PowerUser or Write
+                    Rights,
+                    others got just a ReadOnly Role to access log files.<br>
+                    This way you reduce the risk, somebody deletes your production resources inadvertently.<br>
+                    You have dedicated account for backup of sensitive Data?<br> Define only the users who should be
+                    able to
+                    access
+                    the data in your Role to access this account, instead of writing complicated access policies in one
+                    account.<br>
+                    <h3>Isolation of your stage environments</h3>
+                    Of course you could run 3 stages in just one account.<br>
+                    You could create 3 VPCs, for each stage one or even let your services run in just one VPC.<br>
+                    But this approach brings also some risks.<br>
+                    Imagine your application got environments variables to define some parameters like the DB Host or
+                    connection String to connect. <br>
+                    For you Dev Application the value might be : dev.connection-string <br>
+                    For Prod it is : prod.connection-string<br>
+                    Now one of your developers make changes on the environments properties for Dev and
+                    makes a little copy & paste error ( of course just in theory, these things never happen for real)
+                    and changes dev.connection-string to prod.connection-string.<br>
+                    Your Dev Database is a snapshot of your Production DB, so this will not be noticed immediately,
+                    when the Dev Application connects to the Prod Database.<br>
+                    If you have isolated your environments, an error would occur and you will detect the error in a
+                    second
+                    and no data can be compromised.<br>
+                    But if your environments are not isolated, the Dev Application will connect to the production
+                    Database
+                    and developers will make some changes, believing they work on the Dev Database.
+                    They might edit data or in worst case delete data or a whole table.<br>
+                    You don't want this to happen! <br>
+                    The DB is just an example, you could connect to the wrong APIs, microservices and so on.<br>
+
+                    <h3>Group workloads on business and ownership</h3>
+                    In a bigger company it makes also sense to group your workloads to different accounts by business
+                    purpose
+                    or ownership.<br>
+                    Each development team got their own Stage accouns for their applictions. <br>
+                    Isolation of business units can help them operate with greater decentralized control,
+                    but still provides the ability for you to provide overarching guardrails. <br>
+
+                    <h3>Better cost control</h3>
+                    By the separation per business purpose or teams comes one more advantage:<br>
+                    In addition to cost reporting at the account level, AWS has built-in support to consolidate
+                    and report costs across your entire set of accounts. <br>
+                    When you require fine-grained cost allocation, you can apply cost allocation tags to individual
+                    resources in each of your accounts. <br>
+
+                    <h3>Promote innovation and agility</h3>
+                    By setting up a sandbox account to develop new services or POCs you allow your
+                    developers experiment with new services without causing harms to your stage environments.<br>
+                    Also you can easily track the costs for this account by consolidated billing, much better as in just
+                    one account.<br>
+
+                    <h3>Problems with service quotas</h3>
+                    Each service in AWS got service quotas, which are valid for one account.
+                    For example Running On-Demand X instances is 28.
+                    If you run all your services and stages in just one account you will reach these quotas much faster.
+                    In this can have a negative impact on your prod environment.<br>
+                    Lets think you have your client facing business application set up with auto-scaling.<br>
+                    Normally running 10 instances, but when more customers are accessing the application, for
+                    example on Black Friday, the app might scale out to 20 instances.<br>
+                    Now your developers run some load tests against the Dev servers and scale this environment up for
+                    these tests. You reach the service quota for your instances, but your prodcution environment is
+                    still running with the desired count of 10.<br>
+                    Since a lot of customers are accessing your application to buy your products, the prod application
+                    servers are trying to scale out now, but they can't because you already reached the service
+                    quota.<br>
+                    Your customers will face a bad user experience with the application and you will lose money.<br>
+                    Also errors with service quotas are not easy to find. <br>
+                    The quotas are normally the last option were develpers search for a problem, when for example
+                    auto-scaling does not work as expected.<br><br>
+
+                    <h2>Define your Multi Account Setup</h2>
+                    Now it's time to define your multi account infrastructure, so how many accounts are you going to
+                    need?<br>
+                    This depends of course a lot of the size of your company, number of your business units,
+                    applications
+                    you run at AWS, but let's try to find a answer in a generic approach.<br>
+                    I recommended you also take a look into the AWS documentation and whitepaper for
+
+                    <a href="https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/benefits-of-using-multiple-aws-accounts.html"
+                        class="page-scroll">mulitple AWS Accounts</a><br><br>
+                    Lets have a look on a example Setup Scenario from this documentation<br>
+                    <img class="blog-image" src="img/multi-account.jpg" alt="Mulit Account 1" loading="lazy" /><br>
+                    <br>
+                    We see here the following accounts:<br>
+                    -AWS Organisations Account ( or Master Account)<br>
+                    -Shared Services Account<br>
+                    -Log Archive Account<br>
+                    -Security Account <br>
+                    -Network Service Account <br>
+                    Well actually on this diagram are Stage Accounts for business unit applications missing, but it we
+                    can start
+                    with this.<br>
+                    In the new documentation AWS introcuces even more account types, but if you don't plan for
+                    an international enterprise, we will be fine with those we got so far.<br>
+                    Lets describe the most important types of accounts, this way you should be able to define your
+                    account
+                    setup depending on your use case.<br>
+
+                    <h3>AWS Organisations Account or Master Account</h3>
+                    This is your main account were you also define your organizal structure and accounts.
+                    You can do this in AWS Organisations, see the next chapter on this.<br>
+                    Also your IAM users are defined here, for the other accounts you will use roles and do a switch
+                    role.<br>
+                    For each account you can define roles with the users you want to grant access and also exactly
+                    define
+                    what they should be able to do.<br>
+                    Also in this account is your consolidated billing. With cost allocation tags you can seperate your
+                    resources by accounts, workloads or projects.<br>
+                    Keep permisssions restricted for this account, your users basically just need to login and then
+                    switch role to the account, they have to work with.<br>
+                    You should not run any workloads or services in this account.
+
+                    <h3>Stage Accounts</h3>
+                    These are n accounts were you run your business application ( all or grouped by business units or
+                    workloads).<br>
+                    Stages have a lot of different names, but most used are :
+                    Prod, QA, Int, Test, Dev or sometimes Stage.<br>
+                    Most common is using 3 stages for example Dev, QA and Prod, but sometimes you might just
+                    need a QA and Prod account or you need 4 stages for some reason.<br>
+                    Try to keep the environments identical otherwise searching errors from stage to stage can be
+                    difficult.<br>
+                    Of course you can size your Dev or QA environments smaller than Prod to econimize costs.<br>
+
+
+                    <h3>Shared Services Account</h3>
+                    You might have resources or services, which need to be accessed from one than just one account
+                    or don't need to be staged, run just in one account and access other accounts.<br>
+                    The build tools account with for example a jenkins is an example for this, but this is described
+                    next.<br>
+                    If your stage account need to access a common shared resources, it should not be placed in one of
+                    them,
+                    it is the better practice to place it in a shared services account. If needed, you can peer VPCs to
+                    provide access for example for private subnets. <br>
+
+                    <h3>Build tool Account</h3>
+                    If you run for example CodePipeline to build your application and deploy your infrastructure to your
+                    stage accounts, you should setup a Build Tools account for this.<br>
+                    Running a Jenkins Server or Nexus and so on are also valid use case for this account.<br>
+
+                    <h3>Log Archive Account</h3>
+                    If you want to centralize your Log files, for example to also not grant read access to
+                    the prod account or just to store and backup them in just one place, you can use this kind of
+                    account.<br>
+                    <h3>Network Service Account </h3>
+                    If you have OnPremise Datacenter connected via Direct Link, if you use Transit Gateway,
+                    if your network setup is more advanced and needs a lot of configuration, you should consider
+                    a Network Service Account. <br>
+                    You can limit access to your Network Specialist and avoid Developers create confusion by
+                    changing network resources, peerings or access control list, they don't understand fully.<br>
+
+
+
+                    <h3>Backup Account </h3>
+                    You can backup data (snapshots etc) in AWS in the same region, cross region or cross account.<br>
+                    To avoid the failure of a AZ, you should backup in a different AZ in the same region.<br>
+                    If you want to be prepared for a failure of a complete region, do multi-region backup.<br>
+                    But what about if your account gets compromised by a hacker?<br>
+                    He might not even have account to your whole account, but maybe your application was hacked<br>
+                    and the application role was not setup with the principle of least privilege, instead somebody<br>
+                    just attached a Adminstrator Policy to the instance role of the application or even worse, the<br>
+                    application uses Access Keys and Secrets from a privileged user?<br>
+                    He could delete all of your data, backups, S3 buckets in all regions, your backups would be
+                    gone.<br>
+                    For this use case a Backup Account is really helpful.<br>
+                    You do cross-account replication to your backup account for this case.<br>
+                    Even so your application account was compromised and the data was deleted, you still got the backups
+                    and
+                    can setup a new account ( of course with IaC in a couple of minutes) and restore from your
+                    backups.<br>
+
+                    <h3>Summary</h3>
+                    For a small organisation you want need all of those, but here is a setup which I would consider
+                    as kind of a mimimum account strucucture to work with.<br>
+                    The Build tools account might be obsolet if you build outside of AWS for example with Gitlab or
+                    Azure Devops. <br><br>
+                    <img class="blog-image" src="img/accountstructure.jpg" alt="Mulit Account 3" loading="lazy" /><br>
+                    <br><br>
+                    <h2>AWS Organizations</h2>
+                    In your AWS Organisations Account or Master Account you can define the structure
+                    of your Organization by Organizational Units and Accounts.<br>
+                    An Organizational Unit can contain 0-n accounts, can just serve as an logical level<br>
+                    to organize your hierarchical tree or you be related with one ore more AWS accounts. <br>
+                    You can define a hierarchical structure for your Organizational Units first and<br>
+                    later on create new AWS accounts in AWS Organizations or invite existing accounts to your master
+                    account.<br>
+                    There is no rule or one correct way to define your organisation tree, this depends on your<br>
+                    requirements on how to seperate costs and permisssions, your workloads, usage of Service Control
+                    Policies and many
+                    other things. <br>
+                    To get started don't overengineer, create one OU, create or add your accounts to it, later on
+                    you can still change the OU structure and move your existing accounts. <br>
+
                 </div>
 
 
@@ -156,7 +365,8 @@
                     <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
                     </li>
                     <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
-                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a>
+                    </li>
                     <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
                 </ul>
             </div>
