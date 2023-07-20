@@ -126,7 +126,7 @@
                         Like main or for example development. These names don't change, so once you have setup your
                         pipeline, everything works fine.<br>
                         If you want to build your feature branches in your Pipeline, you have to create a new
-                        Pipeline so moment the first push was done at the new feature branch and you want
+                        Pipeline the moment the first push was done at the new feature branch and you want
                         to delete this new pipeline once the PR for the branch was merged or closed. <br>
                         There might be n feature branches active at one point of time. <br>
                         This is not quite easy to setup, therefor let's take a closer look on the details.<br>
@@ -149,7 +149,7 @@
                             github.event.head_commit.message }}" }' <br>   
                         </code>
                     <br>
-                    I am triggering these actions on Push events for branches with a defined nameing
+                    I am triggering these actions on Push events for branches with a defined naming
                     "^(feature|bug|hotfix))"
                     and also on the close PR action. <br>
                     The first action will create the feature branch if it does not yet exist, the second action will
@@ -173,8 +173,9 @@
                             delete:<br> 
 
                         </code>
+                    <br>
                     Once your github actions are setup, you will see the actions in your github repo in the actons
-                    tab:<br>
+                    tab:<br><br>
                     <img class="blog-image" src="img/multi-pipe3.jpg" alt="arch diagram" loading="lazy" /><br>
                     <br>
                     Please check the actions and the logs, no errors occurs in the execution.<br> You can also check the
