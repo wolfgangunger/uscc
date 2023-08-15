@@ -95,20 +95,20 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>Pipeline for CloudFormation Deployments</h2>
+                <h2>Pipeline for automatic CloudFormation Deployments</h2>
                 <hr>
             </div>
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
-                    <img class="blog-image" src="img/pipeline-cfn.jpg" alt="7" loading="lazy" />
+                    <img class="blog-image" src="img/pipelines-cfn.avif" alt="7" loading="lazy" />
                     <p></p>
                     <h4>By Wolfgang Unger</h4><br>
                     <p> 
                         <h4>Introduction</h4><br>
                         Do you need an automation to deploy your CloudFormation Templates to your AWS Account(s) ?<br>
-                        A Pipeline or a tool  that will automatically create a CloudFormation Deployment Pipeline for each of your stacks ?<br>
-                        You need to deploy the same Template on different ennvironments or accounts with different parameters for each template?<br>
+                        A Pipeline or a tool that will automatically create a CloudFormation Deployment Pipeline for each of your stacks ?<br>
+                        You need to deploy the same Template on different environments or accounts with different parameters for each template?<br>
                         Then you should read this blog and use this Pipeline which will do exactly this for you. <br>
                         <br>
                         CloudFormation is perfect to deploy your Infrastructure on AWS as IaC.<br>
@@ -123,7 +123,7 @@
                         Therefore it is good to have a pipeline to deploy these templates instead of do it manually .<br>
                         You will verify only Stacks in a certain git branch will be committed and the deployed stacks are always in sync with 
                         your repo.<br>
-                        Also you can then limit the user role and no longer allow manual deployments, at least not at QA or PROD.<br>
+                        Also you can then limit the user roles and no longer allow manual deployments, at least not at QA or PROD.<br>
                         <br>
                         But how do set up such a pipeline ? <br>
                         If you have for example 40 CloudFormation templates you will need 40 Pipelines, if you have 3 stages ( Dev, QA and Prod ), 
@@ -150,7 +150,7 @@
                             how the pipeline works.<br>
                             <br>
                             <h4>CloudFormation Repo</h4><br>
-                            Let's start from the beginning, we have a repo with our CloudFormation Templates, which represents my "Wolfgang Unger CFN Example Repo". <br>
+                            Let's start from the beginning, we have a repo with our CloudFormation Templates, which represents my "Wolfgang Unger CFN Example Repo" from the 2 repos above <br>
                             Each CloudFormation Stack will be deployed for example in 3 accounts (dev, qa and prod) with different variables.<br>
                             So we have besides our template yaml 3 json files for the variables and a structure somehow like this:<br>
                             <img class="blog-image" src="img/repo-cfn-1.jpg" alt="7" loading="lazy" /><br>
@@ -169,7 +169,7 @@
                             The CloudFormation Deployment Pipeline must be able to create or update a CloudFormation Stack. <br>
                             (Unfortunatelly this Pipeline cannot delete an deployed Stack, because it got only one Template in its Deployment Section and 
                             one stack there is mandatory. So if you decide to delete a stack and a folder, you have to delete the stack on the Console. <br>
-                            If you improve the pipeline to do so, let me know, would be a great feature)<br>
+                            This is also to protect accidental Stack deletion, see more Infos below.<br>
                             <br>
                             To use my Pipeline you have to follow the naming conventions of my example on the template and parameter files. 
                             If you want to change this or the prefix you have to adapt the code. <br>
@@ -177,17 +177,23 @@
                             <h4>Setup Generator Pipeline</h4><br>
                             Since we now got the source repo for our CloudFormation templates, we can have a look on the Pipeline which will 
                             create the CloudFormation Deployment Pipelines. <br>
+                            This is the architecture:<br><br>
+                            <img class="blog-image" src="img/pipeline-cfn.jpg" alt="7" loading="lazy" /><br>
+                            <br>
                             The Generator Pipeline is written in CDK Python in my repo "cdk-cfn-pipeline ".<br>
+                            If you don't know CDK and CodePipeline yet very well, please have also a look into this blog :<br>
+                            <a href="https://www.sccbrasil.com/blog/aws/cdk-pipeline.html"  class="page-scroll">CodePipeline with CDK Python </a><br>
+                                <br>
+                            
                             The readme explains quite well the neccessary steps, but I will mention the most important ones, but before this 
                             a note on deployments on different accounts and the Pipeline architecture: <br>
                             <br>
-                            The CDK Project will create a pipeline generator pipeline which will create one pipeline for each cloudformation template in the cfn-repo.  
-                            for this architecture 2 approaches are possible:  <br>
-                            To create this generator pipeline once in a toolchain account and create all cfn-pipelines for all accounts/stages in there.  <br>
-                            possible, but this would require cross account roles and setup and complicate this project, make it harder to understand.  <br>
+                            The CDK Project will create a Pipeline generator pipeline which will create one Pipeline for each Cloudformation template in the cfn-repo.  
+                            For this architecture 2 approaches are possible:  <br>
+                            To create this generator pipeline once in a toolchain account and create all cfn-pipelines for all accounts/stages in there to deploy to 3 different accounts  <br>
+                            Possible, but this would require cross account roles and setup and complicate this project, make it harder to understand.  <br>
                             My multi branch pipeline follows this approach <br> 
-                            See : <br>
-                            
+                            See this example using this approach:    
                             <a href="feature-branch-pipeline.html"  class="page-scroll">Git
                                 Multi Branch Pipeline</a><br>
                                 <br>
@@ -203,7 +209,7 @@
                             If you use a non-aws-native Repo you will have to setup a CodeStar Connection to allow CodePipeline to read your - lets say - Github repo, 
                             as in my example.<br>
                             In Github you have to install the AWS Connector for Github Application and add your repos in the configuration.<br>
-                            The you create the CodeStar Connection and define these repos there .<br>
+                            Then you create the CodeStar Connection and define these repos there .<br>
                             You will need the Code Star Connection ARN in the cdk.json.<br>
                             <br>
                             <h5>cdk.sjon</h5>
@@ -214,10 +220,10 @@
                             <h5>CDK Commands </h5>
                             you need to execute: <br>
                             python -m venv .venv  <br>
-                            .venv\Scripts\activate.bat  (windows )<br>
+                            source .venv/bin/activate (Linux) or  .venv\Scripts\activate.bat  (windows )<br>
                             pip install -r requirements.txt  <br>
-                            and then <br>
-                            cdk bootstrap with (change account number)<br>
+                            and then 
+                            bootstrap CDK  with (change account number)<br>
                             cdk bootstrap   --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess  aws://12345678912/us-east-1<br>
                             Next deploy the Pipeline Role with <br>
                             cdk deploy bootstrap-role-stack<br>
@@ -255,26 +261,33 @@
                             The Pipeline is setup with  'trigger_on_push=False' , so it will not start automatically once you have 
                             updated the CFN Repo. <br>
                             I implemented this, because you probably don't want this behaviour for QA and Prod. <br>
-                            It is better to start the Pipeline and therefor the Deployment manually once you are sure to do so.
-                            If you want to run the pipeline on code changes, you must change this Parameter, but I would recommend you <br>
-                            add at least a Manual Approval Step to the Pipeline. Otherwise you Prod ennvironment might get corrupted because of <br>
+                            It is better to start the Pipeline and therefor the Deployment manually once you are sure to do so.<br>
+                            If you want to run the pipeline on code changes, you must change this Parameter, but I would recommend you 
+                            add at least a Manual Approval Step to the Pipeline. Otherwise you Prod ennvironment might get corrupted because of 
                             an error in your Template.<br>
                             Best is to deploy it first on Dev, Test it and afterwards on QA and Prod. <br>
                             Select the Pipeline and press 'Release Changes'.<br>
+                            <br>
                             Once a Pipeline was created you can re-run it any time you want to update a stack. <br>
                             If you delete a folder and its template in your git-repo and run the Pipeline Generator Pipeline again, it will 
                             delete this Pipeline. <br>
-                            There is an issue on Deleting Stacks and its folder in your CFN-Repo.<br>
+                            There is an importing point on Deleting Stacks and its folder in your CFN-Repo:<br>
                             The Pipeline cannot delete the Stack since it must contain at least one Stack. And there is only one Stack . <br>
                             So you must delete the stack manually on the Console before running the Pipeline Generator Pipeline to cleanup the 
                             Pipeline. <br>
-                            I might implement later on a feature to delete the stack with boto in the python script running at the last action in the 
-                            Pipeline Generator Action, that's the place where it could be done. <br>
-                            Check my repo for updates. <br>
+                            I would be possible to delete the stack with boto in the python script running at the last action in the 
+                            Pipeline Generator Action, that's the place where it could be done, but there is no chance to include an approval in here, 
+                            so this is kind of risky. <br>
+                            If you rename a folder in your cfn-repo the CFN Template would be deleted automatic<br>
+                            Deleting CFN Stacks -especially on Prod- should always be confirmed manually, therefore I did not implement this.
+                            You - or some DevOps with permission to delete Stacks - have to delete the CFN Stack manually if you want to do so.  
                             <br>
                             <h5>Additional Infos</h5>
                             I hope you get the architecture behind this automated Pipeline and you can set up successfully.<br>
                             Please enjoy the CloudFormation Deployment Pipelines and  give feedback if you got. <br>
+                            You can adapt the code if you need a different behaviour, for example, if you want the CFN Pipelines to be triggered on push, 
+                            or you want to change the Prefix for the Folders etc. <br>
+                            Have also a look into the other Blogs on DevOps and Pipelienes. <br>
 
 
 <br>
