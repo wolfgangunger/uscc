@@ -220,15 +220,15 @@
                     for triggering the pipelines)<br>
                     <br>
                     After bootstrapping the project and deploy the cross account roles you will first have
-                    to install the normal pipeline with:<br>
+                    to install the main pipeline with:<br>
                     cdk deploy cdk-pipeline-multi-branch<br>
                     <br>
-                    As next step you must deploy the Pipeline-Generator Pipeline with :
+                    As next step you must deploy the Pipeline-Generator Pipeline with :<br>
                     cdk deploy feature-branch-pipeline-generator<br>
                     <br>
                     This will create a second Pipeline the "Pipeline-Generator Pipeline" which
                     will create a 3rd Pipeline which serves as a template for the feature Pipelines.<br>
-                    This Pipeline deploys these recources, the Webhook API and Lambda and the Feature Pipeline
+                    This Pipeline deploys these recources, also the Webhook API and Lambda and the Feature Pipeline
                     Template :<br>
                     <img class="blog-image" src="img/multi-pipe2.jpg" alt="arch diagram" loading="lazy" /><br>
                     Feel free to adapt this Feature Pipleline for your needs.<br>
