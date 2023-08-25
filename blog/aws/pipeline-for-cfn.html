@@ -135,10 +135,10 @@
                         <br>
                         Please have a look into these 2 Github repos from me to get a better understanding .<br>
                         <br>
-                        The repo for the CDK Pipeline Generator :<br>
-                        <a href="https://github.com/wolfgangunger/cdk-cfn-pipeline/" class="page-scroll">Git
+                        The repo for the Pipeline Generator :<br>
+                        <a href="https://github.com/wolfgangunger/cfn-pipeline" class="page-scroll">Git
                             Wolfgang
-                            Unger CDK Pipeline Generator</a><br>
+                            Unger Pipeline Generator</a><br>
                             <br>
                         An example repo how your CloufFormation Repo should look like:<br>
                         <a href="https://github.com/wolfgangunger/cfn-for-pipeline" class="page-scroll">Git
@@ -182,17 +182,13 @@
                             Since we now got the source repo for our CloudFormation templates, we can have a look on the Pipeline which will 
                             create the CloudFormation Deployment Pipelines. <br>
                             This is the architecture:<br><br>
-                            <img class="blog-image" src="img/pipeline-cfn.jpg" alt="7" loading="lazy" /><br>
+                            <img class="blog-image" src="img/architecture-cfn-pipeline.jpg" alt="7" loading="lazy" /><br>
                             <br>
-                            The Generator Pipeline is written in CDK Python in my repo "cdk-cfn-pipeline ".<br>
-                            If you don't know CDK and CodePipeline yet very well, please have also a look into this blog :<br>
-                            <a href="https://www.sccbrasil.com/blog/aws/cdk-pipeline.html"  class="page-scroll">CodePipeline with CDK Python </a><br>
-                                <br>
-                            
+                
                             The readme explains quite well the neccessary steps, but I will mention the most important ones, but before this 
                             a note on deployments on different accounts and the Pipeline architecture: <br>
                             <br>
-                            The CDK Project will create a Pipeline generator pipeline which will create one Pipeline for each Cloudformation template in the cfn-repo.  
+                            The CloudFormatin Template will create a Pipeline generator pipeline which will create one Pipeline for each Cloudformation template in the cfn-repo.  
                             For this architecture 2 approaches are possible:  <br>
                             To create this generator pipeline once in a toolchain account and create all cfn-pipelines for all accounts/stages in there to deploy to 3 different accounts  <br>
                             Possible, but this would require cross account roles and setup and complicate this project, make it harder to understand.  <br>
@@ -208,7 +204,7 @@
 
                             <br>
                             <h5>Codestar Connection</h5>
-                            The Pipeline is a AWS CodePipline and  will need 2 Source Inputs, its own repo and the CloudFormation repo. <br>
+                            The Pipeline is a AWS CodePipline and  will need your CloudFormation Repo as Input <br>
                             CodePipeline supports various repos, so CodeCommit, Github or Bitbucket is all possible. <br>
                             If you use a non-aws-native Repo you will have to setup a CodeStar Connection to allow CodePipeline to read your - lets say - Github repo, 
                             as in my example.<br>
@@ -216,23 +212,13 @@
                             Then you create the CodeStar Connection and define these repos there .<br>
                             You will need the Code Star Connection ARN in the cdk.json.<br>
                             <br>
-                            <h5>cdk.sjon</h5>
-                            Next you have to adapt the cdk.json File . <br>
-                            Use your Code Star Connection ARN and also adapt stage, branch, repos etc. <br>
-                            Once this is done, you can start with the CDK commands . <br>
-                            <br>
-                            <h5>CDK Commands </h5>
-                            you need to execute: <br>
-                            python -m venv .venv  <br>
-                            source .venv/bin/activate (Linux) or  .venv\Scripts\activate.bat  (windows )<br>
-                            pip install -r requirements.txt  <br>
-                            and then 
-                            bootstrap CDK  with (change account number)<br>
-                            cdk bootstrap   --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess  aws://12345678912/us-east-1<br>
-                            Next deploy the Pipeline Role with <br>
-                            cdk deploy bootstrap-role-stack<br>
-                            And then you can deploy the Pipeline Generator with <br>
-                            cdk deploy  cfn-deploy--pipeline-generator<br>
+                            <h5>Install the Pipeline Generator</h5>
+                            Once you have setup the Codestar Connection to your repo you can install the Pipeline Generator with the CloudFormation Template.
+                            The Template is named 'cfn-pipeline-generator.yaml'. <br> 
+                            You have to define in the variables the codestar connection your repo name and you can choose if the Pipeline Generator 
+                            should be triggered on Changes in your CloudFormation Repo. 
+                            <img class="blog-image" src="img/cfn-pipe1.jpg" alt="7" loading="lazy" />    <br>    
+
                             <br>
                             <h5>Pipeline Generator</h5>
                             The Pipeline will start to run and deploy a Template Pipeline for the CloudFormation Deployments.<br>
@@ -296,9 +282,9 @@
 
 <br>
                     References<br>
-                    <li><a href="https://github.com/wolfgangunger/cdk-cfn-pipeline/" class="page-scroll">Git
+                    <li><a href="https://github.com/wolfgangunger/cfn-pipeline/" class="page-scroll">Git
                         Wolfgang
-                        Unger CDK Pipeline Generator</a></li>
+                        Unger Pipeline Generator</a></li>
                     <li> <a href="https://github.com/wolfgangunger/cfn-for-pipeline" class="page-scroll">Git
                         Wolfgang
                         Unger CFN Example Repo</a></li>
