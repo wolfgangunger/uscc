@@ -130,7 +130,8 @@
                         you will need 3 x 40 Pipelines.<br>
                         You don't want to create them manually .<br>
                         <br>
-                        I have created a CDK CodePipeline that will create these CFN Pipelines for you. <br>
+                        I have created a CodePipeline that will create these CFN Pipelines for you. <br>
+                        You just have to deploy it with a CloudFormation Template. <br>
                         I will scan your CloudFormation repo and for each folder ( following a naming convention ) it will create a Pipeline to deploy this stack.<br>
                         <br>
                         Please have a look into these 2 Github repos from me to get a better understanding .<br>
@@ -173,7 +174,7 @@
                             <br>
                             To use my Pipeline you have to follow the naming conventions of my example on the template and parameter files. 
                             If you want to change this or the prefix you have to adapt the code. <br>
-                            Take also a look into this blog if you have doubts about how to organize your CloudFormation Templates :
+                            Take also a look into this blog if you have doubts about how to organize your CloudFormation Templates :<br>
                             <a href="cfn-structure.html" class="page-scroll">Git
                                 How to organize your CloudFormation Templates</a><br>
 
@@ -203,7 +204,7 @@
                             I implemented the 2nd more easy and clear approach for this pipeline.  <br>  
                             In each account/stage the pipeline generator must be deployed to generate the cfn-templates in the account where the stacks should be deployed.  <br>
                             Thus no cross account roles are complicating the project, the stage account is considered the same as the toolchain account <br>
-                            note, that you have to deploy the generator pipeline in dev, qa and prod for example and adapat the stage name in the cdk.json each time.  <br>
+                            note, that you have to deploy the generator pipeline in dev, qa and prod for example <br>
 
                             <br>
                             <h5>Codestar Connection</h5>
@@ -219,7 +220,7 @@
                             Once you have setup the Codestar Connection to your repo you can install the Pipeline Generator with the CloudFormation Template.
                             The Template is named 'cfn-pipeline-generator.yaml'. <br> 
                             You have to define in the variables the codestar connection your repo name and you can choose if the Pipeline Generator 
-                            should be triggered on Changes in your CloudFormation Repo. 
+                            should be triggered on Changes in your CloudFormation Repo. <br> 
                             <img class="blog-image" src="img/cfn-pipe1.jpg" alt="7" loading="lazy" />    <br>    
 
                             <br>
@@ -291,6 +292,8 @@
                     <li> <a href="https://github.com/wolfgangunger/cfn-for-pipeline" class="page-scroll">Git
                         Wolfgang
                         Unger CFN Example Repo</a></li>
+                    <li>    <a href="cfn-structure.html" class="page-scroll">Git
+                            How to organize your CloudFormation Templates</a></li>
                 </div>
                 <br><br>
             </div>
