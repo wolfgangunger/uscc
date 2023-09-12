@@ -137,7 +137,7 @@
                         Enter AWS Key and Secret and Region and a name for the Service Connection (azure-devops-user)<br>
                         <br> 
                         <h4>Variable Groups </h4><br>
-                        You have to define a Variable Group for each environment/accont  we want to deploy.<br>
+                        You have to define a Variable Group for each environment/accont, you want to deploy.<br>
                         Go to Pipelines→Library→Variable Groups and define a new Group, for example MyProject-Dev    <br>
                         We need 4 Variables in the Group to be able to execute the terraform commands in the Pipeline:  <br>
                         - backend_config: should point to your terraform backend configuration file, 
@@ -145,6 +145,8 @@
                         - env_vars: should point to your terraform variables file, for example env/myProject/dev.tfvars<br>
                         - backendAWSBucketName: the name of your S3 Bucket for your terraform state<br>
                         - backendAWSKey: the name of the state file, for example ‘terraform.tfstate’<br>
+                        You can define n of the groups, the variables should be named identically . <br>
+                        You will adress the variables inside the groups with the group-attribute in the pipeline. <br>
                         <br>
                         To be able to read your variables groups in your Pipeline you have to link the variable group to your pipeline.<br>
                         In the Pipeline ( within the next step), select the options (...) on the right side and select 'Triggers',<br>
@@ -172,7 +174,8 @@
                         - optional: my_terraform_templates_dir : if you have your terraform main file not in the root directory of your repo, 
                           we will need this variable to define  'workingDirectory' in our commands. <br>
                         - group: the variable group we have defined earlier <br>
-                        Under this group, the 4 variables we have defined in our Variable Group.<br>
+                        Under this group, the 4 variables we have defined in our Variable Group will be recordnized automatically<br>
+                        If you copy your Dev Pipeline to create a QA Pipeline, all you need to do, is change the name of the variable group. <br>
                         So the variables block will be like:<br><br>
                         <i>
 
@@ -181,10 +184,6 @@
                         &ensp;    backendServiceAWS: 'my-service-connection'<br>
                         &ensp;    my_terraform_templates_dir: 'infrastructure/'<br>
                         &ensp;   group: my-project-dev-account<br>
-                        &ensp;   backendAWSKey:  $(backendAWSKey)<br>
-                        &ensp;   backendAWSBucketName: $(backendAWSBucketName)<br>
-                        &ensp;   backend_config:  $(backend_config)<br>
-                        &ensp;   env_vars: $(env_vars)  <br>
                         </i>
                         <br>
                
