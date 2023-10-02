@@ -136,6 +136,12 @@
                         To understand this service better, lets have a look on 'Build a new Plan'.<br>
                         Besides the name the first important section is the Backup rule configuration.<br>
                         You have choose a vault as target and a backup frequency. <br>
+                        We defined for RDS 3 backup rules: <br>
+                        Daily ( expire after one week) <br>
+                        Weekly ( expire after 5 weeks) <br>
+                        Monthly (expiere after 53 weeks) <br>
+                        This will hold backps for your of the last 7 days, every week in the year and also one for each month. <br>
+                        For Dynamo we defined just a weekly Backup rule. <br> 
                         Once you have selected this, you can define the backup window, the startup time.<br>
                         There is an attribute 'Start within' which I would set to 1 hour.<br>
                         The backups don't start immediatelly on the start time, sometimes you have to wait for up to 15 minutes, 
@@ -157,7 +163,9 @@
                         But I have figured out, you really need to allow the backup account access to the vault,<br>
                         otherwise the cross account copies won't work. Of yource not to copy into, but probably to read from the vault.<br>
                         So the UI message is a bit confusing . <br>
-                        More about the policies in a second.
+                        More about the policies in a second.<br>
+                        You can define multiple Copy configurations, this allows you to copy your snapshots into another region and also into another account.<br>
+                        <br>
                         Once you have defined these attributes you can click 'Create Plan'.<br>
                         Once you got this, you need to select the resource assignments, the assets you want to backup.<br>
                         You need a role which allows to perform the backup actions, so the role needs these AWS managed policies:<br>
