@@ -96,7 +96,7 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>5 common problems and errors on AWS & Cloud accounts</h2>
+                <h2>5 common problems and errors on AWS & cloud accounts</h2>
                 <hr>
             </div>
             <div class="space"></div>
@@ -115,7 +115,7 @@
                         It is really not unusual you find critical security issues and bad practices in production accounts.<br>
                         This blog will cover the most common issues which you normally find on AWS.<br>
                         Are you in doubt your AWS architecture was setup with best practices ?<br>
-                        You can use this article as a checklist for your account and architecture. <br>
+                        You can use this article as a checklist and do a self-review on your account and architecture  <br>
                         If you find some of the mentioned issues in your account, you should immediatelly take actions.<br>
                         <br>
                         The 5 most common errors and problems we will have a closer look are:<br>
@@ -139,18 +139,148 @@
                         <a href="security-musts.html" class="page-scroll"> Security Best Practices on AWS</a>
                         <br>
                         In here we will cover this a little bit shorter and focus on the most critical and most widespread errors.<br>
+                        <br>
+                        <b>Avoid IAM Users, use Roles instead. </b><br>
+                        This is valid for real users and for application permissions.<br>
+                        Real users need only one IAM user in the master account, in all other accounts they can use switch role.<br>
+                        This means, he got  only one Access Key & Secret Key Pair and need to store only one ( long & strong) password,
+                        the user got of course got MFA enabled.<br>
+                        Applications don't need IAM users to work properly and therefore don't need Access Keys ( for example 
+                        passed as env variables in clearcode or in properties file inside application)<br>
+                        Use roles instead, no Access Keys required! <br>
+                        If you want to perform some AWS commands by the SDK, for example boto or .NET or SDK library, you don't need 
+                        to pass a user or credentials when constructing the client. <br>
+                        Use the default constructor and the client will use the attached instance role.<br>
+                        If you have Access Keys & Secrets in cleartext either in your env variables, properties or git, fix this immediatelly.<br>
+                        <br>
+                        <b>Violation of principle of least privilege</b><br>
+                        Grant least access while creating IAM Policies, to perform only the necessary actions.<br>
+                        Don't assign the Adminstrator Policy to anybody and also not to your applications! Only assign rights which are really needed.<br>
+                        If your application got a Adminstrator Policy attached and got hacked, the agressor can delete almost anything in your account.<br>
+                        <br>
+                        <b> Internet-facing Databases, Instances and Applications</b><br>
+                         Take care only the web-tier is internet-facing, not the application or database tier.<br>
+                         This is a very common and wide spread anti pattern unfortunatelly.<br>
+                         You Database don't have to be (and must not be) open to 0.0.0.0\0 ( the whole internet)!<br>
+                         If your developers must access the database with their local DB-clients, they should do it over a bastion host.<br>
+                         Also a application server must not be internet-facing. <br>
+                         If you need to ssh into a server use Session Manager, don't open Port 22 to the internet.<br>
+                         Only the web-server needs to be public available.<br>
+                         In fact the best solution is, only the Loadbalancers should be internet-facing and they will forward 
+                         traffic to the servers, which are protected in private subnets. <br>
+                         Keep your databases in private subnets, same for application servers and all clusters and best also for 
+                         your webservers. Put a loadbalancer in front of it. <br>
+                         Enable WAF for your internet-facing resources if you want to be really secure. <br>
 
-                        
-
+                         <br>
                         <h4>No Snapshots and Backups - Reliability, Failure management (RPO)</h4><br>
+                        <img class="blog-image" src="img/backupavif.avif" alt="Backup" loading="lazy" /><br>
+                        Also not rarely to see, the total miss of snapshots and backups.<br>
+                        No database snapshots, EBS backups of stateful or manually configured servers, no backups for the data and storage in AWS.<br>
+                        If you want to take Backup seriously take a look into this blog of me:<br>
+                        <a href="aws-backup.html" class="page-scroll"> AWS Backup - Multi Region and Multi Account Setup</a>
+                        <br><br> 
+                        You don't have to backup multi region or multi account (of course depending of your requirements), but you should backup.<br>
+                        You should create daily snapshots of your databases and servers, which cannot be simply restarted after a loss of data or crash. <br>
+                        We are talking here about RPO (Recovery Point Objective), the dataloss after an incident you can tolerate.<br>
+                        If you do nightly snapshots, lets say at 1 AM and there is an occurence of your database at 11AM and you have<br>
+                        to restore a snapshot, your RPO will be 10 hours. With nightly snapshots your maximum RPO is 24h.<br>
+                        If you do no backups and snapshots at all and you have a incident you will be in real trouble.<br>
+                        Good luck trying to restore your data ! Your RPO will probably be weeks or worse your data will be completly lost.<br>
+                        <br>
+                        If you store important data in S3 think about cross region or cross account replication. <br>
+                        Enable delete protection or versioning. <br>Without this, you or somebody could simply delete the data in S3 and 
+                        there is no chance to restore a non versioned object. <br><br>
 
                         <h4>Non resilent architectures, single point of failures - Reliability : Workload architecture</h4><br>
+                        <img class="blog-image" src="img/train-jap.avif" alt="swiss" loading="lazy" /><br>
+                        When it comes to Reliability, you might have read about Multi Availability Zones or even Cross Region Failure Architectures.<br>
+                        Well this is an really important issue, but let's focus on a even worse and more likely failure scenarios.<br>
+                        With Multi AZ or Cross Region we want to protect our infrastructure from a failure of 
+                        a AWS Availability Zone or a complete AWS region. <br>
+                        If there is no WW3 in near future, a meteor hits the earth or Godzilla appears, this is not the most likely scenario to happen.<br>
+                        What is much more likely is the failure of an single server . in particular if it is a windows server. <br>
+                        Do you have single point of failures in your infrastructure?<br>
+                        Many services on AWS are resilent by design on AWS, like for example S3.<br>
+                        S3 is not implemented with an single server storing your data on its disk, it is designed Mult AZ with an Availability of 99,99%.<br>
+                        Same for Dynamo, Lambda, Loadbalancers are not just single servers, they are a managed service, which will continue to work,<br>
+                        a NAT Gateway is a managed service with the same architecture, not comparable with a single NAT instance.<br>
+                        Clusters services are save, talking about reliablity and Availability, for example ECS, ElastiCache and more. <br><br>
+                        Lets focus on EC-Instances and RDS Instances (which are basically also just dedicated EC2 instances).<br>
+                        If your have your flagship application running on just a single EC2 instance, this cannot be considered a 
+                        reliable and high available architecture.<br>
+                        Also if you just have a single database instance without multi az or a standby or reader instance. <br>
+                        You have to take an action here.<br>
+                        For EC2  exists a great feature : Autoscaling Groups and Launch Templates.<br>
+                        Instead of a single EC2 instance you define a Launch Template. You can create a Launch Template from your exising EC2 instance. <br>
+                        Now you define a Autoscaling Group for this Launch Template, which will take care, there will be always instances 
+                        running for there 'Desired Capacity'. <br>
+                        If you just need one instance, no problem, you can set 'Desired Capacity' to 1. <br>
+                        Your costs will not increase. 
+                        But your Reliability and Availability.<br>
+                        For Database Instances think about setting up a cluster instead of a single instance.<br>
+                        Make up your choice if you need a read replica or Multi AZ, this depends on your use case . <br>
+                        Multi AZ is for High Availability and Reliability, a Read Replica serves more to increase your Performance on Database Reads.<br>
+                        But it will also increase Reliability, because you can promote the Read Replica as new Master in case of an incident. <br>
+
+                        <br>
 
                         <h4>No usage of IaC (RTO)</h4><br>
+                        <img class="blog-image" src="img/infra.avif" alt="infra" loading="lazy" /><br>
+                        Are you already using CloudFormation, CDK or Terraform ?<br>
+                        Perfect, then you can skip this chapter. <br>
+                        Just be aware of one point.<br>
                         Drifts !<br>
+                        If you are using IaC, use it strict.<br>
+                        I have seen many times, customers use for example CloudFormation, but in time-critical situations, 
+                        they fix or change something on the Web-Console and don't include these changes into their IaC files.<br>
+                        Now your IaC is no longer in sync with your deployed infrastructure and this is a real problem.<br>
+                        For CloudFormation for example this is called a Drift.<br>
+                        First, your IaC represents no longer your real infrastructure. <br>
+                        It might be correct and safe, if you check your code, everything looks good, 
+                        but someone openend the Database Security Group on the WebConsole, so your real infrastructure is not safe !<br>
+                        Second, these drifts can cause serious problems when updating a CloudFormation Stack ( or trying a Terrafrom apply).<br>
+                        Your Stacks might get stuck, in worst case, where you have no chance to update or rollback again, the 
+                        only remaining solution will be destroying the Stack and redeploy.<br>
+                        <br>
+                        If your are not using IaC and do anything on the WebConsole manually, you have a problem.<br>
+                        Use a IaC Tool immediatelly.<br>
+                        If you have no clue which one to use, take a look into this blog:<br>
+                        <a href="iac.html" class="page-scroll"> Infrastructure as Code </a>
+                        <br><br> 
+                        Why should you use IaC ?<br>
+                        Well for a POC or just trying out, if your application would work also with DynamoDB, the WebConsole is fine,
+                        to achieve quick results. <br>
+                        You don't have to code this, if you do not yet know, you will use it in production. Perfect.<br>
+                        But your productive environment ?<br>
+                        You must be able to re-create it quickly after an incident. <br>
+                        If you have created anything on the WebConsole, probably no documentation, or maybe somebody else did it, <br>
+                        who is no longer in the company, you will have a lot of fun, to re-create your infrastructure in this critical situation,
+                        where any second is important.<br>
+                        We are talking here about RTO (Recovery Time Objective) or how quickly after an outage an application must be available again.<br>
+                        With CloudFormation, Terraform or CDK and Pipeline to deploy them, your RTO might be 1-2 hours ( including restoring a 
+                        database snapshot and re-deploying your application code).<br>
+                        Without them, your RTO might be days or weeks. <br>
+                        Can you deal with this?<br>
+                        If not, please use IaC . <br>
+                        <br>
                         <h4>No Monitoring, Alarming and Logging</h4><br>
+                        <img class="blog-image" src="img/monitoring.avif" alt="monitoring" loading="lazy" /><br>
+                        “Everything fails all the time” (Werner Vogels, CTO AWS)<br><br>
+                        Also to mention, many systems on AWS does not have setup Monitoring, Alarming and Logging properly. <br>
+                        Are you logging your important servers to cloudwatch or S3 ?<br>
+                        The Cloudwatch Log Agent is really easy to setup for an EC2 instance. <br>
+                        RDS has native Log Features, most of the services, but they have to be enabled and setup.<br>
+                        There a VPC FlowLogs you can setup and a lot more. <br>
+                        <br>
+                        Do you have CloudTrail setup in your account? To monitor and record your activities in the account?<br>
+                        Do you monitor your critical systems and get SNS notifitations if a server becomes unhealthy or 
+                        do you wait until the customers will call you, to tell you , your site is unavailable? <br>
+                        Cloudwatch is the tool to use, to setup alarms and notifications. <br>
+                        Use health checks and SNS notifications to get informed about failures. <br>
+                        And to avoid these situation before failure, implement the hints mentioned on Reliability and Workload architecture. <br>
 
-               
+                        <br>
                        
                         <h4>Diverse other issues</h4><br>
                         These were the 5 top common problems but there are more points to observe.<br>
@@ -185,7 +315,7 @@
                         Perfect, then you don't to worry and you or your implementation partner did a great job.<br>
                         If you have any of these problems in your account, you have to fix this. Urgently .<br>
                         Find someone with the knowHow to do it right, of course you can also contact us, <br>
-                        we would proudly help to get your architecture save and up to date with all best practices . <br>
+                        we would proudly help to get your architecture save and up to date with all best practices . <br><br>
                         <a href="../../contact.html" class="btn btn-default">Contact us</a>
                
                 </div>
