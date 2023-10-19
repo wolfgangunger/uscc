@@ -302,7 +302,21 @@
          
 
                         <br>
+                        <b>Unused resources running</b><br>
+                        Often you found resources running, which are no longer in use.<br>
+                        Setup by a developer on the Webconsole for a POC or a test and not cleaned up.<br>
+                        These resources will cause costs and even worse might be a security risk, if for 
+                        example an EC2 instance with a open Security Group.<br>
+                        Clean you account ! <br>
+                        Delete everything what is obsolet. And take care it doesn't happens again.<br>
+                        Best practice is to tag everything which is really needed.<br>
+                        Make at least a 'Owner' and a 'Project' tag.<br>
+                        This helps also identifying the responsable in cause you don't know whom to ask. <br>
+                        Project Tag can be used for cost allocation tags and cost separation.<br>
+                        Anything not tagged can and should be deleted.<br>
+                        If you want to automate this, a Lambda could do the job.<br>
 
+                        <br>
                         <b>Missing cost optimization and cost monitoring</b><br>
                         Many companies waste a lot of money by not optimizing the costs on AWS.<br>
                         Please have a look into this blog, to check if you do everything right .<br>
