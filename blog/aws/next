@@ -14,5 +14,50 @@ compute
 storage
 
 
+--
+chatgpt:
+what are the most common questions about aws on google ?
+
+What is AWS?
+How much does AWS cost?
+How do I create an AWS account?
+What are AWS services?
+How do I launch an EC2 instance on AWS?
+What is Amazon S3?
+How do I set up an RDS database on AWS?
+What is AWS Lambda?
+How does AWS billing work?
+How can I secure my AWS resources?
+What is AWS IAM (Identity and Access Management)?
+How do I deploy a web application on AWS?
+How do I scale my infrastructure on AWS?
+What is AWS CloudFormation?
+How can I optimize costs on AWS?
+What are AWS certifications, and how do I prepare for them?
+What is AWS Elastic Beanstalk?
+What is AWS VPC (Virtual Private Cloud)?
+How does AWS compare to other cloud providers like Azure and Google Cloud?
+How can I troubleshoot AWS issues?
 
 
+what are the most common questions from managers about aws on google ?
+How can AWS benefit my organization?
+What are the cost implications of using AWS, and how can we manage expenses effectively?
+What are the best practices for managing AWS resources and ensuring cost control?
+How can we ensure the security of our data and applications on AWS?
+What AWS services are relevant to our specific business needs?
+How do we build a cloud strategy and roadmap for our organization using AWS?
+What is AWS Well-Architected Framework, and how can we apply it to our projects?
+How do we monitor and optimize the performance of our applications on AWS?
+What is AWS Identity and Access Management (IAM), and how do we set up and manage user access?
+How can we implement disaster recovery and high availability solutions on AWS?
+What is AWS Compliance and how do we ensure regulatory compliance for our applications?
+What are the best practices for data backup and retention on AWS?
+How can we migrate our existing applications and data to AWS?
+What is AWS Marketplace, and how can we leverage it for third-party solutions?
+How do we manage and analyze our AWS billing and usage reports?
+What is AWS CloudFormation, and how can it help us automate infrastructure provisioning?
+How do we handle staffing and training to build AWS expertise within our team?
+What are the AWS support and service level agreement (SLA) options?
+How do we leverage AWS managed services and serverless computing?
+What case studies or success stories can provide insights into how other organizations have benefited from AWS?
