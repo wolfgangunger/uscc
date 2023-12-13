@@ -152,7 +152,15 @@
                             There is a Readme in each repo to guide you, but I will explain some additional infos in this blog on 
                             how the pipeline works.<br>
                             <br>
-                            <h4>CloudFormation Repo</h4><br>
+                            See also this video to get a quick overview how the Generator Pipeline works:<br>
+                            <div class="left">
+                                <video controls>
+                                  <source src="../../video/cfn-pipeline.mp4" type="video/mp4" />
+                                  Your browser does not support the video tag.
+                                </video>
+                              </div>
+                              <br>
+                    <h4>CloudFormation Repo</h4><br>
                             Let's start from the beginning, we have a repo with our CloudFormation Templates, which represents my "Wolfgang Unger CFN Example Repo" from the 2 repos above <br>
                             Each CloudFormation Stack will be deployed for example in 3 accounts (dev, qa and prod) with different variables.<br>
                             So we have besides our template yaml 3 json files for the variables and a structure somehow like this:<br>
