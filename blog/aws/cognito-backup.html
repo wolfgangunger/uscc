@@ -185,6 +185,16 @@
                         You should see the execution counter increasing daily after the deployment.<br>
                         The Import Workflow you must trigger manually in case you want to restore the data. <br> 
                         <br>
+                        <br>
+                        <h5>Restore</h5><br>
+                        To restore the data of a backup you must trigger the Import Workflow as mentioned.<br> 
+                        You can do so, once the Export Workflow ran successfully at least once.<br> 
+                        What about to transfer data from one to another account?<br> 
+                        For this use-case you have to install the solution in both accounts.<br> 
+                        Once you have data in the Dynamo in the source account, you have to copy the data in the table to <br> 
+                        the Dynamo in the new account. You can do so by Commandline or Python.<br> 
+                        Now you can run the Import Workflow in the target account. <br> 
+
                         <h4>Conclusion</h4><br>
                         This solution works - under the already mentioned limitations - and you don't have to implement <br>
                         the functionality on your own in a couple of lambdas. <br>
