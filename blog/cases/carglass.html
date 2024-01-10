@@ -99,7 +99,7 @@
                         <a href="https://www.carglass.de/" class="page-scroll" target="_blank">Carglass </a><br><br>
 
              
-                        Carglass was already in progress to migrate their On Premise infrastructre to AWS, 
+                        Carglass was already in progress to migrate their On Premise infrastructure to AWS, 
                         but did not have enough resources to proceed and complete the migration from OnPremise to AWS
                         within the the ambitious schedule. Thats why we joined their team to support them achieving their goals.<br>
                         They used EC2 to migrate OnPremise, VMs, which for example had 3rd party software running for various
@@ -108,8 +108,8 @@
                         kubectl, so EKS was not used.<br>
                         RDS was also used as backend for various applications.<br>
                         AWS Lambda was used for processing of small tasks, basically for maintenance of the AWS
-                        infrastructe, not for business logic yet.<br>
-                        CloudFormation was used as infrastructe as Code Tool.<br>
+                        infrastructure, not for business logic yet.<br>
+                        CloudFormation was used as infrastructure as Code Tool.<br>
                         The first action was analyze the current setup and define epics to optimize the aws
                         infrastructure and accelerate and complete the migration.<br>
                         We focused than on IaC, the AWS Account Structure, Cost-Optimization, Improvement of RPO and RTO
@@ -121,41 +121,21 @@
                         -Strict usage of IaC - CloudFormation<br>
                         -Cost-Opmimization<br>
 
-                    <h4>Reorganize AWS Account Strucure</h4><br>
-                    The current setup was a Master Account and 3 Stage Accounts (DEV, QA & PROD) .<br>
+                    <h4>Reorganize AWS Account Structure</h4><br>
+                    The current setup already contained a  Master Account and Stage Accounts<br>
                     It is already a good practice to separate the stages in separate accounts, but since it was
-                    neccessary to grant acess to<br>
+                    neccessary to also grant acess to<br>
                     external service providers to the accounts, the separation of all these parties on IAM level to
                     grant only rights to their servers and resources,<br>
-                    following the principle of least privilage, was difficult.<br>
-                    Administrator policies where granted, allowing changes on networking and also on actions on
-                    other domain resources.<br>
+                    following the principle of least privilage, was quite difficult implementing on IAM and policy level.<br>
                     The better approach was to define the account structure more granular and define more dedicated
                     accounts with its on IAM roles.<br>
                     The AWS Whitepaper gives an example for a multi-account scenario.<br>
-                    <img src="img/multi-account.jpg" alt="SMM" width="500"> <br>
-                    <br>
-                    We followed this example with small changes, defining the following account strucuture with AWS
-                    Organizations :<br>
-                    <b>Organizations Account</b> - Master account with the IAM Users to login<br>
-                    <b>Networking Account</b> - Transit Gateway and Direct Connect , Adminstrator Access only for the
-                    Network
-                    Administator<br>
-                    <b>Shared Services Account</b> - Account for shared resoures and services to avoid too much VPC
-                    peerings
-                    between the other accounts<br>
-                    <b>Main Stage Accounts DEV, QA & PROD</b><br>
-                    <b>Stage Accounts for external service providers</b><br>
-                    <b>Stage Accounts for Oracle and its service provider</b><br>
-
-
-                    The separation in these dedicated accounts helped to apply the principle of least privilage,
-                    allowing the different roles<br>
-                    only access to their resources.<br>
-                    Carglass was using Direct Connect between their company intranet and the AWS accounts, <br>
-                    managed by a Transit Gateway and the requirement to enable Peering between some but not all accounts. <br>
-                    The Networking Account helped to restrict permissions in the Networking Setup only to <br>
-                    their Network Adminstrator but would still allow the LeadDevs and DevOps to assume a Adminstrator Role 
+                    Please have also a look in our blog about defining the multi account structure for your organization<br>      
+                    <a href="../aws/multi-account.html" class="page-scroll">AWS Multi Account Setup</a><br>
+                    We followed this example with small changes, which allowed for 
+                    example only the Network Adminstrator to make changes on Direct Connect, Transit Gateway and Network resources.  
+                    On the other side, the LeadDevs and DevOps or Service Providers still could to assume a Adminstrator Role 
                     in their Stage accounts. <br>
                     The dedicated accounts where much more neatly, allowing the admins to stop or teminate manual
                     created test/poc resources.<br>
@@ -226,14 +206,14 @@
                     needed 24/7, but only during business hours.<br>
                     <br>
                     <h4> Training and documentation</h4><br>
-                    SCC Brasil held a couple of AWS training sessions to the infrastructe team to enable them to
-                    maintain the AWS infrastructe all
+                    SCC Brasil held a couple of AWS training sessions to the infrastructure team to enable them to
+                    maintain the AWS infrastructure all
                     alone in the future.
                     Also a lot of documentation was written in the company Confluence, including Runbooks, Best
                     practices, Troube Shooting etc<br>
                     <br>
                     We are glad to be able to support the Carglass Germany Team on their Cloud journey, it
-                    was a lot of fun to work with the well skilled infrastructe team and hope all the Best for them in the future.<br>
+                    was a lot of fun to work with the well skilled infrastructure team and hope all the Best for them in the future.<br>
                 </div>
 
 
