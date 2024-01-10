@@ -176,60 +176,54 @@
       <p></p>
       <div class="articles-list" data-aos="fade-up">
 
-        <h3>These are some of the solutions we develop to deal with commom problems within Devops projects.</h3> <br>
+        SCC Brasil is a Service Provider, we are supporting companies on their Cloud Journey.<br>
+        So most of our work depends much of the individual requirements of each customers, we do not 
+        offer Products or Standard Software. <br>
+        But often the same requirements have to be implemented for 
+        various Customers. <br>
+        Common problems and use-cases many clients need for AWS and DevOps. <br>
+        These solutions can be re-used, maybe you have to adapt it a bit for you individual needs, but 
+        probably will serve almost out of the box for your current needs.<br>
+        We are offering these solutions as Open Source to you and the AWS Community to accelerate your Cloud Journey and 
+        hope you find it useful for your company and also give as a feedback and ideas for changes or improvements.<br>
+        <img class="blog-image" src="./blog/aws/img/solutions.avif" alt="solutions" loading="lazy" /><br>
+
         <p></p>
 
 
-        <a href="blog/aws/pipeline-for-cfn.html" class="page-scroll">
+       
           <div class="panel panel-primary">
             <div class="panel-heading">
               Pipeline for automatic CloudFormation Deployments
             </div>
 
-            <div class="panel-body article-preview">
+            <div class="panel-body solutions">
               <span>
-                Do you need an automation to deploy your CloudFormation Templates to your AWS Account(s)?
-                A Pipeline or a tool that will automatically create a CloudFormation Deployment Pipeline for each of your stacks ?
-                Read this blog about my Github Project to setup such a Pipeline for your CloudFormation Templates  
+                Are you using CloudFormation as Infrastructure as Code Tool but you still deploy your Templates manually on the Web Console?<br>
+                You should definitelly do this by Pipeline (CI/CD) to avoid changes made in the Template and 
+                Repo are not being promoted to the Stages or vice versa changes not being committed to the Templates Repo are 
+                being deployed on the CloudFormation Console. <br>
+                There are various options: Jenkins, Azure DevOps, Gitlab, Bitbucket and more. <br>
+                But still it will be a considerable effort to create all Pipelines manually.<br>
+                Do you need an automation to deploy your CloudFormation Templates to your AWS Account(s)?<br>
+                A Pipeline or a tool that will automatically create a CloudFormation Deployment Pipeline for each of your stacks ?<br>
+                If so take a look into this solution from us, that will allow you to create these pipelines fully automatically
+                by a Generator. The Pipelines will be in AWS CodePipeline. Once created you can trigger them to create or update 
+                your Template and define this as the standard process for IaC changes. <br>
+                You find more information about this solution in this blog :<br>
+                <a href="blog/aws/pipeline-for-cfn.html" > Blog - Pipeline for automatic CloudFormation Deployments</a><br>
+                or you can have a look directly in out Github Repo:<br>
+                <a href="https://github.com/wolfgangunger/cfn-pipeline" >Github - Pipeline for automatic CloudFormation Deployments</a><br>
+                
               </span>
             </div>
           </div>
-        </a>
-
-        <a href="blog/aws/cfn-pipeline.html" class="page-scroll">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              Pipeline for automatic CloudFormation Deployments using CDK.
-            </div>
-
-            <div class="panel-body article-preview">
-              <span>
-                Do you need an automation to deploy your CloudFormation Templates to your AWS Account(s)?
-                A Pipeline or a tool that will automatically create a CloudFormation Deployment Pipeline for each of your stacks ?
-                Read this blog about my Github Project to setup such a Pipeline for your CloudFormation Templates with CDK  
-              </span>
-            </div>
-          </div>
-        </a>
-
-        <a href="blog/aws/azure-pipeline.html" class="page-scroll">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              Azure Devops Pipeline for Terraform Deployments
-            </div>
-
-            <div class="panel-body article-preview">
-              <span>
-                Are you using Azure Devops and Terraform? You need a Pipeline to automate your Deployments to the cloud? 
-                This blog shows how to deploy Terrafrom with Azure Devops to a AWS Account by creating a Pipeline step by step.  
-                Of course you could also deploy to Azure or GCP.
-              </span>
-            </div>
-          </div>
-        </a>
 
 
-        <a href="blog/aws/feature-branch-pipeline.html" class="page-scroll">
+
+
+
+
           <div class="panel panel-primary">
             <div class="panel-heading">
               How to setup a Multi Branch Pipeline with Webhook
@@ -244,7 +238,7 @@
               </span>
             </div>
           </div>
-        </a> 
+
 
 
     </div>
