@@ -79,109 +79,45 @@
         <div class="container">
             <div class="section-title">
                 <h2>Ogulo GmbH</h2>
-                <hr><img src="img/ogulo.png" alt="Ogulo" width="90">
+                <hr><img src="img/ogulo.png" alt="Ogulo" width="180">
             </div>
             <br>
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
                     <p></p>
-                    <p>For about 1 year SCC Brasil worked together with the Ogulo internal IT Team to improve their
-                        Cloud Infrastructure.<br>
-                        Ogulo was already using AWS, all services for 3 stages were running in one account.<br>
-                        Services used were: Fargate, ElasticBeanstalk, RDS, Lambda, S3, CloudFront and more. <br>
-                        So far not all of these resources were created by IaC (CloudFormation) and/or pipeline, but
-                        created manually on the web-console.<br>
-                        We focused together with Ogulo on deploying the services into 3 dedicated stage accounts and
-                        also deploy every resource strict with IaC ( mostly CloudFormation ), using the
-                        same (parameterized) Stacks for all 3 accounts and stages.<br>
-                        Also in the process to enhance the RTO AND RPO some other small changes where introduced,
-                        like usage of Loadbalancers, Snapshots, Replication and so on.<br>
-                        In this blog let's have a look on 3 epics<br>
-                        -Migrate and Optimize to new AWS Account Strucure<br>
-                        -Strict usage of IaC<br>
-                        -Define Desaster Recovery Strategy and improve RPO and RTO<br>
+                    <p>Ogulo is an established brand for virtual reality in the real estate industry in Germany, and their solutions create an unique VR experience <br>
+                        where customers can see the full potential of a property, from anywhere in the world.<br>
+                        Checkout their solutions on the <a href="https://www.ogulo.com/" class="page-scroll" target="_blank">Ogulo website </a><br> <br>
 
-                    <h4>Migrate and Optimize to new AWS Account Strucure</h4><br>
-                    The current setup was basically one account for all 3 stages (DEV, SANDBOX & LIVE) .<br>
-                    It is a good practice to separate the stages in separate accounts, so this was<br>
-                    performed and while setting up the first account, the DEV Account, each<br>
-                    resource was setup with CloudFormation.<br>
-                    The Stacks where parameterized to be re-used for SANDBOX and LIVE Account.
-                    The original account was left to be used as master and Organizations account.<br>
-                    The stage accounts where accessed by swithing roles.<br>
-                    The AWS Whitepaper gives an example for a multi-account scenario.<br>
-                    <img src="img/multi-account.jpg" alt="SMM" width="500"> <br>
-                    <br>
-                    We simplified this setup, defining the following account
-                    strucuture with AWS
-                    Organizations :<br>
-                    <b>Organizations Account</b> - Master account with the IAM Users to login<br>
-                    <b>Stage Account DEV</b><br>
-                    <b>Stage Account SANDBOX</b><br>
-                    <b>Stage Account LIVE</b><br>
+                        SCC Brasil worked together with the Ogulo IT Team to implement the services that will provide the best fit to the Ogulo needs in regards to Cloud Infrastructure.<br>
+                        Ogulo was already using AWS, and the focus of the consultancy was their need to implement IaC (Cloudformation) and others best practices, like multi-account structure,<br>
+                        Disaster Recovery improving RTA and RPA, and also improve the Database performance with the migration to AuroraDB.<br>
+                        Services used were: Fargate, ElasticBeanstalk, RDS, Lambda, S3, CloudFront and more. <br><br>
 
-                    The separation in these dedicated accounts helped to apply the principle of least privilage,
-                    for example restricting the permissions for the LIVE Account to only selected users<br>
-                    Also consolidated billing helped the management to monitor the aws costs on a better
-                    granularity.<br>
-                    In this state of the project a dedicated networking account or shared services account was not
-                    required.<br>
+                        We focused together with Ogulo on deploying the services into dedicated stage accounts,<br>
+                        the separation in these dedicated accounts helped to apply the principle of least privilage,<br>
+                        for example restricting the permissions for the LIVE Account<br>
+                        Also consolidated billing helped the management to monitor the aws costs on a better<br>
+                        granularity.<br> <br> 
+                        We also deploy every resource strict with IaC ( mostly CloudFormation ), using parameterized Stacks for all accounts and stages.<br>                        
+                        These Cloudformation Templates were managed using Git and deployed via Pipelines in Bitbucket, to ensure stability and control on maintaining the infrastructure.<br>
+                        Also in the process to enhance the RTO AND RPO we defined together with the client a strategy of pilote lite and backup and restore.<br>
+                        Strict usage of IaC is already an important step to a better RTO for re-creating the resources.<br>
+                        Some other small changes where introduced,
+                        like usage of Loadbalancers, Snapshots, Replication and so on.<br><br>
+
+                        In our <a href="../aws/blog.html" class="page-scroll" target="_blank">blog page</a> you can find some of the strategies and best practices used.<br><br>
+
+                        -<a href="../aws/multi-account.html" class="page-scroll" target="_blank">Migrate and Optimize to new AWS Account Structure</a><br>
+                        -<a href="../aws/iac.html" class="page-scroll" target="_blank">Strict usage of IaC</a><br>
+                        -<a href="../aws/cfn-structure.html" class="page-scroll" target="_blank">Code organization using Clouformation</a><br>
+                        -<a href="../aws/disaster-recovery.html" class="page-scroll" target="_blank">Define Desaster Recovery Strategy and improve RPO and RTO</a><br>
 
 
-
-
-                    <h4>Strict usage of IaC</h4><br>
-
-                    The CloudFormation Stacks were structured :<br>
-                    -The stacks were layered to better separate the logical and strucutural elements:<br>
-                    <img src="img/cfn-layering.jpg" alt="SMM" width="500"> <br>
-                    A VPC Stack would now only contain VPC and Network resources, but no other resources like for
-                    example S3 Buckets.<br>
-                    Therefore the application developers never had to touch VPC or Route53 Stacks, but only their
-                    Application Layer Stacks.<br>
-                    -The stacks were ordered in the git repo by their layers to allow them to re-deploy in the correct
-                    orders.<br>
-                    Cross-References with Outputs in Inputs Values were used, but in this case of course the Stack
-                    containing the Output must be
-                    deployed first.<br>
-                    The structure of the Stacks was defined like this:<br>
-                    000-099 IAM ( Roles, Users, Policies)<br>
-                    100-199 Network (VPC, Transit Gateways, Peering, R53 Hosted Zones, Certificates )<br>
-                    200-299 Common used resources (common Security Groups, KMS Keys, Secrets, Parameter Store)<br>
-                    300-399 Storage ( S3, EFS, EBS, Redis & RDS Databases)<br>
-                    400-499 Computing ( EC2, LBs, SGs)<br>
-                    500-599 Container Services (ECS/Fargate)<br>
-                    600-699 CDN-Content Delivery Network (Cloudfront)<br>
-                    <br>
-                    The Stacks used in 3 Stage Accounts were unified to a single stack and parameterized.
-                    <br>
-                    The existing MariaDB RDS was migrated to a Aurora RDS using the DMS .<br>
-                    The ElasticBeanstalk Apps where created on the WebConsole, they where now deployed by CloudFormation
-                    and
-                    updated by a Jenkins Pipeline.
-                    All Applications, like EB and Fargate where modified to use secretsmanager for the credentials.<br>
-
-                    <h4>Improve Desaster Recovery Strategy and therefore RPO and RTO</h4><br>
-                    We defined together with the client a strategy of pilote lite and backup and restore.<br>
-
-                    Strict usage of IaC is already an important step to a better RTO for re-creating the resources.<br>
-                    Also Loadbalancers were introcuced to the ElasticBeanstalk Applications.<br>
-                    The Fargate Service was already loadbalanced and setup with autoscaling.<br>
-                    The Route53 setup in the master account in conjunction with the 3 stage accounts allowed a switch to
-                    a second environment (SANDBOX or DEV) in
-                    case of a desaster on
-                    the PROD account.<br>
-                    All RDS instances were configured for daily snapshots, also EBS volumes.<br>
-                    The Live RDS instances were setup with read replicas.<br>
-                    S3 Bucket Lifecycle Policies where used, also cross region replication for critical data of
-                    dedicated buckets.<br>
-                    All code (lambdas, eb apps, fargate) was stored and maintained in git and deployed via Github
-                    Pipeline.<br>
-                    <p></p>
+                  
 
                 </div>
-
 
             </div>
         </div>
@@ -193,7 +129,7 @@
     <div id="team-section">
         <div class="container">
             <div class="section-title">
-                <h2>Autor</h2>
+                <h2>Author</h2>
                 <hr>
             </div>
             <div id="row">
