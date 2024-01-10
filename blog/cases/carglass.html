@@ -89,38 +89,46 @@
             <div class="row">
                 <div class="col-md-12">
                     <p></p>
-                    <p>For about 1 year SCC Brasil worked together with the Carglass internal IT Team to improve their
-                        Cloud Infrastructure<br>
-                        Carglass is the biggest company in germany for windshield repair and replacement.<br>
+                    <img src="../../img/clients/carglass1.png" alt="carglass" loading="lazy" /> &#160
+                    <p>For about 1 year SCC Brasil worked together with the Carglass Germany internal IT Team on their Migration to AWS<br>
+                        <br>
+                        Carglass is the leading vehicle glass repair and replacement company across 25 countries, <br>
+                        like Germany, Austria, Belgium, France, Switzerland, Sweden, Brazi, Chile and many more. <br>
+                        Also in Germany Carglass is the biggest company for windshield repair and replacement.<br>
                         See company site:
-                        <a href="https://www.carglass.de/" class="page-scroll" target="_blank">Carglass </a><br>
-                        The first action was analyze the current setup and define epics to optimize the aws
-                        infrastructure.<br>
-                        Carglass was already in progress to migrate their On Premise infrastructre to AWS.
-                        They used EC2 to migrate VMs, which for example had 3rd party software running for various
+                        <a href="https://www.carglass.de/" class="page-scroll" target="_blank">Carglass </a><br><br>
+
+             
+                        Carglass was already in progress to migrate their On Premise infrastructre to AWS, 
+                        but did not have enough resources to proceed and complete the migration from OnPremise to AWS
+                        within the the ambitious schedule. Thats why we joined their team to support them achieving their goals.<br>
+                        They used EC2 to migrate OnPremise, VMs, which for example had 3rd party software running for various
                         internal applications.<br>
                         The main business application was running on a Kubernets cluster, also on EC2 machines. Setup by
-                        kubectl, so far EKS was not used.<br>
+                        kubectl, so EKS was not used.<br>
                         RDS was also used as backend for various applications.<br>
                         AWS Lambda was used for processing of small tasks, basically for maintenance of the AWS
                         infrastructe, not for business logic yet.<br>
-                        The issues were identified and priorized to bring their hybrid infrastructure on another
-                        quality level<br>
-                        The first epics based on the Review were: Security, Account Structure, Improve RPO and RTO,
-                        IaC<br>
-                        In this blog let's have a look on 3 maior epics<br>
+                        CloudFormation was used as infrastructe as Code Tool.<br>
+                        The first action was analyze the current setup and define epics to optimize the aws
+                        infrastructure and accelerate and complete the migration.<br>
+                        We focused than on IaC, the AWS Account Structure, Cost-Optimization, Improvement of RPO and RTO
+                        and of course on the ongoing Migration of resources still OnPremise <br>
+                        <br>
+                        In this blog let's have a look on the most important epics<br>
                         -Reorganize AWS Account Strucure<br>
-                        -Improve Desaster Recovery Strategy and therefore RPO and RTO<br>
-                        -Strict usage of IaC<br>
+                        -Define and Improve Desaster Recovery Strategy and therefore RTO<br>
+                        -Strict usage of IaC - CloudFormation<br>
+                        -Cost-Opmimization<br>
 
                     <h4>Reorganize AWS Account Strucure</h4><br>
                     The current setup was a Master Account and 3 Stage Accounts (DEV, QA & PROD) .<br>
                     It is already a good practice to separate the stages in separate accounts, but since it was
-                    neccessary to grant acess to
+                    neccessary to grant acess to<br>
                     external service providers to the accounts, the separation of all these parties on IAM level to
-                    grant only rights to their servers and resources,
+                    grant only rights to their servers and resources,<br>
                     following the principle of least privilage, was difficult.<br>
-                    Too much administrator policies where granted, allowing changes on networking and also on actions on
+                    Administrator policies where granted, allowing changes on networking and also on actions on
                     other domain resources.<br>
                     The better approach was to define the account structure more granular and define more dedicated
                     accounts with its on IAM roles.<br>
@@ -138,37 +146,46 @@
                     between the other accounts<br>
                     <b>Main Stage Accounts DEV, QA & PROD</b><br>
                     <b>Stage Accounts for external service providers</b><br>
-                    <b>Stage Accounts for Oracle and its servie provider</b><br>
+                    <b>Stage Accounts for Oracle and its service provider</b><br>
 
 
                     The separation in these dedicated accounts helped to apply the principle of least privilage,
-                    allowing the different roles
+                    allowing the different roles<br>
                     only access to their resources.<br>
+                    Carglass was using Direct Connect between their company intranet and the AWS accounts, <br>
+                    managed by a Transit Gateway and the requirement to enable Peering between some but not all accounts. <br>
+                    The Networking Account helped to restrict permissions in the Networking Setup only to <br>
+                    their Network Adminstrator but would still allow the LeadDevs and DevOps to assume a Adminstrator Role 
+                    in their Stage accounts. <br>
                     The dedicated accounts where much more neatly, allowing the admins to stop or teminate manual
-                    created test/poc resources.
+                    created test/poc resources.<br>
                     Also consolidated billing helped the management to monitor the aws costs on a better
                     granularity.<br><br>
 
-                    <h4>Improve Desaster Recovery Strategy and therefore RPO and RTO</h4><br>
-                    All RDS instances where already creating daily snapshots, also EBS volumes, so the RPO was in most
-                    cases acceptable, here were only small improvements neccessary,
-                    but there a TODO with the RTO.<br>
-                    Not all resources where created with IaC (CloudFormation was used in general), some where created
-                    manually on the AWS Console
-                    and many of the resources created with IaC were modified over the time manually on the AWS Console
-                    ( and not the Cfn Stack),<br>
-                    which caused drifts on many Stacks and therefore possible problems when updating or re-creating
-                    these resources.
-                    To allow the team to re-create all resources in the case of a desaster recovery, the strict usage of
-                    IaC
-                    must be implemented.<br>
+                    <h4>Define and Improve Desaster Recovery Strategy and therefore RPO and RTO</h4><br>
+                    First we had to define the Expectations on RPO and RTO together with Carglass.<br>
+                    All RDS instances where already creating daily snapshots, also EBS volumes, so the RPO <br>
+                    was already quite well, here were only small improvements neccessary, for example on the RDS Snapshot Settings and Scheduling. <br>
+
+                    The RTO left some potential for improvements<br>
+                    Not all resources where yet created with IaC (CloudFormation was used in general), some where created
+                    manually on the AWS Console, due to urgent requirements in the migration process. <br>
+                    Also some of the resources created with IaC were modified over the time manually on the AWS Console<br>
+                    due to urgent production issues, which caused drifts on some Stacks and therefore possible problems when updating the resources by CloudFormation.<br>
+                    To allow the team to re-create all resources in the case of a desaster recovery and therefore 
+                    achieve a real short RTO,  the strict usage of
+                    IaC must be applied consequently.<br>
+
                     <br>
 
-                    <h4>Strict usage of IaC and deployment with CI/CD</h4><br>
+                    <h4>Strict usage of IaC (CloudFormation) and deployment with Jenkins Pipeline</h4><br>
 
                     The CloudFormation Stacks were re-structured :<br>
                     -The stacks were layered to better separate the logical and strucutural elements:<br>
                     <img src="img/cfn-layering.jpg" alt="SMM" width="500"> <br>
+                    Please have also a look in our blog on structuring CloudFormation Templats to get 
+                    more informations about this :<br>
+                    <a href="../aws/cfn-structure.html" class="page-scroll">How to organize CloudFormation Templates </a><br>
                     A VPC Stack would now only contain VPC and Network resources, but no other resources like for
                     example S3 Buckets.<br>
                     Therefore the application developers never had to touch VPC or Route53 Stacks, but only their
@@ -178,11 +195,12 @@
                     Cross-References with Outputs in Inputs Values were used, but in this case of course the Stack
                     containing the Output must be
                     deployed first.<br>
-                    -The Stacks used in 3 Stage Accounts were unified to a single stack and parameterized instead of
-                    having 3
-                    stacks almost being 95% equaly.<br>
-                    - All Stacks were deployed by Jenkins<br>
-                    -Drift detection problems were sent by SNS Notifications<br>
+                    -Some Stacks used in 3 Stage Accounts were unified to a single stack and parameterized instead of
+                    having 3 stacks with a lot of Copy & Paste.<br>
+                    - All Templates were deployed by Jenkins, Pipelines for CloudFormation Deployment were introduced<br>
+                    - A Jenkins Pipeline to automatically create Deployment Pipelines for each Template and each stage was coded in Groovy.
+                    If a new Stack was added, this Pipeline must be triggered and it would create new Deployment Pipelines for each stage<br>
+                    -Drift detection problems were sent by SNS Notifications to avoid new Drifts<br>
                     <br>
                     <p></p>
 
@@ -214,9 +232,8 @@
                     Also a lot of documentation was written in the company Confluence, including Runbooks, Best
                     practices, Troube Shooting etc<br>
                     <br>
-                    At the end of the project the account structure was cleaned up, IaC was strictly used, this way a
-                    lot of problems removed, the
-                    costs were optimized and the customer was enabled to manage its AWS platform .
+                    We are glad to be able to support the Carglass Germany Team on their Cloud journey, it
+                    was a lot of fun to work with the well skilled infrastructe team and hope all the Best for them in the future.<br>
                 </div>
 
 
