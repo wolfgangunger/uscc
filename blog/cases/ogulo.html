@@ -105,7 +105,11 @@
                         granularity.<br> <br> 
                         We also deploy every resource strict with IaC ( mostly CloudFormation ), using parameterized Stacks for all accounts and stages.<br>                        
                         These Cloudformation Templates were managed using Git and deployed via Pipelines in Bitbucket, to ensure stability and control on maintaining the infrastructure.<br>
+<<<<<<< Updated upstream
                         Also in the process to enhance the RTO AND RPO we defined together with the client the backup strategy for RDS and S3<br>
+=======
+                        Also in the process to enhance the RTO AND RPO we defined together with the client a strategy of backup and restore.<br>
+>>>>>>> Stashed changes
                         Strict usage of IaC is already an important step to a better RTO for re-creating the resources.<br>
                         Some other small changes where introduced,
                         like usage of Loadbalancers, Snapshots, Replication and so on.<br><br>
