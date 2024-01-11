@@ -220,24 +220,55 @@
           </div>
 
 
-
-
-
-
+                
           <div class="panel panel-primary">
             <div class="panel-heading">
-              How to setup a Multi Branch Pipeline with Webhook
+              AWS Cost Savings
             </div>
 
-            <div class="panel-body article-preview">
+            <div class="panel-body solutions">
               <span>
-                This tutorial will cover how to setup a feature branch pipeline with
-                CDK and CodePipeline. Since there is no native support for this functionality in CodePipeline
-                and many other Build Tools, we have to implement this on our own.
-                Based on my Github Project I will explain the setup and how to adapt for your requirements.
+                There are a number of ways to reduce your AWS bill, you can use the AWS Cost Explorer to analyze usage and costs, <br>
+                we have an comprehensive guide to make this analisys in the blog <a href="blog/aws/costopt.html" > Blog - Cost optimization strategies</a><br>
+                But if you already have your basis covered, there is one simple lambda that can help you reduce even more your costs.<br>
+                Usually the non production environments, don't neeed to be up 24/7, so this lambda can reduce your compute costs more than 50% on non-production environments.
+                This simple Lambda Function can stop and start your EC2, Autoscaling and RDS instances.<br>
+                Read more about it in this blog :<br>
+                <a href="blog/aws/cost-savings-lambda.html" > Blog - Schedule/Stop your instances automatically</a><br>
+                or you can have a look directly in out Github Repo:<br>
+                <a href="https://github.com/wolfgangunger/lambda-instance-scheduler" class="page-scroll">Cost savings lambda | Github Wolfgang Unger</a><br> 
+                
               </span>
             </div>
           </div>
+<!-- 
+
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              Pipelines for CDK deployments
+            </div>
+
+            <div class="panel-body solutions">
+              <span>
+
+                Maybe your are already using AWS CodePipeline to deploy your CDK Code and infrastructure to your Stage Accounts.
+                I have a HowTo and Example Github Project about how to do so in this blog:
+                CDK CodePipeline
+                This works fine, but only on your main/master branch.
+                There is no build in functionality with CodePipeline that supports building mulitple feature branches.
+                For small companies and projects this is ok, but if you work on a bigger projects with lets say 20 developers
+                working on the CDK and infrastructure, 3-5 open feature branches the same time, you will miss this feature.
+                You want to test your feature branches before merging them back into the main branch.
+                If have implemented a multi feature branch pipeline, it is available in my github account.
+
+                Read more about it in this blog :<br>
+                <a href="blog/aws/feature-branch-pipeline.html" > Blog - Feature Brach Pipeline</a><br>
+                or you can have a look directly in out Github Repo:<br>
+                <a href="https://github.com/wolfgangunger/cdk-codepipeline-multibranch" class="page-scroll">Pipeline multi-branch | Github Wolfgang Unger</a><br>
+                
+              </span>
+            </div>
+          </div> -->
 
 
 
