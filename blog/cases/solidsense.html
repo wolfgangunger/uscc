@@ -75,131 +75,70 @@
             <div class="clearfix"></div>
     </header>
 
+
+
     <div id="about-section">
         <div class="container">
+
             <div class="section-title">
                 <h2>Solidsense</h2>
-                <hr><img src="img/solidsense.png" alt="Solidsense" width="290">
+                <hr><img src="img/solidsense.png" alt="Solidsense" width="300">
             </div>
-            <br>
+
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
                     <p></p>
-                    <p>For about 6 month SCC Brasil worked together with Solidsense to improve their
-                        AWS Cloud Infrastructure and also the Terraform Setup<br>
-                        Solidsense developed a Event Media Streaming Platform build on
-                        ElasticBeanstalk, RDS, Lambda, S3, CloudFront, Cognito, Chime and other services.<br>
+                    <p>
+                        Solidsense is a innovative company that brings ideas to live - emotional surroundings, experiences, installations and interactive exhibits, <br>
+                        helping companies on delivering stunning experiences, participate on planning, execution and production on individual solutions to bring <br>
+                        their dreams into reality using technology.<br>
+                        We have the privilege to work with solidsense on a solution of Event Media Streaming, this platform runs on AWS, and together <br>
+                        we improve the availability, cost and performance of the solution.<br>
+                        The solution utilizes various aws services like ElasticBeanstalk, RDS, Lambda, S3, CloudFront, Cognito, Chime and other services.<br>
+                        We help defining a good IaC aproach using Terraform, multi-account structure, Disaster Recovery strategy, etc, <br>
+                        and also implement all of these best practices in the AWS Infrastructure optimizing the cost, availability and performance.<br>
                         <br>
-                        After an initial Architecture Review analyzing the Security, Reliability, Operational Excellence
+                        This partnership begins with an initial Architecture Review analyzing the Security, Reliability, Operational Excellence<br>
                         and also the Terraform Setup and Project Structure,<br>
-                        SCC Brasil was contracted to improve
-                        the cloud infrastructe to follow all best practices and also the 5 pillars of the
+                        SCC Brasil was contracted to improve the cloud infrastructe to follow all best practices and also the 5 pillars of the
                         Well-Architected Framework.<br>
                         <br>
-                    <h4>Terraform Project Re-Structuring</h4><br>
-                    The Even Media Streaming Platform was supposed to be installed for various clients in a
-                    3 stage account setup,<br> therefore we adapted the flat Terraform Project Structure to serve for
-                    this purpose.<br>
-                    <br>
-                    Lets first have a look on the new structure of the terraform project.<br>
-                    <br>
-                    <img src="img/terraform.jpg" alt="Terraform" width="300"> <br>
-                    <br>
+                        Between the various upgrades made to the infrastructure, we can cite some memorables:<br>
+                            - IaC using Terraform, and Azure DevOps to deploy the code using Pipelines.<br>
+                            - Improve Auto-Scaling configuration to fit the needs of an Event (huge spikes in traffic in minutes).<br>
+                            - Improve security using SecretsManager, Security Group Chaining, Cloudfront Origin Access Control, etc.<br>
+                            - Improve Backup in a multi-account setup using AWS Backup.<br>
 
-                    Inside the infrastructure folder you have the main tf file. main.tf, variables.tf, outputs.tf if
-                    needed.<br>
-                    In this folder you will execute your terraform commands.<br>
-                    Inside the subfolder env you have the tfvars file for each environment, in this example dev, qa
-                    and prod. <br>
-                    Also a backend.conf file for each environment (qa-backend.conf etc)<br>
-                    You will init the project with the .conf file for the environment you want to address.<br>
-                    The plan, apply or delete commands you will execute with the tfvars file for the env
-                    (dev,qa,prod).<br>
+                            <br>
+            
+                        In our <a href="../aws/blog.html" class="page-scroll" target="_blank">blog page</a> you can find some of the strategies and best practices used.<br><br>
 
-                    <br>
-                    The diagram shows a simplified infrastructure/env folder.<br>
-                    Indeed there were subfolders under the env folder for each customer and and each of them will
-                    be the tfvars files for the 3 environments.<br>
-                    Having:<br>
-                    -infrastructure<br>
-                    --env<br>
-                    ---customer1<br>
-                    ----dev.tfvars<br>
-                    ----qa.tfvars<br>
-                    ----prod.tfvars<br>
-                    ---customer2<br>
-                    ----dev.tfvars<br>
-                    ----qa.tfvars<br>
-                    ----prod.tfvars<br>
-                    ......more customers
-                    <br>
-                    This way all configuration files for one customer were in one common folder and the
-                    customers were all grouped under the folder env.<br>
-                    The main.tf file in the infrastructure root filder will include all the modules you want to
-                    create
-                    for your environment.<br>
-                    Modules were introduced and these modules were placed in the subfolder 'modules'<br>
-                    This way no copy & paste code was produced, the project structure was kept simple and
-                    supported the multi client deployment requirements.<br>
-                    <br>
-                    <h4>Loadbalancing Optimization</h4><br>
-                    <br>
-                    <br>
-                    <img src="img/aws-alb.jpg" alt="5Pillars" width="300"> <br>
-                    <br>
-
-                    Solidsense scale out requirements were besides the normal Loadbalancing capabilites and
-                    features.<br>
-                    When a event started in the evening, within 1 minute up to 5000 users made their login and
-                    started using the media streaming services and the applications.<br>
-                    A scaling policy based on CPU or Network metrics cannot handle this, from where the scale out events
-                    will be triggered and until the new instances are fully started, it will take more than 3 minutes
-                    and
-                    the users will face a bad user experience.<br>
-                    Saying this, the classical loadbalancing triggers will not work.<br>
-                    Since the events occure on a given time and date and for a given duration, a time based scheduled
-                    Load Balancing is the best approach.
-                    15 min before the event, the desired count for the Elastic Beanstalk Environments will be increased
-                    (based
-                    on a calculation of the number of event users), for example from 1 to 10.
-                    And after the event the desired count will be set back to 1.<br>
-                    Before tests on multiple EC2 instances and higher Load we evaluated the best instance size
-                    for a small number of users based on the hardware requirements of the application.<br>
-                    Solidsense performed new Loadtests and the results were outstanding.<br>
-                    A lambda with API Gateway & a simple UI in the Admin Application was written and deployed the
-                    change the time scheduled Loadbalancing by event data and user number.<br>
-                    <br>
-                    <h4>Security, Reliability & Operational Excellence Improvements</h4><br>
-                    We analyzed the infrastructure, also used SecurityHub and Trusted Advisor and addressed some
-                    Security Issues to resolve.<br>
-                    The ElasticBeanstalk application was adapted to use only role based policies, all credentials
-                    were moved to SecretsManager, Security Group Chaining was introduced, all S3 Buckets for CloudFront
-                    were accessed only with Origin Access Control.<br>
-                    Loggin was enabled for EB, EC2, the Loadbalancers, RDS, VPC Flowlogs, S3 Access and others.<br>
-                    Monitoring was enhanced and alarms created for EC2, RDS, ALB and Lambdas.<br>
-                    A backup strategy was defined and implemented.
-                    Best practices of the 5 pillars were applied.<br>
-                    <br>
-                    <img src="img/5pillars.webp" alt="5Pillars" width="500"> <br>
-                    <br>
-                    Besides the already mentioned measures for Security, Reliability & Operational Excellence<br>
-                    the Perfomance Efficiency had been optimized together with the changes on Loadbalancing and
-                    Lambda configurations.<br>
-                    Cost Optimization was addressed by scaling down the EB environments to 0 when no event was
-                    scheduled, <br>
-                    the correct sizing of the EC2 and RDS instances and use of serveless services like Lambda and API
-                    Gateway.<br>
-
-
-
+                        -<a href="../aws/terraform.html" class="page-scroll" target="_blank">Terraform Project Structure and Setup</a><br>
+                        -<a href="../aws/azure-pipeline.html" class="page-scroll" target="_blank">Azure Devops Pipeline for Terraform Deployments</a><br>
+                        -<a href="../aws/aws-backup.html" class="page-scroll" target="_blank">AWS Backup - How to backup cross region and cross account</a><br>
+                        <br>
+                        <br>
+<!-- 
+                        <div style="width: 90%; float:right">
+                            <blockquote class="blockquote">
+                                <p class="blockquote__text">
+                                    " TODO "
+                                </p>
+                                <p class="blockquote__text blockquote__text--author">- Sören Fricke (Solidsense)</p>
+                
+                
+                            </blockquote>
+                        </div>
+                   -->
 
                 </div>
-
 
             </div>
         </div>
     </div>
+
+
 
 
 
