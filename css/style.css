@@ -55,6 +55,19 @@ h1 strong {
   margin-bottom: 1em;
 }
 
+.iconpanel {
+  display: flex;
+  margin-top: 0;
+  background: #f8fffe;
+  border: 1px solid #bbbbbb;
+  color: #0c0a47;
+  box-sizing: border-box;
+  margin: 10px 30px;
+}
+
+
+
+
 .panel-primary {
   border-color: rgba(27, 3, 136, 0.9);
 }
