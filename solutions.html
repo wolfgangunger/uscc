@@ -196,7 +196,7 @@
             <div class="panel-heading">
               Pipeline for automatic CloudFormation Deployments
             </div>
-
+            <img src="img/aws/Arch_AWS-CodePipeline_48.png" alt="codepipeline" loading="lazy" />
             <div class="panel-body solutions">
               <span>
                 Are you using CloudFormation as Infrastructure as Code Tool but you still deploy your Templates manually on the Web Console?<br>
@@ -205,6 +205,7 @@
                 being deployed on the CloudFormation Console. <br>
                 There are various options: Jenkins, Azure DevOps, Gitlab, Bitbucket and more. <br>
                 But still it will be a considerable effort to create all Pipelines manually.<br>
+                <b>CloudFormation Deployment Pipeline</b>  <br>
                 Do you need an automation to deploy your CloudFormation Templates to your AWS Account(s)?<br>
                 A Pipeline or a tool that will automatically create a CloudFormation Deployment Pipeline for each of your stacks ?<br>
                 If so take a look into this solution from us, that will allow you to create these pipelines fully automatically
@@ -219,56 +220,120 @@
             </div>
           </div>
 
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              CDK Pipelines
+            </div>
+            <img src="img/aws/Arch_AWS-CodePipeline_48.png" alt="codepipeline" loading="lazy" />
+            <div class="panel-body solutions">
+              <span>
 
+                Are you using CDK as IaC Tool but not yet setup a Pipeline for the Deployment Process?<br>
+                If so, these to 2 solutions might be of interest for you.<br><br>
+                <b>CDK CodePipeline</b>  <br>
+                The first is a AWS CodePipeline you can integrate in your CDK project, which will create 
+                a CodePipeline for your CDK project.<br>
+                Once deployed to your account (or a toolchain account), it will automatically deploy changes in your 
+                CDK code to the stages. <br>
+                The project also shows how to use a super class for the pipeline, so you can sublass various classes from it - if you need this. <br>
+                More Infos you will find in this blog:<br>
+                <a href="cdk-pipeline.html" >
+                      CodePipeline with CDK Python and generic Superclass
+                </a><br>
+                And this is the Github Repo for the project :<br>
+                <a href="https://github.com/wolfgangunger/cdk-codepipeline" class="page-scroll">Git
+                  Wolfgang
+                  Unger CDK Pipeline</a><br>
+                  <br>
+                <b>Multi Branch CodePipeline</b>  <br>
+                Maybe your are already using AWS CodePipeline to deploy your CDK Code and infrastructure to your Stage Accounts. Perfect.<br>
+                This works fine, but only on your main/master branch.<br>
+                There is no build in functionality with CodePipeline that supports building mulitple feature branches.<br>
+                For small companies and projects this is ok, but if you work on a bigger projects with lets say 20 developers<br>
+                working on the CDK and infrastructure, 3-5 open feature branches the same time, you will miss this feature.<br>
+                You want to test your feature branches before merging them back into the main branch.<br>
+                If have implemented a multi feature branch pipeline, it is available in my github account.<br>
+
+                Read more about it in this blog :<br>
+                <a href="blog/aws/feature-branch-pipeline.html" > Blog - Feature Brach Pipeline</a><br>
+                or you can have a look directly in our Github Repo:<br>
+                <a href="https://github.com/wolfgangunger/cdk-codepipeline-multibranch" class="page-scroll">Pipeline multi-branch | Github Wolfgang Unger</a><br>
+                
+              </span>
+            </div>
+          </div> 
                 
           <div class="panel panel-primary">
             <div class="panel-heading">
-              AWS Cost Savings
+              Instance Scheduler Lambda
             </div>
-
+            <img src="img/aws/Arch_AWS-Lambda_48.png" alt="codepipeline" loading="lazy" />
             <div class="panel-body solutions">
               <span>
                 There are a number of ways to reduce your AWS bill, you can use the AWS Cost Explorer to analyze usage and costs, <br>
-                we have an comprehensive guide to make this analisys in the blog <a href="blog/aws/costopt.html" > Blog - Cost optimization strategies</a><br>
+                we have an comprehensive guide to make this analisys in the blog<br> <a href="blog/aws/costopt.html" > Blog - Cost optimization strategies</a><br>
+                <b>Instance Scheduler Lambda</b>  <br>
                 But if you already have your basis covered, there is one simple lambda that can help you reduce even more your costs.<br>
-                Usually the non production environments, don't neeed to be up 24/7, so this lambda can reduce your compute costs more than 50% on non-production environments.
-                This simple Lambda Function can stop and start your EC2, Autoscaling and RDS instances.<br>
-                Read more about it in this blog :<br>
+                Usually the non production environments, don't neeed to be up 24/7, so this lambda can reduce your compute costs <br>
+                more than 50% on non-production environments.<br>
+                This simple Lambda Function can stop and start your EC2 and RDS instances once you have tagged them with a dedicated Tag. 
+                Also autoscaled instanced are supported<br>
+                More detailed informations in this blog :<br>
                 <a href="blog/aws/cost-savings-lambda.html" > Blog - Schedule/Stop your instances automatically</a><br>
-                or you can have a look directly in out Github Repo:<br>
+                or you can have a look directly in our Github Repo:<br>
                 <a href="https://github.com/wolfgangunger/lambda-instance-scheduler" class="page-scroll">Cost savings lambda | Github Wolfgang Unger</a><br> 
                 
               </span>
             </div>
           </div>
-<!-- 
 
           <div class="panel panel-primary">
             <div class="panel-heading">
-              Pipelines for CDK deployments
+              DynamoDB Copy Lambda
             </div>
-
+            <img src="img/aws/Arch_AWS-Lambda_48.png" alt="codepipeline" loading="lazy" />
             <div class="panel-body solutions">
               <span>
+                AWS gives some simple options to copy data from one dynamodb to a new dynamodb table, <br>
+                like using export a csv file and importing it to a new table, <br>
+                but unfortunatly the situation is not so simple if your use case needs to put the data into an existing DynamoDB Table<br>
+                <b>DynamoDB Copy Lambda</b>  <br>
+                To overcome this problem, we created a simple lambda that copy data from one dynamodb table to another in the same account<br>
 
-                Maybe your are already using AWS CodePipeline to deploy your CDK Code and infrastructure to your Stage Accounts.
-                I have a HowTo and Example Github Project about how to do so in this blog:
-                CDK CodePipeline
-                This works fine, but only on your main/master branch.
-                There is no build in functionality with CodePipeline that supports building mulitple feature branches.
-                For small companies and projects this is ok, but if you work on a bigger projects with lets say 20 developers
-                working on the CDK and infrastructure, 3-5 open feature branches the same time, you will miss this feature.
-                You want to test your feature branches before merging them back into the main branch.
-                If have implemented a multi feature branch pipeline, it is available in my github account.
-
-                Read more about it in this blog :<br>
-                <a href="blog/aws/feature-branch-pipeline.html" > Blog - Feature Brach Pipeline</a><br>
-                or you can have a look directly in out Github Repo:<br>
-                <a href="https://github.com/wolfgangunger/cdk-codepipeline-multibranch" class="page-scroll">Pipeline multi-branch | Github Wolfgang Unger</a><br>
-                
+                More detailed informations in this blog :<br>
+                <a href="copy-dynamo-lambda.html" class="page-scroll">Copy data from a DynamoDB table to another existing DynamoDB table</a><br>
+                or you can have a look directly in our Github Repo:<br>
+              
               </span>
             </div>
-          </div> -->
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              Terraform Example Project
+            </div>
+            <img src="blog/aws/img/tf2.png" alt="terraform" loading="lazy" width="90"/>
+            <div class="panel-body solutions">
+              <span>
+                If you start to work with terraform will maybe ask yourself, how should you structure your
+                terraform project?<br>
+                You can find various example repos and projects in the web, but not all will server for your use
+                case. <br>
+                In this tutorial I will try to show a setup which will be usefull in quite a lot of
+                situations<br>
+                Of yourse you will have to adapt it for your special needs, but it should serve as a good
+                generic solution to start.<br>
+                More detailed informations in this blog :<br>
+                <a href="terraform.html" class="page-scroll">Terraform example structure</a><br>
+                or you can have a look directly in our Github Repo:<br>
+                <a href="https://github.com/wolfgangunger/aws-terraform" class="page-scroll"
+                target="_blank">Github
+                Wolfgang Unger - Terraform</a><br>
+              
+              </span>
+            </div>
+          </div>
+
+
 
 
 
