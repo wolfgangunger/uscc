@@ -277,7 +277,27 @@
                     <h2>Network</h2>
                     <img class="blog-image" src="img/network.avif" alt="Network" loading="lazy" /><br>
                     <br>
+                    <h3>VPC Setup</h3><br>
+                    It is best practice not to use the default VPC in an region but to setup your own VPC instead.<br>
+                    Together with your other infrastructure resources with IaC.<br>
+                    You should take some considerations on the VPC design about costs.<br>
+                    For instances in private subnets to be able to connect to the internet (which is normally the case, updates etc),
+                    you need a NAT Gateway.<br>
+                    A NGW is placed in one Availability Zone.<br>
+                    So if you setup a VPC over 3 AZs and you want to have a real Multi AZ setup, you will need 3 NGWs.<br>
+                    Because the AZ with the NGW fails the instances in the 2 other AZs might still run, but causing troube and 
+                    errors because they cannot longer access the internet. <br>
+                    A NAT Gateway will cost you about 35$ a month. <br>
+                    So if you have 3 NGWs in each stage and 3 stages, only the costs for the NGWs are ~ 315 $<br>
+                    If you consider a AZ failure not as the most probable event and accept the risk you can of cause stick with one NGW.<br>
+                    Depending on this decision your this, you might change your VPC design.<br>
+                    Do you want to have a VPC over 3 Availability Zones (3 public subnets & 3 private subnets) or<br>
+                    only 2 Availability Zones (2 public subnets & 2 private subnets) ?<br>
+                    The second option already can handle a failure of one AZ, so is Multi AZ.<br>
+                    If you want the highest possible availability, go for 3. <br>
+                    But if you choose one NGW per AZ, the 3 AZ VPC is 50% more expensive than the 2 AZ VPC. Keep in mind.<br>
 
+                    <br>
                     <h3>Use private IPs and endpoints</h3><br>
                     Traffic inside your VPC is normally without extra cost, but public traffic is always charged.<br>
                     <i>Note: Data transfer between availability Zones do cost extra, see the next bullet point.</i><br>
