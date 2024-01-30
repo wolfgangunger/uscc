@@ -119,7 +119,7 @@
                             Getting started with AWS Application Composer</a>
 
                         <br><br>
-                        I have to mentioned, I am a little bit surprised it was announced so strong as new Service, since AWS actually got 
+                        I have to say first, I am a little bit surprised it was announced so strong as new Service, since AWS actually got 
                         a similar service for many years.<br>
                         Many might not know it, but in CloudFormation you find the 'Designer' which offers a similar functionality and this for many years.<br>
                         If you have never used it, this is what it looks like, you find it under CloudFormation.<br>
@@ -150,7 +150,39 @@
                      To work with Application Composer you not only need the Extension, but you also have to open your project folder from 
                      your local drive in Visual Studio. Otherwise you won't be able the Extension/Plugin. <br>
                             <br>
-                     <h4>Fist project</h4><br>
+                            <h4>Some first tests for drag and drop</h4><br>
+                            On the left side, you can choice from 'Enhanced Components' and 'Standard IaC Resources'.<br>
+                            So far there are 14 Enhanced Components, mostly Serveless resources. <br>
+                            We will create a Serveless application in a second, let's have first a look on the Standard Resources.<br>
+                            What about, you have to create a VPC, this is quite a usual use-case, first thing before creating <br>
+                            Databases or Fargate-Services or EC2's will be a VPC.<br>
+                            So I drop a VPC to the canvas. What I get as IaC is :<br>
+                            <i>
+                            Resources:<br>
+                            VPC:<br>
+                            &ensp;     Type: AWS::EC2::VPC<br>
+                            &ensp;    Properties: {}<br>
+                            </i>
+                            <br>
+                            So really just a skeleton of the CloudFormation Code for a VPC.<br>
+                            A real VPC with Subnets, IGWs, NWGs, Routes etc  and full functionality  might have 500 lines of Yaml Code. <br>
+                            To create this with the Canvas you have to add all these resources like Subnets also and connect them with each other. <br>
+                            A lot of work... You will be much faster if you use your existing VPC stack ( which you have created on a former project) and <br>
+                            adapt a little bit for your current project. <br>
+                            Same is valid for a lot of Services, for example a Fargate Service will need a ECR-Repo, a Cluster, a Task Definition with Env Variables, a Service,
+                            a Target Group for the Loadbalancer etc <br>
+                            To create this on the Canvas you will not be faster as re-using and adapting an existing CFN Template.<br>
+                            I am missing here on thing:<br>
+                            In CDK for example you have L1, L2 and L3 constructs.<br>
+                            A L1 constructs represents one resource like a VPC or one CloudFormation Resource (CDK will generate a CloudFormation Json in the Sync Step) <br>
+                            But there a L2 and L3 constructs for higher level abstractions of resources. <br>
+                            L3 constructs offer already a composition of components and with these resources it is quite easy to create for example a Fargate Service. <br>
+                            Would be great to choose from this type of resources here also.<br>
+                            So a real VPC, a composition of Subnets, IGWs, NGWs, Routes etc or a ECS Patterns like a Loadbalanced Fargate Service. <br>
+                            With just the basic IaC resources you will not be able to work really fast and productive in Application Composer. <br>
+
+                            <br>
+                     <h4>Fist project - a Serveless Application</h4><br>
                      Create a new project folder on your local disk and insert a new and empty template.yaml<br>
                      In the WebConsole you can press 'New Project' and then open this project folder in the menu on the top, right side .<br>
                      <br>
