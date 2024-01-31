@@ -148,14 +148,14 @@
                      loading="lazy" /><br>  
                      <br>
                      To work with Application Composer you not only need the Extension, but you also have to open your project folder from 
-                     your local drive in Visual Studio. Otherwise you won't be able the Extension/Plugin. <br>
+                     your local drive in Visual Studio. Otherwise you won't be able see and use the Extension/Plugin. <br>
                             <br>
                             <h4>Some first tests for drag and drop</h4><br>
                             On the left side, you can choice from 'Enhanced Components' and 'Standard IaC Resources'.<br>
-                            So far there are 14 Enhanced Components, mostly Serveless resources. <br>
+                            So far there are 14 Enhanced Components, mostly Serverless resources. <br>
                             We will create a Serveless application in a second, let's have first a look on the Standard Resources.<br>
                             What about, you have to create a VPC, this is quite a usual use-case, first thing before creating <br>
-                            Databases or Fargate-Services or EC2's will be a VPC.<br>
+                            Databases or Fargate-Services or EC2's, will be a VPC.<br>
                             So I drop a VPC to the canvas. What I get as IaC is :<br>
                             <i>
                             Resources:<br>
@@ -178,7 +178,8 @@
                             But there a L2 and L3 constructs for higher level abstractions of resources. <br>
                             L3 constructs offer already a composition of components and with these resources it is quite easy to create for example a Fargate Service. <br>
                             Would be great to choose from this type of resources here also.<br>
-                            So a real VPC, a composition of Subnets, IGWs, NGWs, Routes etc or a ECS Patterns like a Loadbalanced Fargate Service. <br>
+                            So a real VPC, a "Level3" VPC, a composition of Subnets, IGWs, NGWs, Routes etc or a ECS Patterns like a Loadbalanced Fargate Service,
+                            which are available as L3 constructs in CDK <br>
                             With just the basic IaC resources you will not be able to work really fast and productive in Application Composer. <br>
 
                             <br>
