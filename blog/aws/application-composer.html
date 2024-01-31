@@ -187,6 +187,7 @@
                      In the WebConsole you can press 'New Project' and then open this project folder in the menu on the top, right side .<br>
                      <br>
                      Now we can drag and drop our fist resources. <br>
+                     <b>Api Gateway</b><br>
                      We start with a API Gateway. <br>
                      On the Canvas you can select a resource and open its properties,<br> the details will appear <br>
                      on the right side (for example the API Gateway): <br>
@@ -199,6 +200,7 @@
                      PUT /items/{id}<br>
                      and more like DELETE, but for now should should work, we can test, if the basic functionality is working. <br>
                      <br>
+                     <b>Lambdas</b><br>
                      Now we can drag and drop our Lambda Functions, the properties look like:<br>
        
                     <img class="blog-image" src="img/ac6.jpg" alt="ac6"
@@ -207,7 +209,9 @@
                     You should adapt your Runtime and the source Folder and of course the Logical ID.<br>
                     I am using Python 3.11 for this example.<br>
                     Now you can connect the API Gateway methods which the Lambda Functions on the Canvas. <br>
+                    This works really nice and speeds up the coding process indeed. <br>
                     <br>
+                    <b>DynamoDB Table</b><br>
                     Next we add a Dynamo Table to the Canvas, which will be our Database for the items. <br>
                     The Dynamo Table Properties:<br>
                     <img class="blog-image" src="img/ac5.jpg" alt="ac5"
@@ -221,9 +225,9 @@
                     The properties of the Canvas are not designed well on this.<br>
                     You have to switch to the CloudFormation Template View and add in the DynamoDB properties:<br>
                     <i>TableName: Items </i><br>
-                    I hope, they are going to fix this issue soon. <br>
+                    I hope, they are going to fix this issue soon. <br><br>
                     Now you should also connect the Lambda Functions with the DynamoDB in the Canvas. <br>
-
+                    So by now your API methods should be connected with each Lambda and the Lambdas must be connected with the DynamoDB.<br>
                     <br>
 
 
