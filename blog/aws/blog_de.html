@@ -16,7 +16,7 @@
   <title>AWS Blog Wolfgang Unger</title>
   <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil" />
   <meta name="keywords"
-    content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, " />
+    content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, Generative AI, AI,Fargate, ECS, EKS, Devops, Shoring, Security, Software Development,  Cloud Training, Consulting, Engineering,  Wolfgang Unger, os cloud gurus, #sccbrasil, #oscloudgurus, " />
   <meta name="author" content="AWS Blog Wolfgang Unger" />
   <meta name="og:title" property="og:title" content="AWS Blog Wolfgang Unger & SCC Brasil" />
   <meta property="og:description"
@@ -81,8 +81,13 @@
           <li><a href="../../index_de.html#services-section" class="page-scroll">Services</a></li>
           <li><a href="../cases/cases.html" class="page-scroll">Cases</a></li>
           <li><a href="./blog_de.html" class="page-scroll">Blog</a></li>
-          <li><a href="../../faq_de.html#fag" class="page-scroll">FAQ</a></li>
-          <li><a href="../../index_de.html#contact-section" class="page-scroll">Contact</a></li>
+          <li><a href="../../faq_de.html#faq" class="page-scroll">FAQ</a></li>
+          <li>
+            <a href="../../index_de.html#contact-section" class="page-scroll">Contact</a>
+          </li>
+          <!-- -->
+
+          <!-- -->
         </ul>
       </div>
       <!-- /.navbar-collapse -->
@@ -110,7 +115,7 @@
   </header>
   <!-- About Section -->
 
-  <div id="about-section">
+  <div id="blog">
     <div class="container">
       <div class="section-title">
         <h2><b>AWS Blog Wolfgang Unger & SCC Brasil</b></h2>
@@ -160,6 +165,23 @@
           <div class="articles-list" data-aos="fade-up">
             <div id="recent-posts">
             <h3>Letzte Posts</h3>
+            
+            <a href="application-composer.html" class="page-scroll">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  AWS Application Composer - How to get started
+                </div>
+                <div class="panel-body article-preview">
+                  <span>
+                    How to get started AWS Application Composer?
+                    AWS Application Composer was announced quite strong on the last Re-Invent, so time
+                    to have a closer look on the
+                    new service.
+                    This is a short tutorial on how to use AWS Application Composer and how to create a Serverless application and also a feedback on the status of the service
+                  </span>
+                </div>
+              </div>
+            </a>
 
             <a href="bedrock.html" class="page-scroll">
               <div class="panel panel-primary">
@@ -896,88 +918,167 @@
             <a href="../../index_de.html" class="page-scroll btn btn-default">Home</a>
           </div>
           <br><br>
+          <div class="">
           Haben sie Fragen zu AWS Themen?<br>
           Wir hoffen hier die Anwtorten zu liefern. <br><br>
 
 
-          <h4>Was ist AWS?</h4><br>
-          <h4>Wieviel kostet AWS?</h4><br>
-          <h4>Wie funktioniert die AWS-Preisgestaltung?</h4><br>
-          <h4>Wie erstelle ich ein AWS-Konto?</h4><br>
-          <h4>Welche AWS-Dienste gibt es?</h4><br>
-          <h4>Wie starte ich eine EC2-Instanz in AWS?</h4><br>
-          <h4>Was ist Amazon S3?</h4><br>
-          <h4>Wie richte ich eine RDS-Datenbank in AWS ein?</h4><br>
-          <h4>Was ist AWS Lambda?</h4><br>
-          <h4>Wie funktioniert die Abrechnung bei AWS?</h4><br>
-          <h4>Wie kann ich meine AWS-Ressourcen sichern?</h4><br>
+          <h4>Wie funktioniert die AWS-Preisgestaltung?</h4>
+          Die Preisgestaltung von Amazon Web Services (AWS) ist sehr vielfältig und kann je nach den spezifischen Diensten und Ressourcen, <br>
+          die Sie verwenden, variieren. Hier sind einige grundlegende Prinzipien und Aspekte der AWS-Preisgestaltung:<br>
+          Pay-as-you-go-Model, Stündliche Abrechnung, Verschiedene Dienstmodelle, Reservierte/Spot-Instanzen etc <br>
+
+          <h4>Wie erstelle ich ein AWS-Konto?</h4><br>      
+          Das Erstellen eines AWS-Kontos ist relativ einfach und erfordert nur wenige Schritte. <br>
+          Sie benötigen eine Email Adresse und eine Kredit-Karte. <br>
+          Öffne deinen Webbrowser und gehe zur offiziellen AWS-Website: <br>
+          <a href="https://aws.amazon.com/" target="_blank" >AWS Console </a><br>
+          Auf der AWS-Startseite findest du die Option "Konto erstellen" oder "Create an AWS Account". <br>
+          Klicke darauf, um den Anmeldevorgang zu starten<br>
+
+          <h4>Welche AWS-Dienste gibt es?</h4>
+          Amazon Web Services (AWS) bietet eine breite Palette von Cloud-Diensten, die verschiedene IT-Infrastrukturbereiche abdecken. <br>
+          Hier sind einige der Hauptkategorien und wichtigen AWS-Dienste:<br>
+          Compute, Database, Storage, Containers, Developer Tools<br>
+
+          <h4>Wie starte ich eine EC2-Instanz in AWS?</h4>
+          Das Starten einer Amazon Elastic Compute Cloud (EC2)-Instanz in AWS ist relativ einfach und kann über die AWS Management Console durchgeführt werden. <br>
+          Hier sind die grundlegenden Schritte:<br>
+          Navigation zur EC2-Konsole<br>
+          In der EC2-Konsole klickst du auf die Schaltfläche "Instanzen starten" (Launch Instances) oder auf "Instanzen starten" (Launch Instance), <br>
+          je nachdem, wie die Schaltfläche beschriftet ist<br>
+
+          <h4>Was ist Amazon S3?</h4>          
+          Amazon Simple Storage Service (S3) ist ein skalierbarer und hochverfügbarer Objektspeicherdienst von Amazon Web Services (AWS).<br> 
+          Er ermöglicht das Speichern und Abrufen von beliebigen Datenmengen über das Internet. S3 ist als eine Art Cloud-basiertes Dateisystem konzipiert <br>
+          und bietet eine zuverlässige und sichere Möglichkeit, Daten in der Cloud zu speichern.<br>
+
+          <h4>Wie richte ich eine RDS-Datenbank in AWS ein?</h4>
+
+          <h4>Was ist AWS Lambda?</h4>
+
+          <h4>Wie funktioniert die Abrechnung bei AWS?</h4>
+          Die Preisgestaltung von Amazon Web Services (AWS) ist sehr vielfältig und kann je nach den spezifischen Diensten und Ressourcen, <br>
+          die Sie verwenden, variieren. Hier sind einige grundlegende Prinzipien und Aspekte der AWS-Preisgestaltung:<br>
+          Pay-as-you-go-Model, Stündliche Abrechnung, Verschiedene Dienstmodelle, Reservierte/Spot-Instanzen etc <br>
+
+          <h4>Wie kann ich meine AWS-Ressourcen sichern?</h4>
           Folgen Sie den Regeln zu IAM, lassen sie ihre Services und DBs in privaten Subnetzen, schließen sie alle möglichen Ports etc <br>
           Lesen sie mehr dazu in unserem Blog <br><a href="security-musts.html" class="page-scroll ">Security best
-            practices</a><br><br>
-          <h4>Was ist AWS IAM (Identity and Access Management)?</h4><br>
-          <h4>Wie deploye ich eine Webanwendung in AWS?</h4><br>
-          <h4>Wie kann ich meine Infrastruktur in AWS skalieren?</h4><br>
+            practices</a><br>
+
+          <h4>Was ist AWS IAM (Identity and Access Management)?</h4>
+
+          <h4>Wie deploye ich eine Webanwendung in AWS?</h4>
+
+          <h4>Wie kann ich meine Infrastruktur in AWS skalieren?</h4>
 
           Nutzen Sie Autoscaling Groups und Launch Templates anstelle einzelner Instanzen, Nutzen Sie Cluster wie ECS und andere <br>
+
           <h4>Was ist AWS CloudFormation?</h4><br>
           Ein IaC Tool zum Erstellen und Warten von AWS resourcen anhand einer YAML oder Json Datei<br>
           Lesen sie mehr dazu in unserem Blog <br><a href="iac.html" class="page-scroll ">IaC - Infrastructure as
-            Code</a><br><br>
-          <h4>Wie kann ich die Kosten in AWS optimieren?</h4><br>
-          Rightsizing, Autoscaling, reduzieren Sie Server Laufzeiten, nutzen Sie Sport instances, reserved instances und Saving plans <br>
-          Lesen sie mehr dazu in unserem Blog<br> <a href="costopt.html" class="page-scroll ">cost optimization</a><br><br>
-          <h4>Welche AWS-Zertifizierungen gibt es, und wie bereite ich mich darauf vor?</h4><br>
-          Die leichteste is Cloud Practitioner, es gibt jede Menge weitere wie Solutions Architect Associate usw
-          Lesen sie mehr dazu in unserem Blog <br><a href="certification.html" class="page-scroll ">AWS AWS-Zertifizierungen</a><br><br>
-          <h4>Was ist AWS Elastic Beanstalk?</h4><br>
-          AWS Elastic Beanstalk stellt Webanwendungen bereit, damit Sie sich auf Ihr Geschäft konzentrieren können.
-          Lesen sie wie sie eine ElasticBeanstalk Applikation in 2 Minuten deployen können in unserem Blog<br> <a href="deploy-eb.html" class="page-scroll ">Elastic Beanstalk</a><br><br>
-          <h4>Was ist AWS VPC (Virtual Private Cloud)?</h4><br>
-          <h4>Wie vergleicht sich AWS mit anderen Cloud-Anbietern wie Azure und Google Cloud?</h4><br>
-          <h4>Wie kann ich Probleme bei AWS beheben?</h4><br>
+            Code</a><br>
 
-          <h4>Wie kann AWS die Effizienz und Agilität unseres Unternehmens steigern?</h4><br>
-          <h4>Welche Kosten sind mit der Nutzung von AWS verbunden, und wie können wir sie effektiv verwalten?</h4><br>
-          Lesen sie mehr dazu in unserem Blog <br><a href="costopt.html" class="page-scroll ">cost optimization</a><br><br> 
-          <h4>Welche bewährten Methoden gibt es für das Management von AWS-Ressourcen und Kostenkontrolle?</h4><br>
+          <h4>Wie kann ich die Kosten in AWS optimieren?</h4>
+          Hier sind einige grundlegende Prinzipien und Aspekte der AWS-Preisgestaltung:<br>
+          Pay-as-you-go-Model, Stündliche Abrechnung, Verschiedene Dienstmodelle, Reservierte/Spot-Instanzen etc
+          Achten Sie auf Rightsizing, Autoscaling, reduzieren Sie Server Laufzeiten, nutzen Sie Sport instances, reserved instances und Saving plans <br>
           Lesen sie mehr dazu in unserem Blog<br> <a href="costopt.html" class="page-scroll ">cost optimization</a><br><br>
-          <h4>Wie stellen wir die Sicherheit unserer Daten und Anwendungen auf AWS sicher?</h4><br>
+
+          <h4>Welche AWS-Zertifizierungen gibt es, und wie bereite ich mich darauf vor?</h4>
+          Die leichteste is Cloud Practitioner, es gibt jede Menge weitere wie Solutions Architect Associate usw
+          Lesen sie mehr dazu in unserem Blog <br><a href="certification.html" class="page-scroll ">AWS AWS-Zertifizierungen</a><br>
+
+          <h4>Was ist AWS Elastic Beanstalk?</h4>
+          AWS Elastic Beanstalk stellt Webanwendungen bereit, damit Sie sich auf Ihr Geschäft konzentrieren können.
+          Lesen sie wie sie eine ElasticBeanstalk Applikation in 2 Minuten deployen können in unserem Blog
+          <br> <a href="deploy-eb.html" class="page-scroll ">Elastic Beanstalk</a><br>
+
+          <h4>Was ist AWS VPC (Virtual Private Cloud)?</h4>
+
+          <h4>Wie vergleicht sich AWS mit anderen Cloud-Anbietern wie Azure und Google Cloud?</h4>
+
+          <h4>Wie kann ich Probleme bei AWS beheben?</h4>
+
+          <h4>Wie kann AWS die Effizienz und Agilität unseres Unternehmens steigern?</h4>
+
+          <h4>Welche Kosten sind mit der Nutzung von AWS verbunden, und wie können wir sie effektiv verwalten?</h4>
+          Hier sind einige grundlegende Prinzipien und Aspekte der AWS-Preisgestaltung:<br>
+          Pay-as-you-go-Model, Stündliche Abrechnung, Verschiedene Dienstmodelle, Reservierte/Spot-Instanzen etc
+          Lesen sie mehr dazu in unserem Blog <br>
+          <a href="costopt.html" class="page-scroll ">cost optimization</a><br>
+
+          <h4>Welche bewährten Methoden gibt es für das Management von AWS-Ressourcen und Kostenkontrolle?</h4>
+          Nutzen sie Saving Plans, die richtigen Instanz Größen, horizontale Skalierung, Serverless und mehr.<br>
+          Lesen sie mehr dazu in unserem Blog<br> <a href="costopt.html" class="page-scroll ">cost optimization</a><br>
+
+          <h4>Wie stellen wir die Sicherheit unserer Daten und Anwendungen auf AWS sicher?</h4>
+          Die Sicherheit von Daten und Anwendungen in Amazon Web Services (AWS) ist von entscheidender Bedeutung. <br>
+          AWS bietet eine Vielzahl von Sicherheitsdiensten und bewährten Verfahren, <br>
+          um sicherzustellen, dass deine Ressourcen in der Cloud geschützt sind. <br>
           Lesen sie mehr dazu in unserem Blog<br> <a href="security-musts.html" class="page-scroll ">Security best
-            practices</a><br><br>
+            practices</a><br>
+
           <h4>Welche AWS-Dienste sind für die spezifischen Geschäftsanforderungen unseres Unternehmens relevant?</h4>
           <br>
-          <h4>Wie entwickeln wir eine Cloud-Strategie und Roadmap unter Verwendung von AWS?</h4><br>
-          <h4>Was ist das AWS Well-Architected Framework, und wie setzen wir es in unseren Projekten ein?</h4><br>
-          <h4>Wie überwachen und optimieren wir die Leistung unserer Anwendungen auf AWS?</h4><br>
+
+          <h4>Wie entwickeln wir eine Cloud-Strategie und Roadmap unter Verwendung von AWS?</h4>
+
+          <h4>Was ist das AWS Well-Architected Framework, und wie setzen wir es in unseren Projekten ein?</h4>
+
+          <h4>Wie überwachen und optimieren wir die Leistung unserer Anwendungen auf AWS?</h4>
+
           <h4>Was ist AWS Identity and Access Management (IAM), und wie richten wir den Benutzerzugriff ein und
-            verwalten ihn?</h4><br>
-          <h4>Wie implementieren wir Notfallwiederherstellungs- und Hochverfügbarkeitslösungen auf AWS?</h4><br>
-          Lesen sie mehr dazu in unserem Blog <br><a href="aws-backup.html" class="page-scroll ">AWS Backup - How to backup cross region and cross account</a><br><br>  
+            verwalten ihn?</h4>
+
+          <h4>Wie implementieren wir Notfallwiederherstellungs- und Hochverfügbarkeitslösungen auf AWS?</h4>
+          Machen Sie Backups und Snapshots, replizieren Sie ihre S3 Buckets, setzen sie Multi AZ für ihre Architektur ein. <br>
+          Lesen sie mehr dazu in unserem Blog <br>
+          <a href="aws-backup.html" class="page-scroll ">AWS Backup - How to backup cross region and cross account</a><br><br>  
+
           <h4>Was ist AWS-Compliance, und wie stellen wir die Einhaltung gesetzlicher Vorschriften für unsere
-            Anwendungen sicher?</h4><br>
-          <h4>Was sind bewährte Methoden für die Datensicherung und -archivierung auf AWS?</h4><br>
-          Lesen sie mehr dazu in unserem Blog <br><a href="aws-backup.html" class="page-scroll ">AWS Backup - How to backup cross region and cross account</a><br><br>  
+            Anwendungen sicher?</h4>
+
+          <h4>Was sind bewährte Methoden für die Datensicherung und -archivierung auf AWS?</h4>
+          Machen sie snapshots und Backups, replizieren sie ihre S3 Daten, sie können auch cross region und cross account backups machen, wenn sie wirklich sicher gehen wollen. <br>
+          Lesen sie mehr dazu in unserem Blog <br>
+          <a href="aws-backup.html" class="page-scroll ">AWS Backup - How to backup cross region and cross account</a><br>
+
           <h4>Was ist AWS-Compliance, und wie stellen wir die Einhaltung gesetzlicher Vorschriften für unsere
-            Anwendungen sicher?</h4><br>
-          <h4>Wie migrieren wir bestehende Anwendungen und Daten zu AWS?</h4><br>
-          <h4>Was ist der AWS Marketplace, und wie können wir ihn für Lösungen von Drittanbietern nutzen?</h4><br>
-          <h4>Wie verwalten und analysieren wir unsere AWS-Rechnungs- und Nutzungsberichte?</h4><br>
+            Anwendungen sicher?</h4>
+
+          <h4>Wie migrieren wir bestehende Anwendungen und Daten zu AWS?</h4>
+          Es gibt verschiedene Strategien, wie Lift & Shift, Replatform, Refactor und mehr .<br>
+          Lesen sie unseren Blog über die 7 R's <br>
+          <a href="7r.html" class="page-scroll ">7 R's - Cloud Migration strategies</a><br> 
+
+          <h4>Was ist der AWS Marketplace, und wie können wir ihn für Lösungen von Drittanbietern nutzen?</h4>
+
+          <h4>Wie verwalten und analysieren wir unsere AWS-Rechnungs- und Nutzungsberichte?</h4>
+
           <h4>Was ist AWS CloudFormation, und wie kann sie uns bei der Automatisierung der Bereitstellung von
-            Infrastruktur unterstützen?</h4><br>
+            Infrastruktur unterstützen?</h4>
             Ein IaC Tool zum Erstellen und Warten von AWS resourcen anhand einer YAML oder Json Datei<br>
           Lesen sie mehr dazu in unserem Blog <br><a href="iac.html" class="page-scroll ">IaC - Infrastructure as
-            Code</a><br><br>
+            Code</a><br>
+
           <h4>Wie gehen wir mit Personalbesetzung und Schulung vor, um AWS-Expertise in unserem Team aufzubauen?</h4>
-          <br>
+        
           Die leichteste AWS AWS-Zertifizierungen is Cloud Practitioner, es gibt jede Menge weitere wie Solutions Architect Associate usw<br>
-          Lesen sie mehr dazu in unserem Blog <br><a href="certification.html" class="page-scroll ">cost
-            optimization</a><br><br>   
-          <h4>Welche AWS-Support- und Service-Level-Vereinbarungen (SLA) gibt es?</h4><br>
-          <h4>Wie können wir AWS-Managed Services und serverloses Computing nutzen?</h4><br>
+          Lesen sie mehr dazu in unserem Blog <br>
+          <a href="certification.html" class="page-scroll ">Tips zu AWS AWS-Zertifizierungen</a><br>
+
+          <h4>Welche AWS-Support- und Service-Level-Vereinbarungen (SLA) gibt es?</h4>
+
+          <h4>Wie können wir AWS-Managed Services und serverloses Computing nutzen?</h4>
+
           <h4>Welche Fallstudien oder Erfolgsgeschichten bieten Einblicke, wie andere Unternehmen von AWS profitiert
-            haben?</h4><br>
+            haben?</h4>
+
         </div>
       </div>
+    </div>
       <br><br>
       <center>
         <img loading="lazy" src="../../img/scc-logo-shoring-deutsch.jpg" class="ready-to-cloud contact"
