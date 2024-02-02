@@ -36,6 +36,16 @@ h1 strong {
   border-left-width: 10px;
 }
 
+.card-text {
+  border: 1px solid #bbbbbb;
+  border-left-width: 10px;
+  color: #0c0a47;
+  max-width: 1200px;
+  margin: 10px 30px;
+  padding: 25px;
+
+}
+
 .blockquote__text {
   font-family: 'Gelasio', serif;
   font-style: italic;
