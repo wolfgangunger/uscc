@@ -48,7 +48,10 @@
         <loc>https://www.sccbrasil.com/blog/cases/ogulo.html</loc>
         <lastmod>2024-02-02</lastmod>
    </url>
-   
+     <url>
+        <loc>https://www.sccbrasil.com/contact.html</loc>
+        <lastmod>2024-02-02</lastmod>
+   </url> 
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/application-composer.html</loc>
         <lastmod>2024-02-02</lastmod>
@@ -183,7 +186,7 @@
     </url> 
      <url>
         <loc>https://www.sccbrasil.com/blog/aws/s3-bucket-block-public-access.html</loc>
-        <lastmod>2023-08-15</lastmod>
+        <lastmod>2024-01-01</lastmod>
     </url> 
                                                                                                                   
 </urlset> 
