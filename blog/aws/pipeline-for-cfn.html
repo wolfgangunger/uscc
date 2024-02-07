@@ -206,11 +206,6 @@
                             For this architecture 2 approaches are possible:  <br>
                             To create this generator pipeline once in a toolchain account and create all cfn-pipelines for all accounts/stages in there to deploy to 3 different accounts  <br>
                             Possible, but this would require cross account roles and setup and complicate this project, make it harder to understand.  <br>
-                            My multi branch pipeline follows this approach <br> 
-                            See this example using this approach:    
-                            <a href="feature-branch-pipeline.html"  class="page-scroll">Git
-                                Multi Branch Pipeline</a><br>
-                                <br>
                             I implemented the 2nd more easy and clear approach for this pipeline.  <br>  
                             In each account/stage the pipeline generator must be deployed to generate the cfn-templates in the account where the stacks should be deployed.  <br>
                             Thus no cross account roles are complicating the project, the stage account is considered the same as the toolchain account <br>
@@ -224,7 +219,6 @@
                             as in my example.<br>
                             In Github you have to install the AWS Connector for Github Application and add your repos in the configuration.<br>
                             Then you create the CodeStar Connection and define these repos there .<br>
-                            You will need the Code Star Connection ARN in the cdk.json.<br>
                             <br>
                             <h5>Install the Pipeline Generator</h5>
                             Once you have setup the Codestar Connection to your repo you can install the Pipeline Generator with the CloudFormation Template.
