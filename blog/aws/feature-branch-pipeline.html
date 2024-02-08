@@ -209,6 +209,7 @@
 
                     <h5>Setup</h5>
                     Please follow the Readme to setup the github project on your accounts.<br>
+                    Clone my repo to your git <br>
                     You have to adapt a couple of file to get it running.<br>
                     -github-actions-demo.yml (to be edited with your hook url)<br>
                     -cdk.json (account numbers and codestar connection, branch names)<br>
@@ -218,6 +219,8 @@
                     AWS Connector for GitHub to send notifications <br>on git events ( this is not for creating
                     branches, just
                     for triggering the pipelines)<br>
+                    After adapting the project files, like cdk.json, you must commit this to your repo.<br>
+                    The pipeline will checkout your repo as source, so the files must be already checked in and adapted corretly. <br>
                     <br>
                     After bootstrapping the project and deploy the cross account roles you will first have
                     to install the main pipeline with:<br>
