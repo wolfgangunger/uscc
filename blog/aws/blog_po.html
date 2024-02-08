@@ -917,25 +917,241 @@
           Dúvidas sobre AWS?<br>
           <br><br>
  
-          <h4>
-            O que é AWS CloudFormation e como ele pode nos ajudar a automatizar o provisionamento de infraestrutura?</h4><br>
-          Leia mais sobre esse assunto no nosso blog <a href="iac.html" class="page-scroll ">IaC - Infrastructure as Code</a><br><br>
-          <h4>Como posso economizar dinheiro na nuvem? Como posso reduzir custos na AWS?</h4><br>
-          Leia mais sobre esse assunto no nosso blog <a href="costopt.html" class="page-scroll ">cost optimization</a><br><br>
-          <h4>A nuvem é realmente segura?</h4><br>
-          Leia mais sobre esse assunto no nosso blog <a href="security-musts.html" class="page-scroll ">Security best practices</a><br><br>
-          <h4>Onde posso encontrar um especialista em migração cloud?</h4><br>
-          A SCC Brasil te ajuda com isso. <a href="../../index_po.html#contact-section" class="page-scroll ">Entre em contato</a><br><br>
-
-
-          <h4>Vou economizar com a migração para a nuvem?</h4><br>
-          <h4>Posso fazer a migração para a nuvem por conta própria?</h4><br>
-          <h4>AWS ou Azure? Qual nuvem devo usar?</h4><br>
-          <h4>AWS ou Azure, qual é mais barato?</h4><br>
-          <h4>Como posso diminuir custo e otimizar os serviços que eu uso na AWS?</h4><br>
-          <h4>Como faço para migrar para a nuvem? Como faço para migrar para a AWS?</h4><br>          
-          <h4>Quantas contas na AWS (AWS Accounts) eu preciso?</h4><br>
+          <h4>Como criar uma conta na AWS?</h4>
+          Tudo o que você precisa é de um endereço de e-mail e um cartão de crédito. <br>
+          <a href="https://aws.amazon.com/free/?nc1=h_ls&all-free-tier.sort-by=item"  target="_blank">Crie uma conta e começe já.</a><br>
+          Você pode experimentar muitos serviços sem custo, utilizando o free tier. <br>
+          <br>
+          <h4>Quais são os serviços da AWS?</h4>
+          A AWS possui mais de 200 serviços. Computação, Banco de Dados, Armazenamento, Contêineres, Ferramentas de Desenvolvimento e muito mais. <br>
+          <br>
+          <h4>Como criar uma instância EC2 na AWS?</h4>
+          Se deseja usar o Console da Web, basta abrir o EC2 e pressionar "Executar Instância". <br>
+          Você pode então escolher entre muitas opções, como tamanho(tipo) de instância, imagem e SO e muito mais. <br>
+          <br>
+          <h4>Como configurar um banco de dados RDS na AWS?</h4>
+          É bastante simples, siga estas etapas: <br>
+          Navegue até RDS, clique em "Criar banco de dados."
+          Selecione seu mecanismo de banco de dados.<br>
+          Defina o identificador da instância, nome de usuário e senha.
+          Defina o tipo de instância, armazenamento, VPC e outras opções.<br>
+          Defina o nome do banco de dados, porta, etc.
+          Revise as configurações e clique em "Lançar."
+          Use o endpoint, nome de usuário e senha para conectar.<br>
+          <br>
+          <h4>Como funciona a cobrança da AWS?</h4>
+          A cobrança da AWS (Amazon Web Services) é baseada em um modelo pay-as-you-go, <br>
+          permitindo que os usuários paguem apenas pelos serviços que usam sem custos iniciais ou compromissos de longo prazo.<br>
+          Os seguintes custos serão cobrados:<br>
+          Preços baseados em uso, cobrança por hora, custos de transferência de dados, instâncias reservadas e spot.<br>
+          <br>
+          <h4>Como posso proteger meus recursos da AWS?</h4>
+          Siga as regras do IAM, mantenha seus serviços e bancos de dados em sub-redes privadas, restrinja quaisquer portas e mais. <br>
+          Leia mais sobre isso em nosso blog <br><a href="security-musts.html" class="page-scroll ">Melhores práticas de segurança</a><br><br>
+          <h4>O que é AWS IAM (Identity and Access Management)?</h4>
+          AWS IAM (Identity and Access Management) é um serviço da web fornecido pela Amazon Web Services (AWS) <br>
+          que permite aos usuários controlar com segurança o acesso aos serviços e recursos da AWS. O IAM permite que você gerencie usuários, grupos, funções, <br>
+          e suas permissões dentro do seu ambiente AWS. Aqui estão os principais aspectos do AWS IAM:<br>
+          Usuários, Grupos, Funções, Políticas, Permissões, MFA, Chaves de acesso.<br>
+          <br>
+          <h4>Como faço para implantar uma aplicação web na AWS?</h4>
+          Isso depende da sua arquitetura.<br>
+          Um Frontend JS pode ser hospedado no S3, os serviços de Backend podem ser executados no ElasticBeanstalk, ECS, EKS, AppRunner ou EC2.<br>
+          <br>
+          <h4>Como faço para escalar minha infraestrutura na AWS?</h4>
+          Escalar sua infraestrutura na AWS envolve ajustar a capacidade de seus recursos para atender às demandas variáveis de suas aplicações. <br>
+          A AWS fornece vários serviços e recursos para ajudá-lo a escalar sua infraestrutura tanto vertical quanto horizontalmente. <br>
+          Aqui está uma visão geral dos conceitos e métodos chave para escalar na AWS:<br>
+          Escala Vertical, Escala Horizontal, Auto Scaling, Balanceamento de Carga, Arquitetura Serverless e mais. <br>
+          <br> 
+          <h4>Como posso otimizar custos na AWS?</h4>
+          Dimensionamento correto, Autoscaling, Reduzir horas de uso, Usar instâncias Sport, instância reservada e planos de economia <br>
+          Leia mais sobre isso em nosso blog <br><a href="costopt.html" class="page-scroll ">otimização de custos</a><br>
+          <br>
+          <h4>O que são as certificações AWS, e como me preparo para elas?</h4>
+          A mais fácil é a Cloud Practitioner, existem várias outras como Solutions Architect Associate etc<br>
+          Leia mais sobre certificações e como se preparar neste Blog <br><a href="certification.html" class="page-scroll ">certificações aws</a><br>
+          <br>
+          <h4>O que é AWS Elastic Beanstalk?</h4>
+          AWS Elastic Beanstalk implanta aplicações web para que você possa se concentrar em seu negócio.<br>
+          Leia mais sobre como implantar uma aplicação EB em 2 minutos em nosso blog <br><a href="deploy-eb.html" class="page-scroll ">Elastic Beanstalk</a><br>
+          <br>
+          <h4>O que é AWS VPC (Virtual Private Cloud)?</h4> 
+          AWS VPC (Virtual Private Cloud) é um serviço que permite criar uma seção isolada logicamente da AWS Cloud<br>
+          onde você pode lançar recursos da AWS em uma rede virtual que você define. Isso lhe dá mais controle sobre a configuração da sua rede, <br>
+          incluindo a seleção do seu intervalo de endereços IP, criação de sub-redes, e configuração de tabelas de roteamento e gateways de rede<br>
+          <br>
+          <h4>Como posso solucionar problemas da AWS?</h4>
+          A solução de problemas da AWS envolve uma abordagem sistemática para identificar e resolver problemas. <br>
+          Aqui estão as etapas que você pode seguir para solucionar problemas da AWS de forma eficaz:<br>
+          Verificar o status de saúde do serviço, revisar logs e métricas, verificar a conectividade de rede, verificar os limites de recursos e muito mais. <br>
+          <br>
+          <h4>Como AWS ou Azure podem beneficiar minha organização?</h4>        
+          Amazon Web Services (AWS) ou Azure podem trazer vários benefícios para organizações de várias indústrias. <br>
+          Aqui estão algumas maneiras chave que AWS/Azure podem beneficiar sua organização:<br>
+          Escalabilidade, Alcance Global, Economia de Custos, Flexibilidade e Escolha, Flexibilidade e Escolha, Segurança e Conformidade, Serviços Gerenciados, Inovação. <br>
+          <br>
+          <h4>Quais são as implicações de custo de usar a AWS, e como podemos gerenciar despesas de forma eficaz?</h4>
+          Existem muitas opções como planos de economia e dimensionamento correto, escalonamento horizontal e mais. <br>
+          Leia mais sobre isso em nosso blog <br> <a href="costopt.html" class="page-scroll ">otimização de custos</a><br>
+          <br>
+          <h4>Quais são as melhores práticas para gerenciar recursos da AWS e garantir o controle de custos?</h4>
+          Existem muitas opções como planos de economia e dimensionamento correto, escalonamento horizontal e mais. <br>
+          Leia mais sobre isso em nosso blog <br><a href="costopt.html" class="page-scroll ">otimização de custos</a><br>
+          <br>
+          <h4>Como podemos garantir a segurança de nossos dados e aplicações na AWS?</h4>
+          Siga as regras do IAM, mantenha seus serviços e bancos de dados em sub-redes privadas, restrinja quaisquer portas e mais. <br>
+          Leia mais sobre isso em nosso blog <br><a href="security-musts.html" class="page-scroll ">Melhores práticas de segurança</a>    <br> 
+          <br>
+          <h4>Quais serviços da AWS são relevantes para nossas necessidades de negócios específicas?</h4>
+          Para determinar quais serviços da AWS são relevantes para suas necessidades de negócios específicas, é essencial entender seus requisitos de negócios, objetivos, <br>
+          e a natureza de suas aplicações.<br>
+          Serviços que podem ser úteis: Computação, Banco de Dados, Armazenamento, Análise e Big Data, Aprendizado de Máquina e IA e outros  <br> 
+          <br>
+          <h4>Como construímos uma estratégia de nuvem e um roteiro para nossa organização usando AWS ou Azure?</h4>
+          Construir uma estratégia de nuvem e um roteiro para sua organização usando AWS envolve uma abordagem sistemática. <br> 
+          Aqui estão as etapas para ajudá-lo a desenvolver um plano eficaz:<br> 
+          Definir Objetivos de Negócios<br> 
+          Realizar uma Avaliação de Prontidão para a Nuvem<br> 
+          Envolver as Partes Interessadas<br> 
+          Estabelecer um Centro de Excelência em Nuvem<br> 
+          Definir Políticas de Governança e Conformidade<br> 
+          Desenvolver um Plano de Migração<br> 
+          Escolher Serviços AWS/Azure Apropriados<br> 
+          <br>
+          <h4>O que é o AWS Well-Architected Framework, e como podemos aplicá-lo aos nossos projetos?</h4>   
+          O AWS Well-Architected Framework é um conjunto de melhores práticas e diretrizes projetadas para ajudar as organizações a construir e otimizar seguras, <br> 
+          arquiteturas de nuvem de alto desempenho, resilientes e eficientes. Introduzido pela Amazon Web Services (AWS), o framework fornece <br> 
+          uma abordagem consistente para avaliar arquiteturas, identificar problemas potenciais e tomar decisões informadas 
+           ao construir ou migrar workloads para a AWS Cloud.  <br> 
+          Dê uma olhada em nosso blog, temos vários tópicos sobre Arquitetura e os 5 pilares do Framework bem arquitetado<br>
+          <a href="blog.html#iac" class="page-scroll ">Blog AWS</a>    <br> 
+          <br> 
+          <h4>Como monitoramos e otimizamos o desempenho de nossas aplicações na AWS?</h4>
+          Monitorar e otimizar o desempenho de suas aplicações na AWS é crucial para garantir confiabilidade, <br>
+          eficiência e uma experiência positiva do usuário. Aqui estão as etapas chave para monitorar e otimizar o desempenho da aplicação:<br>
+          Utilize AWS CloudWatch,
+          Implemente AWS X-Ray para Distributed Tracing, Use AWS Lambda Insights para Aplicações Serverless e outros <br>
+          <br>          
+          <h4>Como podemos implementar soluções de recuperação de desastres e alta disponibilidade na AWS?</h4>
+          Implementar soluções de recuperação de desastres (DR) e alta disponibilidade (HA) na AWS envolve projetar e implantar arquiteturas <br>
+          que podem resistir e se recuperar de falhas. A AWS fornece uma variedade de serviços e recursos que permitem às organizações <br>
+          construir soluções robustas e resilientes<br>
+          Leia mais sobre isso em nosso Blog <br><a href="aws-backup.html" class="page-scroll ">AWS Backup - Como fazer backup entre regiões e contas</a><br>
+          <br>  
+          <h4>O que é a conformidade da AWS e como garantimos a conformidade regulatória para nossas aplicações?</h4>      
+          A conformidade da AWS refere-se ao alinhamento de suas aplicações e infraestrutura com padrões e requisitos regulatórios. <br>
+          Alcançar e manter a conformidade regulatória é crucial para as organizações garantirem a segurança, privacidade, <br>
+          e integridade de seus dados e aplicações. A AWS fornece uma infraestrutura de nuvem segura e compatível, <br>
+          <br>
+          <h4>Quais são as melhores práticas para backup e retenção de dados na AWS?</h4>
+          Você definitivamente deve fazer snapshots e backups. Você também pode fazer cross region ou cross account. <br>
+          Leia mais sobre isso em nosso Blog<br> <a href="aws-backup.html" class="page-scroll ">AWS Backup - Como fazer backup cross region e cross account</a><br>
+          <br>  
+          <h4>Como podemos migrar nossas aplicações e dados existentes para a AWS?</h4>
+          Existem várias estratégias, Replatform, Refactor, Lift & Shift etc <br>
+          Dê uma olhada em nosso blog sobre os 7 R's <br>
+          <a href="7r.html" class="page-scroll ">7 R's - Estratégias de migração para a nuvem</a><br>
+          <br>  
+          <h4>O que é o AWS Marketplace e como podemos aproveitá-lo para soluções de terceiros?</h4> 
+          AWS Marketplace é uma loja online que permite aos clientes da AWS encontrar, comprar e implantar software e serviços de fornecedores terceiros 
+          que estão pré-configurados para rodar na AWS. Ele serve como uma plataforma centralizada onde os clientes podem descobrir, comparar e comprar 
+          uma ampla gama de soluções de software, incluindo software como serviço (SaaS), algoritmos de aprendizado de máquina, 
+          produtos de dados e vários softwares de infraestrutura.
+          <br>
+          <h4>Como gerenciamos e analisamos nossos relatórios de faturamento e uso da AWS?</h4>
+          Gerenciar e analisar seus relatórios de faturamento e uso da AWS é essencial para uma gestão e otimização de custos eficazes. A AWS fornece <br>  
+          várias ferramentas e recursos para ajudá-lo a entender e controlar seus gastos. <br>  
+          Console de Gerenciamento de Custos e Faturamento da AWS, Orçamentos, Organizações AWS, Relatórios de Custos e Uso <br>
+          <br>
+          <h4>O que é AWS CloudFormation e como ele pode nos ajudar a automatizar o provisionamento de infraestrutura?</h4>
+          Uma ferramenta IaC para criar e manter recursos da AWS por um arquivo YAML ou JSON. <br>
+          Leia mais sobre Cloudformation e IaC em nosso blog <br><a href="iac.html" class="page-scroll ">IaC - Infraestrutura como Código</a><br>
+          <br>
+          <h4>Como lidamos com o pessoal e o treinamento para construir expertise em AWS dentro de nossa equipe?</h4>          
+          Além da experiência, considere obter Certificações AWS. A mais fácil é a Cloud Practitioner, existem várias outras como Solutions Architect Associate etc<br>
+          Leia mais sobre certificações e como se preparar neste Blog<br> <a href="certification.html" class="page-scroll ">Dicas de Certificação AWS</a> <br>
+          <br>
+          <h4>O que é AWS Elastic Beanstalk?</h4>
+          AWS Elastic Beanstalk é uma oferta de plataforma como serviço (PaaS) totalmente gerenciada da Amazon Web Services (AWS) que simplifica a implantação, <br> 
+          gerenciamento e escalabilidade de aplicações. Ele permite que os desenvolvedores se concentrem em escrever código sem lidar com as complexidades <br> 
+          do setup e gerenciamento de infraestrutura. Elastic Beanstalk suporta uma variedade de linguagens de programação e frameworks, <br> 
+          tornando-o versátil para diferentes tipos de aplicações.<br> 
+          <h4>Quais são as opções de suporte e acordo de nível de serviço (SLA) da AWS?</h4>
+          A AWS fornece vários planos de suporte e acordos de nível de serviço (SLAs) para atender às necessidades de diferentes clientes. <br> 
+          Esses planos oferecem diferentes níveis de suporte técnico, acesso aos recursos da AWS e tempos de resposta<br> 
+          <br>
+          <h4>Como aproveitamos os serviços gerenciados da AWS e a computação serverless?</h4>
+          Aproveitar os serviços gerenciados da AWS e a computação sem servidor permite que as organizações reduzam a sobrecarga operacional, <br>
+          reduzam as tarefas de gerenciamento de infraestrutura e se concentrem mais na construção de aplicações. <br>
+          Veja como você pode aproveitar essas ofertas efetivamente<br>
+          <br>
+          <h4>Quais estudos de caso ou histórias de sucesso podem fornecer insights sobre como outras organizações se beneficiaram da
+            AWS?</h4>
+          Por favor, dê uma olhada em nossos Cases de sucesso:<br>
+          <a href="../cases/cases.html" class="page-scroll">Cases</a><br>
+          Dê também uma olhada no Site de Estudos de Caso da AWS:<br>
+          <a href="https://aws.amazon.com/solutions/case-studies/" class="page-scroll" target="_blank">Estudos de Caso da AWS</a><br>
+           <br>
+ <!--         <h4>Vou economizar com a migração para a nuvem?</h4>
+          A migração para a nuvem pode trazer benefícios financeiros, como redução de custos com infraestrutura, 
+          energia, espaço físico, licenças de software, segurança e suporte técnico, além de maior flexibilidade, <br>
+          escalabilidade e eficiência na alocação de recursos. No entanto, é importante fazer uma análise detalhada 
+          do seu cenário atual e do seu objetivo na nuvem, para avaliar se a migração vale a pena para o seu caso. <br>
+          Você pode usar ferramentas como o <a href="https://calculator.aws/#/">AWS Total Cost of Ownership (TCO) Calculator</a> <br>
+          para estimar os custos e as economias potenciais de migrar para a nuvem.<br>
+          <br>
+          <h4>AWS ou Azure? Qual nuvem devo usar?</h4>
+          Não há uma resposta única para essa pergunta, pois depende das suas necessidades, preferências e orçamento. 
+          AWS e Azure são as duas maiores plataformas de nuvem pública do mercado, oferecendo uma ampla gama de serviços, <br>
+          recursos e benefícios. Ambas têm vantagens e desvantagens, e a escolha entre elas depende de fatores 
+          como a compatibilidade com as suas aplicações existentes, o nível de suporte e segurança que você precisa, <br>
+          a disponibilidade e o desempenho dos serviços na sua região, o modelo de precificação e os descontos 
+          que você pode obter, e a facilidade de uso e integração com outras ferramentas. Nós da SCC podemos te ajudar a escolher a melhor opção para você, contamos com uma equipe capacitada para avaliar e propor as melhores soluções para cada cliente.<br>
+          <a href="../../contact.html" class="page-scroll ">entre em contato.</a><br>
+          <br>
+          <h4>AWS ou Azure, qual é mais barato?</h4>
+          Não há uma resposta definitiva para essa pergunta, pois o custo de usar a AWS ou o Azure depende de vários fatores, 
+          como o tipo, o tamanho e o número de recursos que você usa, o tempo de uso, o nível de serviço, a região, o tipo de <br>
+          contrato, os descontos e os créditos que você pode obter. Em geral, a AWS e o Azure têm modelos de precificação 
+          semelhantes, baseados no consumo, mas podem variar significativamente dependendo do serviço específico que <br>
+          você está usando. Além disso, ambos oferecem formas de reduzir os custos, como reservas, instâncias spot, planos de consumo, 
+          créditos gratuitos, etc. Portanto, para saber qual é mais barato para o seu caso, você precisa fazer <br>
+          uma estimativa detalhada do seu consumo e comparar os preços dos serviços que você precisa nas duas plataformas.<br>
+          <br>
+          <h4>Como posso diminuir custo e otimizar os serviços que eu uso na AWS?</h4>
+          Existem várias formas de diminuir o custo e otimizar os serviços que você usa na AWS, tais como:
+          Escolher o tipo e o tamanho adequado dos recursos que você usa, evitando o excesso ou a falta de capacidade.<br>
+          Aproveitar os descontos e os benefícios de reservar recursos antecipadamente, como as Reserved Instances, as Savings Plans ou as Scheduled Reserved Instances.<br>
+          Utilizar as instâncias spot, que oferecem preços mais baixos para recursos ociosos, mas que podem ser interrompidos a qualquer momento. 
+          Monitorar e analisar o seu consumo e o seu faturamento usando ferramentas como o AWS Cost Explorer, o AWS Budgets, o AWS Cost and Usage Report, o AWS Trusted Advisor, etc.<br>
+          Aplicar as melhores práticas de otimização de custos recomendadas pela AWS, como eliminar recursos não utilizados, usar serviços gerenciados, automatizar tarefas, implementar políticas de backup e retenção, etc.<br>
+          <br>
+          <h4>Como faço para migrar para a nuvem? Como faço para migrar para a AWS?</h4>
+          Para migrar para a nuvem, você precisa seguir um processo que envolve as seguintes etapas:
+          Planejamento: definir o objetivo, o escopo, o cronograma, o orçamento e os riscos da migração, bem como escolher a estratégia, a plataforma e os parceiros adequados para o seu projeto.
+          Preparação: avaliar o seu ambiente atual, identificar as aplicações e os dados que serão migrados, classificar as suas cargas de trabalho por prioridade, complexidade e dependência, e projetar a arquitetura e a configuração do seu ambiente de destino na nuvem.
+          Execução: realizar a migração propriamente dita, usando ferramentas e métodos apropriados para cada tipo de carga de trabalho, como o AWS Migration Hub, o AWS Server Migration Service, o AWS Database Migration Service, o AWS Snowball, etc.
+          Validação: testar e verificar se as aplicações e os dados migrados estão funcionando corretamente na nuvem, se atendem aos requisitos de desempenho, segurança, conformidade e qualidade, e se não há perda ou corrupção de dados.
+          Otimização: monitorar e ajustar o seu ambiente na nuvem, buscando melhorar a eficiência, a escalabilidade, a resiliência e a economia dos seus recursos, e aproveitar os serviços e as funcionalidades da nuvem para inovar e agregar valor ao seu negócio.
+          <br>
+          <h4>Quantas contas na AWS (AWS Accounts) eu preciso?</h4>
+          Não há uma regra fixa para determinar quantas contas na AWS você precisa, mas existem alguns fatores que podem influenciar essa decisão, como:
+          O tamanho e a complexidade da sua organização e das suas aplicações.
+          A necessidade de isolar e controlar os recursos e os custos por departamento, projeto, cliente, ambiente, etc.
+          A exigência de cumprir normas de segurança, privacidade e conformidade.
+          A preferência por um modelo de governança centralizado ou descentralizado.
+          Em geral, ter múltiplas contas na AWS pode trazer benefícios como maior segurança, flexibilidade e granularidade, 
+          mas também pode trazer desafios como maior complexidade, custo e dificuldade de gerenciamento. 
+          Por isso, é importante avaliar os prós e os contras de cada cenário e encontrar o equilíbrio ideal para o seu caso. 
+          Você pode usar ferramentas como o AWS Organizations, o AWS Control Tower, o AWS Single Sign-On, etc., para facilitar a 
+          criação e o gerenciamento de múltiplas contas na AWS.
+          <br>
           <h4>Onde posso encontrar um especialista em migração cloud?</a></h4><br>
+          Aqui na SCC Brasil, temos especialistas em migração para a nuvem, que podem ajudá-lo a planejar, preparar, 
+          executar, validar e otimizar a sua migração Cloud. <br>
+          <a href="../../contact.html" class="page-scroll ">Contate-nos</a><br>
+          <br>
           <h4>Como encontrar consultorias de Cloud? Quais são as melhores consultorias em AWS para empresas?</h4><br>
           <h4>Quais são as consultorias especializadas em otimização de custo na AWS?</h4><br>
           <h4>Quais são as consultorias especializadas em segurança na AWS?</h4><br>
@@ -958,7 +1174,7 @@
           <h4>Como abordamos a contratação de pessoal e o treinamento para desenvolver experiência em AWS em nossa equipe?</h4><br>
           <h4>Quais contratos de suporte e nível de serviço (SLA) da AWS existem?</h4><br>
           <h4>Como podemos usar os serviços gerenciados da AWS e a computação sem servidor?</h4><br>
-          <h4>Quais estudos de caso ou histórias de sucesso fornecem insights sobre como outras empresas se beneficiaram da AWS?</h4><br>
+          <h4>Quais estudos de caso ou histórias de sucesso fornecem insights sobre como outras empresas se beneficiaram da AWS?</h4><br>  -->
         </div>
       </div>
     </div>
