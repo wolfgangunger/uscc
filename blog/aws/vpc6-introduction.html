@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11478199739"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-11478199739');
+</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger | VPC with IPv6 - A introduction</title>
+    <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
+    <meta name="keywords"
+        content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, IP, VPC IPv6, IPv4, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
+    <meta name="author" content="AWS Blog Wolfgang Unger">
+    <meta name="og:title" property="og:title" content="AWS Blog Wolfgang Unger - VPC with IPv6 - A introduction">
+
+    <!-- Favicons
+            ================================================== -->
+            <link rel="shortcut icon" href="../../img/SCC.ico" type="image/x-icon" />
+            <link rel="icon" href="../../img/SCC.ico" type="image/x-icon"  />
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap" rel="stylesheet"
+        type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+    <!-- Navigation
+            ==========================================-->
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand-scc" href="../../index.html">SCC</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>VPC - A introduction to IPv6</h2>
+
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="blog-image" src="img/ipv6.avif" alt="network2" loading="lazy" />
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+
+                    <br>
+                    <h4>Introduction</h4><br>
+                    <br>
+                    February 2024 AWS started to charge not only unused IP addresses but by now all public IP Adresses.<br>
+                    Together with the NAT costs, which have increased also a lot over the years, a VPC is now a 
+                    considerable cost factor especially for small workloads.<br>
+                    The costs on IP addresses are also a way of AWS to push more the usage of IPv6.<br>
+                    Time to have a closer look on IPv6, because we are running out of IPv4 addresses and sooner o later we have to switch to IPv6.<br>
+                    Even so, the adaption is still not so advanced, this will change for sure real soon, we should get ready for IPv6.
+                    Take a look in this table on the support for IPv6 only:<br>
+                    <a href="https://docs.aws.amazon.com/vpc/latest/userguide/aws-ipv6-support.html" target="_blank">IPv6 Support</a><br>
+                    As you can see the Dual Stack support option seems to be the better option for now. <br>
+       
+                    <br>
+                    <h4>VPC Basics</h4><br>
+                    Lets first look on a IPv4 VPC.<br>
+                    As you might know, in IPv4 each computer or device has a IP address, which looks like this.<br>
+                    <b>192.0.0.1 or 48.202.103.88</b> <br>
+                    So 4 numbers from 0 to 255, each mumber is a octet (in binary 00000000 to 11111111).<br>
+                    Thus a IPv4 address is 32 bits long.<br>
+                    This gives us approximatly 4,3 billions of addresses.<br>
+                    This might sound like a huge number for you, but in the age of mobile phones & IOT devices all over the world it is not so huge anymore and comes to its limits.<br>
+                    <br>
+                    Now lets have a look on the structure of a IPv6 address:<br>
+                    <b>2a05:d014:9be:9396:f365:96f6:8c78:c1ba</b><br>
+                    As you can see IPv6 uses hexadecimal instead of decimal numbers like in IPv4. <br>
+                    And is composed by 8 hexadecimal numbers instead of 4 decimal numbers ( 0-255)<br>
+                    The first 4 hexadecimal numbers are used for the network part, the last 4 for the node-part.<br>
+                    A IPv6 address is 128 bit long.<br>
+                    So we won't not run out of IPv6 addresses really soon.<br>
+                    <br>
+                    There is also an important point on this to understand.<br>
+                    In IPv6 we use private IP Addresses and a NAT or IGW for internet communication. This is neccesary since the IP addresses are so limited.<br>
+                    The private IP Ranges are for example 10.0.0.0, 172.16.0.0 and 192.168.0.0 .<br>
+                    Instances or devices with such a private IP address communicate to other public IP addresses over the IP of the IGW or NAT ( therefore
+                    it means Network address translation).<br>
+                    This way many resources with a bunch of private IP addresses only are using and reserving one public IP address.<br>
+                    <br>
+                    In IPv6 all public addresses are publicly routable, you don't need a NAT.<br>
+                    If you want your instances can communicate to addresses outside your VPC, but are not public available from the internet,<br>
+                     you can use a Egress only IGW instead of a NAT.<br>
+                    NATs are no longer neccesary and therefor we can save costs with IPv6.<br>
+
+                    
+                    <br>
+                    Btw. If you want to ping a IPv6 address you need the ping6 command:<br>
+                    ping6 2a05:d014:9be:9396:f365:96f6:8c78:c1ba<br>
+                    <br>
+                    For curl you can use this command:<br>
+                    curl -g -6 'http://[2a05:d014:1213:7900:476d:4f16:ffe0:ee16]:80/'<br>
+
+                    
+                    <br>
+                    <h4>Setting up a VPC</h4><br>
+                    If you want to set up a VPC in AWS you still will have to deal a little with IPv4, so it's a dual stack, not IPv6 only VPC.<br>
+                    Meaning this you have to define a IPv4 CIDR Range (for example 10.0.0.0/24) for your VPC (even so you will use/create only IPv6 addresses)<br>
+                    The IPv4 CIDR Range will be kind of insignificant.<br>
+                    <br>
+                    <h5>VPC</h5><br>
+                    Lets create a VPC with 2 public and 2 private subnets. 
+                    So for a 10.0.0.0/16 VPC the CIDR Range for IPv6 will be /56 : <br>
+                    2a05:d014:1213:7900::/56<br>
+                    <img src="img/ipv6vpc1.jpg" alt="ipv6-1" width="300"> <br>
+                    <br>
+                    If you want to use the Web Console and the wizard on the VPC dashboard, 
+                    <br>your settings should look like this:<br>
+                    <img src="img/ipv6vpc0.jpg" alt="ipv6-0" width="300"> <br>
+                    <br>
+                    <h5>Subnets</h5><br>
+                    The IPv6 subnets will have this CIDR Range:<br>
+                    Public: <br>
+                    2a05:d014:1213:7900::/64<br>
+                    2a05:d014:1213:7901::/64<br>
+                    Private: <br>
+                    2a05:d014:1213:7902::/64<br>
+                    2a05:d014:1213:7903::/64<br>
+                    (which is more or less 18 million trillion addresses for one subnet)<br>
+                    <img src="img/ipv6vpc2.jpg" alt="ipv6-2" width="300"> <br>
+                    <br>
+                    As you can see the subnets differ in the fourth number, to be precice in the hexadecimal pair (00 - FF) 2a05:d014:1213:79<b>00</b>::/64 <br>
+                    <br>
+                    <h5>Routes</h5><br>
+                    Our public subnets must have routes for local traffic and also to the IGW for traffic to the internet.<br>
+                    So it should look like this:<br>
+                    <img src="img/ipv6vpc3.jpg" alt="ipv6-3" width="300"> <br>
+                    The private routes must have routes for local traffic and optionally routes to a Engress only IGW.<br>
+                    <br>
+                    <h5>Security Groups</h5><br>
+                    For Security Groups you also must specifiy the IPv6 behaviour.<br>
+                    Allowing the internet communication in IPv4 is 	0.0.0.0/0, meanwhile in IPv6 ::/0.<br>
+                    For internal VPC communication it will be the CIDR range of your VPC or subnets,<br>
+                    so for example <br>
+                    2a05:d014:1213:7900::/56<br>
+                    or for subnets<br> 
+                    2a05:d014:1213:7902::/64<br>
+                    Security Group chaining wil not change, if you select another SG as source, this works the same way as in IPv4.<br>
+
+
+                     
+
+
+
+                    <br>
+                    <h4>Conclusion</h4><br>
+                    With the new costs on IP addresses and also the NAT costs on AWS, its time to have a closer look on IPv6<br>
+                    Even so the adaption is still not yet as far as it should be, we should get prepared to use IPv6 in the future.<br>
+                    Take a look at this table showing the support for AWS services. <br>
+                    <a href="https://docs.aws.amazon.com/vpc/latest/userguide/aws-ipv6-support.html" target="_blank">IPv6 Support</a><br>
+                    Currently the Dual Stack option is the best one, IPv6 only is not yet an option.<br>
+                    But even with the Dual Stack option an Hybrid VPCs we can already save money and reduce our costs on NATs and public IPv4 addresses. <br>
+                    <br>
+
+                </div>
+
+
+                <p></p>
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>6 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
