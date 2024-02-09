@@ -157,6 +157,35 @@
                     <br>
                     <h4>Connect to EC2 Instances</h4><br>
                     Lets see, if we can connect to our instance now.<br>
+                    First I will try the AWS Cloud Shell and a ping on the IPv6 address <br>
+                    I am getting this error :  Network is unreachable<br>
+                    SSH also does not work with IPv6 address.<br>
+                    So it looks like, we cannot connect with AWS Cloud Shell .<br>
+                    Lets try Sessions Manager. <br>
+                    Keep in mind for Sessions Manager this statement from the AWS Documentation<br>
+                    <a href="https://docs.aws.amazon.com/whitepapers/latest/ipv6-on-aws/ipv6-security-and-monitoring-considerations.html"target="_blank">IPv6 security and monitoring considerations</a><br>
+                    <i> "Resources managed by AWS Systems Manager must have IPv4 connectivity to Systems Manager’s endpoints. <br>
+                    For example, to connect to an EC2 instance using Systems Manager Session Manager, the instance must be running dual-stack and <br>
+                    must have an IPv4 connectivity to the internet or AWS PrivateLink VPC endpoint. Similarly, on-premises resources must also be in dual-stack network mode."</i><br>
+                    So we will actually connect still with IPv4 to our instances, since we will have a dual stack VPC it should work. <br>
+                    If you setup IPv6 only subnets, follow this instructions<br>
+                    <a href="https://repost.aws/questions/QU4lcOfpvgQXS9SrXfHUErHg/is-there-a-plan-for-ssm-public-endpoints-to-support-ipv6" target="_blank">SSM public endpoints</a><br>
+                    You will have to enable DNS64 (returns AAAA records with these synthetic IPv6 addresses for IPv4-only destinations)<br>
+                    and also for your private Subnets add a Engress Only IGW or NAT ( here we go again).<br>
+                    <img src="img/ipv6vpcDns64.jpg" alt="ipv6vpcDns64" width="300"> <br><br>
+                    By the way, you can also setup a VPC endpoint to connect to your EC2 instances with Sessions Manager and not use the public endpoint.<br>
+                    See this documentation: <br>
+                    <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/setup-create-vpc.html" target="_blank">Create VPC endpoints</a><br>
+                    Therefor you open the VPC Console, then endpoints and press 'Create endpoint' and <br>
+                    create Endpoints for these services:<br>
+                    ssm.region.amazonaws.com, ssmmessages.region.amazonaws.com, ec2messages.region.amazonaws.com.<br>
+                    I will try this for my IPv6 VPC but as you can see, IP address type IPv6 and Dual Stack is not available (maybe not yet): <br>
+                    <img src="img/ipv6vpcEndpoint.jpg" alt="ipv6vpcDns64" width="300"> <br><br>
+
+
+
+                    Lets skip this part for now and try to connect with IPv4 functionality.<br><br>
+
                     I had issues to connect with the instance when selecting the instance and press Connect, then switch to the Sessions Manager TAB. <br>
                     I recieved an error the role is not sufficient ( even so was attached correctly).<br>
                     But looking in the Sessions Manager, the instance would appear in the possible targets, when you press 'Start a session'<br> 
@@ -204,8 +233,39 @@
                     <br>
 
                     <br>
+                    <h4>EC2 in private Subnet</h4><br>
+                    Time to test, everything works as expected also with an instance in a private Subnet.<br>
+                    We launch an instance the same way, but this time we select one of our 2 private Subnets of our IPv6 VPC.<br>
+                    I can ping the private instance from my instance in the public subnet, this works fine.<br>
+                    I can also SSH into the private instance. <br>
+                    So communication between the instances works like a charme.<br>
+                    I will try to connect with Sessions Manager.<br>
+                    The button to connect is not enabled and also the workaround directly in Sessions Manager doesn' help.<br>
+                    The instance does not appear in the targets. <br>
+                    But we know already the reason.<br>
+                    The Sessions Manager connects with IPv4 over a public enpoint ( or a VPC endpoint which we could not create for IPv6)<br>
+                    and our private Subnet got no Engress Only IGW or NAT. <br>
+                    So I change my Subnets following the documentation for these values:<br>
+                    <img src="img/ipv6vpcEndpoint.jpg" alt="ipv6vpc Endpoint" width="300"> <br><br>
+                    and add a Engress Only IGW and add the routes for it.<br>
+                    <br>
+                    But still I cannot connect to my instance. <br>
+                    The SSM Agent requires IPv4 access to Systems Manager endpoints in order to function, it is not yet ready for IPv6.<br>
+                    So Sessions Manager is still an issue with IPv6.<br>
+                    Hopefully the SSM Agents gets an update soon. <br>
+                    <br>
+                    Finally I will try if I can route from R53 also to my private instance with an AAAA record to its IPv6 address.<br>
+                    I install a webserver on the instance an create a new route  http://webserverprivate.sub.sccbrasil.com/<br>
+                    and open the Security Group for port 80.<br>
+                    This works also, we can route from Route53 to our instance in a private Subnet over the IPv6 address.<br>
+
+
+
+
+                    <br>
                     <h4>Conclusion</h4><br>
                     Besides the Connect issue there were no relevant problems. <br>
+                    Sessions Manager is not IPv6 ready. <br>
                     Connection works fine, you can communicate between instances, SSH into machines or use Sessions Manager and setup a Webserver for example.<br>
                     For the next blog, I'm going to have a look on other AWS services, like Elastic Beanstalk, Fargate and others<br>
                     how these work together with IPv6 . <br>

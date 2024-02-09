@@ -102,7 +102,7 @@
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
-                    <img class="blog-image" src="img/network2.avif" alt="network2" loading="lazy" />
+                    <img class="blog-image" src="img/memeIPv6.jpg" alt="meme ipv6" loading="lazy" />
                     <p></p>
                     <h4>By Wolfgang Unger</h4><br>
 
@@ -112,8 +112,10 @@
                     February 2024 AWS started to charge not only unused IP addresses but by now all public IP Adresses.<br>
                     Together with the NAT costs, which have increased also a lot over the years, a VPC is now a 
                     considerable cost factor especially for small workloads.<br>
-                    If you run 80 microservices and 10 databases, it does not matter so much, but for customers running <br>
+                    If you run 180 microservices and 30 databases, it does not matter so much, but for customers running <br>
                     one or two fargate services or elastic beanstalk apps, the VPCs costs will increase your aws bill considerably.<br>
+                    It's time to rethink how we setup a VPC under cost considerations. <br>
+                    Also we should also consider of using IPv6 in the near future. <br>
                     <br>
                     <h4>Why setting up your own VPC?</h4><br>
                     As you might already know, it is best practice, not to use the default VPC in your region, but instead <br>
@@ -123,8 +125,8 @@
                     US east got 6 AZs and therefore 6 subnets, most regions have 3 AZs and therefore 3 subnets, some regions have only 2 AZs and 2 subnets.<br>
                     If you setup your infrastructure based on the us-east-1 region with 6 subnets, you might have problem, when are <br>
                     expanding your business and you want 
-                    to setup your resources in a region with less subnets. <br>
-                    You VPCs should always be the same.<br>
+                    to setup your resources in a region with less subnets, because some of your Templates expect 6 of them <br>
+                    You VPCs should always be the same for your environments, even in different regions, this keeps it much easier.<br>
                     Second, the default VPC is not under your control. <br>
                     AWS makes changes, which might affect your services. <br>
                     When I started long time ago on AWS, the default VPCs used to have 3 public subnets and 3 private subnets.<br>
@@ -162,7 +164,7 @@
                     No reason to use a smaller subnet mask, the CIDR range will not increase costs. <br>
                     Better to have sufficient IP addresses, maybe you need them one day. <br>
                     With 2 public and 2 private subnets, each subnet can the have a /18 CIDR range. <br>
-                    With 3 AZs and Subnets you always lose 25% of the available IP addresses by the way.<br>
+                    With 3 AZs and Subnets you always lose 25% of the available IP addresses, by the way.<br>
                     If you create you VPC with IaC, no matter of CloudFormation, Terraform or CDK, you normally <br>
                     want to be able to define the CIDR range as a parameter. <br>
                     You can define the whole CIDR range as parameter or what I normally do, the classB value, the 2nd number of the IP range as parameter.<br>
@@ -175,10 +177,14 @@
                     Use 1 NAT if you want to go for less costs and are willing to accept the really small chance of a AZ failure.<br>
                     For high availability with 2 Subnets you have at least only 2 NATs and not 3 to pay for. <br>
                     The costs on IP addresses are also a way of AWS to push more the usage of IPv6.<br>
-                    Unfortunatelly the adaption of IPv6 is still not yet so much advanced.<br>
+                    Time to see IPv6 as an option. <br>
+                    IPv6 does not need Network Address Translation and due to the much higer number of IP addresses, there are 
+                    no costs on them neither. <br>
+                    Unfortunatelly the adaption of IPv6 is still not yet so much advanced as it should be.
                     Just take a look in this table on the support for IPv6 only:<br>
                     <a href="https://docs.aws.amazon.com/vpc/latest/userguide/aws-ipv6-support.html" target="_blank">IPv6 Support</a><br>
-                    But for sure, IPv6 VPCs will be more relavante by now much faster. <br>
+                    But for sure, IPv6 VPCs will be more relevant by now much faster. <br>
+                    And we should get familiar how to set ip up and use it. <br>
                     Take a look into this blog for a introduction and how to setup a IPv6 VPC.<br>
                     <a href="vpc6-introduction.html" class="page-scroll">VPC IPv6 Introduction</a><br>
                     <br>

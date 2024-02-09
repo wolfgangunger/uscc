@@ -129,25 +129,48 @@
                     This gives us approximatly 4,3 billions of addresses.<br>
                     This might sound like a huge number for you, but in the age of mobile phones & IOT devices all over the world it is not so huge anymore and comes to its limits.<br>
                     <br>
+                    There is also an important point on this to understand.<br>
+                    In IPv6 we often use private IP Addresses AND a internet proxy, a NAT or IGW for internet communication. This is neccesary since the IP addresses are so limited.<br>
+                    You have to differ between public and private IP addresses.
+                    The private IP Ranges are for example 10.0.0.0, 172.16.0.0 and 192.168.0.0 .<br>
+                    You can communicate in the internet to another server or device only by public IP.<br>
+                    In your Intranet our VPC you can communicate via private IP address. <br>
+                    Think of it like the public IP is a global unique address including country, city, postal code and street:<br>
+                    20 W 34th St., New York, NY 10001, USA (Empire State Building)<br>
+                    Inside the building you might have 3000 offices and an internal office building post office to deliver post from office 2020 to 1406.<br>
+                    You can send internal post with just the office number ( private IP), but if you want to recieve post from Europe 
+                    the public IP (full building address) is required.  <br>
+                    
+                    Instances or devices with such a private IP address communicate to other public IP addresses over the IP of a Proxy Server, the IGW or NAT ( therefore
+                    it means Network address translation).<br>
+                    This way many resources with a bunch of private IP addresses only are using and reserving one public IP address.<br>
+                    
+                    <br>
                     Now lets have a look on the structure of a IPv6 address:<br>
                     <b>2a05:d014:9be:9396:f365:96f6:8c78:c1ba</b><br>
                     As you can see IPv6 uses hexadecimal instead of decimal numbers like in IPv4. <br>
                     And is composed by 8 hexadecimal numbers instead of 4 decimal numbers ( 0-255)<br>
                     The first 4 hexadecimal numbers are used for the network part, the last 4 for the node-part.<br>
+                    The IPv6 address space is organized by using format prefixes, that logically divide it in the form of a tree 
+                    so that a route from one network to another can easily be found. <br>
+                    The main categories of IPv6 addresses are:<br>
+                    - Aggregatable global unicast addresses (GUA) — 2000::/3<br>
+                    - Unique-local unicast addresses (ULA) — FC00::/7<br>
+                    - Link-local unicast addresses — FE80::/10<br>
+                    - Multicast addresses — FF00::/8<br>
+                
                     A IPv6 address is 128 bit long.<br>
                     So we won't not run out of IPv6 addresses really soon.<br>
                     <br>
-                    There is also an important point on this to understand.<br>
-                    In IPv6 we use private IP Addresses and a NAT or IGW for internet communication. This is neccesary since the IP addresses are so limited.<br>
-                    The private IP Ranges are for example 10.0.0.0, 172.16.0.0 and 192.168.0.0 .<br>
-                    Instances or devices with such a private IP address communicate to other public IP addresses over the IP of the IGW or NAT ( therefore
-                    it means Network address translation).<br>
-                    This way many resources with a bunch of private IP addresses only are using and reserving one public IP address.<br>
-                    <br>
-                    In IPv6 all public addresses are publicly routable, you don't need a NAT.<br>
+ 
+                    In IPv6 all public addresses are publicly routable, you don't need a NAT anymore<br>
+                    You don't need to differ between private and public IPs.<br>
+                    You can keep the model of private and public subnets to group different resource types like webservers public and <br>
+                    databases private, but private subnet would mean not public reachable ( Routes, Security Groups etc) and not private IP addresses. <br>
                     If you want your instances can communicate to addresses outside your VPC, but are not public available from the internet,<br>
                      you can use a Egress only IGW instead of a NAT.<br>
                     NATs are no longer neccesary and therefor we can save costs with IPv6.<br>
+                    Also there are no charges on IPv6 addresses...at least not yet and hopefully not so soon. <br>
 
                     
                     <br>
@@ -219,8 +242,12 @@
                     <br>
 
                 </div>
+                References: <br>
+                <br>
+                AWS Documentation<br>
 
-
+                <a href="https://docs.aws.amazon.com/whitepapers/latest/ipv6-on-aws/IPv6-on-AWS.html" target="_blank">IPv6 on AWS</a><br>
+                <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html" target="_blank">Migrate your VPC from IPv4 to IPv6</a><br>
                 <p></p>
 
             </div>
