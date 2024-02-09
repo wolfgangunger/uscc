@@ -26,15 +26,15 @@
     </url>
    <url>
         <loc>https://www.sccbrasil.com/blog/aws/blog.html</loc>
-        <lastmod>2024-02-08</lastmod>
+        <lastmod>2024-02-09</lastmod>
    </url>
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/blog_de.html</loc>
-        <lastmod>2024-02-08</lastmod>
+        <lastmod>2024-02-09</lastmod>
    </url>  
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/blog_po.html</loc>
-        <lastmod>2024-02-08</lastmod>
+        <lastmod>2024-02-09</lastmod>
    </url>  
    <url>
         <loc>https://www.sccbrasil.com/blog/cases/cases.html</loc>
@@ -53,12 +53,16 @@
         <lastmod>2024-02-06</lastmod>
    </url> 
     <url>
+        <loc>https://www.sccbrasil.com/blog/aws/vpc6-ec2.html</loc>
+        <lastmod>2024-02-09</lastmod>
+    </url>  
+    <url>
         <loc>https://www.sccbrasil.com/blog/aws/vpc6-introduction.html</loc>
-        <lastmod>2024-02-08</lastmod>
+        <lastmod>2024-02-09</lastmod>
     </url>  
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/vpc-considerations.html</loc>
-        <lastmod>2024-02-08</lastmod>
+        <lastmod>2024-02-09</lastmod>
     </url>  
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/application-composer.html</loc>
