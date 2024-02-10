@@ -157,6 +157,14 @@
                     <br>
                     <h4>Connect to EC2 Instances</h4><br>
                     Lets see, if we can connect to our instance now.<br>
+                    We will connect with the IP address for now.<br>
+                    <br>
+                    For DNS keep in mind:<br>
+                    When you launch a EC2 in a IPv4 VPC with IP address-based naming it will recieve a name like ip-10-20-14-8.ec2.internal<br>
+                    For IPv6 Subnets we need Resource-based naming (RBN).<br>
+                    The format for an instance in any AWS Region is: ec2-instance-id.region.compute.internal<br>
+                    For example: i-0123456789abcdef.us-west-2.compute.internal <br>
+                    <br>
                     First I will try the AWS Cloud Shell and a ping on the IPv6 address <br>
                     I am getting this error :  Network is unreachable<br>
                     SSH also does not work with IPv6 address.<br>
