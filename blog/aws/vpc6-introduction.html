@@ -197,6 +197,10 @@
                     <br>your settings should look like this:<br>
                     <img src="img/ipv6vpc0.jpg" alt="ipv6-0" width="300"> <br>
                     <br>
+                    After the creation you should see in the VPC Settings : <br>
+                    IPv6 pool = Amazon Associated and <br>
+                    IPv6 CIDR = 2a05:d014:1213:7900::/56<br>
+                    <br>
                     <h5>Subnets</h5><br>
                     The IPv6 subnets will have this CIDR Range:<br>
                     Public: <br>
@@ -210,11 +214,27 @@
                     <br>
                     As you can see the subnets differ in the fourth number, to be precice in the hexadecimal pair (00 - FF) 2a05:d014:1213:79<b>00</b>::/64 <br>
                     <br>
+                    Lets confim the settings for the subnets, important attributes are:<br>
+                    IPv6-only: No for Dual Stack Yes for IPv6 Only.<br>
+                    IPv6 CIDR: The CIDR Range for the subnet, will be /64 <br>
+                    Auto-assign public IPv4 address: Can be No also for the public Subnet, because we will use IPv6 addresses instead of IPv4. <br>
+                    DNS64: should be Enabled<br>
+                    Resource name DNS AAAA record: should be Enabled<br>
+
+                    <br>
                     <h5>Routes</h5><br>
                     Our public subnets must have routes for local traffic and also to the IGW for traffic to the internet.<br>
                     So it should look like this:<br>
-                    <img src="img/ipv6vpc3.jpg" alt="ipv6-3" width="300"> <br>
-                    The private routes must have routes for local traffic and optionally routes to a Engress only IGW.<br>
+                    <img src="img/ipv6vpc3.jpg" alt="ipv6-3" width="300"> <br><br>
+                    The private routes must have routes for local traffic and optionally - for internet traffic - routes to a Engress only IGW.<br>
+                    There is also a entry to a managed prefix list for the private subnets.<br>
+                    <img src="img/ipv6vpc4.jpg" alt="ipv6-4" width="300"> <br>
+                    A managed prefix list is a set of one or more CIDR blocks. You can use prefix lists to make it easier to configure and <br>
+                    maintain your security groups and route tables.<br>
+                    If we take a closer look to this prefix list, it is com.amazonaws.region.s3, one of 8 aws managed prefix lists.<br>
+                    The entry for the S3 Prefix list was automatically added by the wizard, it got 10 entries to CIDR ranges and <br>
+                    seems to be neccesary for accessing S3 from our private IPv6 subnets. <br>
+                    I will have to make some tests on my self created IPv6 VPC, if accessing S3 is also possible without this prefix list. <br>
                     <br>
                     <h5>Security Groups</h5><br>
                     For Security Groups you also must specifiy the IPv6 behaviour.<br>
@@ -231,6 +251,7 @@
                     For our evaluation and for first POCs it's fine to create the resources on the Web-Console. <br>
                     But for production workloads and therefore sooner or later we have to create them with IaC. <br>
                     I will publish soon a Github Repo with IaC Examples for IPv6 for CloudFormation, CDK and Terraform.<br>
+                    First examples for CloudFormation are already available, but the repo is in work, keep that in mind. <br>
                     Stay tuned !<br>
                     The repo (under construction) is :<br>
                     <a href="https://github.com/wolfgangunger/aws-ipv6" class="page-scroll" target="_blank">Github
