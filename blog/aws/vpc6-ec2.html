@@ -217,6 +217,16 @@
                     The ping will also work, if you setup all correctly. <br>
                     You can also ssh into the other instance if you upload the pem file on the machine for this test. <br>
                     <br>
+                    We can also test if our VPC is working by EC2 instances.<br>
+                    Connect to a instance in the public Subnet and try a wget or curl command to an internet address.<br>
+                    It will work. <br>
+                    For the same test on a instance in the private subnet we need to jump over the instance <br>
+                    in the public subnet (which we can access by SessionsManager and IPv4) and then SSH into the <br>
+                    instance in the private Subnet. Both most have the same Keypair and you must upload the Keypair to 
+                    the public instance.<br>
+                    Once you are on the private instance, you will see, that curl and wget also works, thus our 
+                    Route Table and EngressOnly IGW was setup correctly.  <br>
+                    <br>
                     <h4>Setup HTTP/HTTPS</h4><br>
                     Now lets connect to one of our instances and install apache. 
                     These lines will do :<br>
@@ -272,8 +282,13 @@
                     and open the Security Group for port 80.<br>
                     This works also, we can route from Route53 to our instance in a private Subnet over the IPv6 address.<br>
 
-
-
+                    <br>
+                    <h4>IaC</h4><br>
+                    First examples for CloudFormation are already available, but the repo is in work, keep that in mind. <br>
+                    Stay tuned !<br>
+                    The repo (under construction) is :<br>
+                    <a href="https://github.com/wolfgangunger/aws-ipv6" class="page-scroll" target="_blank">Github
+                    Wolfgang Unger - AWS IPv6</a><br>
 
                     <br>
                     <h4>Conclusion</h4><br>
