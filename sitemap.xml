@@ -26,15 +26,15 @@
     </url>
    <url>
         <loc>https://www.sccbrasil.com/blog/aws/blog.html</loc>
-        <lastmod>2024-02-09</lastmod>
+        <lastmod>2024-02-16</lastmod>
    </url>
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/blog_de.html</loc>
-        <lastmod>2024-02-09</lastmod>
+        <lastmod>2024-02-16</lastmod>
    </url>  
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/blog_po.html</loc>
-        <lastmod>2024-02-09</lastmod>
+        <lastmod>2024-02-16</lastmod>
    </url>  
    <url>
         <loc>https://www.sccbrasil.com/blog/cases/cases.html</loc>
@@ -42,7 +42,7 @@
    </url>
    <url>
         <loc>https://www.sccbrasil.com/blog/cases/carglass.html</loc>
-        <lastmod>2024-02-06</lastmod>
+        <lastmod>2024-02-16</lastmod>
    </url>
    <url>
         <loc>https://www.sccbrasil.com/blog/cases/ogulo.html</loc>
@@ -52,6 +52,10 @@
         <loc>https://www.sccbrasil.com/contact.html</loc>
         <lastmod>2024-02-06</lastmod>
    </url> 
+    <url>
+        <loc>https://www.sccbrasil.com/blog/aws/vpc6-fargate.html</loc>
+        <lastmod>2024-02-16</lastmod>
+    </url>    
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/vpc6-ec2.html</loc>
         <lastmod>2024-02-09</lastmod>
