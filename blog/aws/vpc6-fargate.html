@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11478199739"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-11478199739');
+</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS Blog Wolfgang Unger | VPC with IPv6 - Running Fargate</title>
+    <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
+    <meta name="keywords"
+        content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, IP, VPC IPv6, IPv4, EC2, RDS, S3, EC2, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
+    <meta name="author" content="AWS Blog Wolfgang Unger">
+    <meta name="og:title" property="og:title" content="AWS Blog Wolfgang Unger - VPC with IPv6 - A introduction">
+
+    <!-- Favicons
+            ================================================== -->
+            <link rel="shortcut icon" href="../../img/SCC.ico" type="image/x-icon" />
+            <link rel="icon" href="../../img/SCC.ico" type="image/x-icon"  />
+    <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome/css/font-awesome.css">
+
+    <!-- Stylesheet
+            ================================================== 
+        <link rel="stylesheet" type="text/css"  href="css/styles_menu.css">        
+        
+        -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/prettyPhoto.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap" rel="stylesheet"
+        type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <script type="text/javascript" src="js/modernizr.custom.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+</head>
+
+<body>
+
+    <!-- Navigation
+            ==========================================-->
+    <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand-scc" href="../../index.html">SCC</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="text-center" name="home">
+        <div class="intro-text">
+            <!--<h1>We are <span class="color">Optics</span></h1>
+                
+                <h1>SCC</h1>
+                -->
+            <p class="paragraph1">SCC</p>
+            <p class="paragraph1b">Brasil</p>
+            <p class="paragraph1c">os cloud gurus </p>
+            <p class="paragraph1d">Software Cloud Consulting</p>
+            <p class="paragraph1e">Your software development, cloud, consulting & shoring company</p>
+            <div class="clearfix"></div>
+    </header>
+
+
+
+    <div id="about-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>VPC IPv6 - Running Fargate in private Subnets</h2>
+
+                <hr>
+            </div>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="blog-image" src="img/fargate.png" alt="fargate" loading="lazy" />
+                    <p></p>
+                    <h4>By Wolfgang Unger</h4><br>
+
+                    <br>
+                    <h4>Introduction</h4><br>
+                    <br>
+                    How to run a Fargate or ECS Service on IPv6 ? 
+                    This short tutorial will try to explain this challenge<br>
+                    <br>
+                    AWS accounced already some time ago ECS and Fargate now also supports IPv6 Dual Stack.<br>
+                    It is also listed in the supported Dual Stack services, see <br>
+                    <a href="https://docs.aws.amazon.com/vpc/latest/userguide/aws-ipv6-support.html" target="_blank">IPv6 Support</a><br>
+                    So let's try it out, if it really works. <br>
+                    But on my tests, I figured out, it's not really easy running a Fargate Service in a private Subnet in a IPv6 dual-stack Subnet.<br>
+                    You will face a couple of problems and have to perform a couple of steps to get it running.<br>
+                    Let's cover in this blog, what is required to get it working. <br>
+
+
+                    <br>
+                    <h4>VPC</h4><br>
+                    First we need a VPC in dual-stack mode, please have a look into this blog how to set it up.<br>
+                    <a href="vpc6-introduction.html" class="page-scroll">VPC IPv6 Introduction</a><br>
+                    You will also find some examples for CloudFormation, Terraform and CDK in my Github Repo to 
+                    create the VPC with IaC .<br>
+                    <a href="https://github.com/wolfgangunger/aws-ipv6" class="page-scroll" target="_blank">Github
+                        Wolfgang Unger - AWS IPv6</a><br>
+                    Make sure you have public and private Subnets and the Routes are setup correct.<br>
+                    No NAT should be existing, only a EgressOnly IGW.<br>
+                    The private Subnets should route IPv6 traffic through the EgressOnly IGW.<br>
+                    IPv4 traffic will not be possible from the private Subnets to the internet, since we got no NAT.<br>
+                    (This will cause us problems later on )<br>
+
+                    
+                    <br>
+                    <h4>ECS/Fargate Preconditions </h4><br>
+                    AWS accounced IPv6 is not supported for Fargate and ECS but forget to mention a little detail.<br>
+                    You have to enable IPv6 Support in your Account ECS settings, its disable by default in February 2024 <br>
+                    As you might know in the Elastic Container Service you have Account Settings in the menu on the left side.<br>
+                    Unfortunatelly you can't set it here. You need to activate IPv6 with CLI.<br>
+                    Either by :<br>
+                    <i>aws ecs put-account-setting-default --name dualStackIPv6 --value enabled (--region eu-west-1)</i><br>
+                    or<br>
+                    <i>aws ecs put-account-setting --name dualStackIPv6 --value enabled (--region eu-west-1)</i><br>
+                    with or region parameter for one region or without for all regions. <br>
+                    
+                    <br>
+                    <h4>ECR and Docker Container </h4><br>
+                    Of course we need a Container to run and also a Repo to store the Image.<br>
+                    I will use a simple httpd Container for my tests. <br>
+                    You find the Dockerfile also in my repo in /docker.<br>
+                    We will run a image  FROM httpd:2.4<br>
+                    Next we need a ECR repo to upload and later on pull our image, so lets 
+                    create a ECR private Repo.<br>
+                    <img src="img/ipv6-fargate1.jpg" alt="fargate1" width="300"> <br>
+                    After building our httpd Image we push it to our ECR Repo <br>
+                    <i>docker push account.dkr.ecr.eu-west-2.amazonaws.com/ecs-repository-ipv6:httpd</i><br>
+
+                    <br>
+                    <h4>ECS Cluster and Task Definition</h4><br>
+                    Now we can create our Cluster and a Task Definition to run on later. <br>
+                    For the Cluster is not much to configure, for the Task Definition we will define:<br>
+                    NetworkMode: awsvpc<br>
+                    App Environment : Fargate <br>
+                    the Container Port ( can be 80 to start) and a Execution Role for Fargate.<br>
+                    <img src="img/ipv6-fargate2.jpg" alt="fargate2" width="300"> <br>
+
+                    <br>
+                    <h4>Create the Service</h4><br>
+                    Now we can create a Service based on our Task Definition.<br><br>
+                    We will define :<br>
+                    Our Cluster <br>
+                    Launch Type: Fargate <br>
+                    Application Type : Service <br>
+                    Service Name: httpd <br>
+                    Desired Tasks: 1<br>
+                    Networking:<br>
+                    &ensp;Our IPv6 dual-stack VPC <br>
+                    &ensp;Subnets: Our private Subnets <br>
+                    &ensp;Security Group : Create one or chose an existing one, make sure you have Port 80 open for IPv6 and IPv4 . Will become an issue later on <br>
+                    &ensp;Public IP : Turned Off<br>
+
+                    <br>
+                    <h4>Run the Service</h4><br>
+                    Lets run our service and see what will happen. <br>
+                    It will create a service httpd in our cluster and try to run a task.<br>
+                    But the taks will not start successfully, after 3 attempts to deploy the task, it will fail: <br>
+                    <i>ResourceInitializationError: unable to pull secrets or registry auth: execution resource retrieval failed: <br>
+                    unable to retrieve ecr registry auth: service call has been retried 3 time(s): RequestError: <br>
+                    send request failed caused by: Post "https://api.ecr.eu-west-1.amazonaws.com/": dial tcp [64:ff9b::a00:1322]:443: i/o timeout. Please check your task network configuration.</i><br>
+                    During the deployment attempts I took a look on the task, it recieved an ENI with a private IPv4 and IPv6 address. <br>
+                    No public IPv6 address, by purpose. <br>
+                    Looks like the taks can't pull the image with IPv6 from ECR. And with IPv4 it will work neither, since I have <br>
+                    no NAT and routes to the internet for IPv4. <br>
+                    I will try one more time, for now in the public subnet and Public IP : Turned On.<br>
+                    The service becomes healthy, so our Docker Image is fine and our Cluster also works in general.<br>
+                    The problem seems that the Enpoint for ECR is not IPv6 ready. <br>
+                    We will need to pull our Image with IPv4. <br>
+
+                    
+                    <br>
+                    <h4>Create VPC endpoints for ECR</h4><br>
+                    Since our VPC got no routes for private IPv4 addresses to the internet and we also got no plans to add a NAT, <br>
+                    we need to create VPC enpoints to enable our task to pull the image from ECR with IPv4 address<br>
+                    See the Amazon documentation on <br>
+                    <a href=" https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html" class="page-scroll" target="_blank">Amazon ECR interface VPC endpoints</a><br>
+                    <br>
+                    In VPC you find endpoints in the left menu, select create Endoint and create <br>
+                    2 interface Endpoints for <br>
+                    com.amazonaws.region.ecr.dkr<br>
+                    and <br>
+                    com.amazonaws.region.ecr.api<br>
+                    both linked to your IPv6 VPC and private Subnets. <br>
+                    You need to create also a Gateway Endpoint to <br>
+                    com.amazonaws.region.s3<br>
+                    <br>
+                    I struggled on this part, because the documentation doesn't mention an important detail.<br>
+                    It's not enough to create these 3 endpoints, the interface endpoints must also have <br>
+                    your fargate security group assigned. When creating the endpoint, it will only assign the Default SG of the VPC. <br>
+                    If you run your Service with the Default SG you won't have a problem, but I am deploying the <br>
+                    Service with IaC and have a dedicated SG for my Service. This caused me a headache.<br>
+                    So, don't forget to add your Service Security Group to the 2 interface endpoints.<br>
+                    <br>
+                    Will our Service now finally become healthy? <br>
+                    No... at least not, if we enable Log Collection on the Task Definition. <br>
+                    The communication from the task to CloudWatch will fail. We would need another enpoint, to enable this.<br>
+                    But I am a little frustrated and out of patience now, so I simply disable Log Collection.<br>
+                    And ....Eureka ! The Service becomes healthy. <br>
+                    <br>
+                    <img src="img/ipv6-fargate3.jpg" alt="fargate3" width="300"> <br>
+                    <br>
+                    Lets look at our task, respectively on the Network Settings:<br>
+                    <img src="img/ipv6-fargate4.jpg" alt="fargate4" width="300"> <br>
+                    No public IP, a private IPv4 address and and a IPv6 address. <br>
+                    The ENI also got both addresses. <br>
+                    <br>
+                    It was a hard piece of work, but finally the service is running . <br>
+                    Thanks for Joel Brandenburg from AWS for giving me support on the VPC enpoints part. <br>
+
+
+                    <br>
+                    <h4>IaC</h4><br>
+                    For your first tests you should try by WebConsole, this will keeps things easier.<br>
+                    Once you got your service running, you can start with Iac.<br>
+                    Have a look in my Repo, wou will find examples there, 
+                    the repo is in work, keep that in mind. 
+                    Stay tuned<br>
+                    The repo (under construction) is :<br>
+                    <a href="https://github.com/wolfgangunger/aws-ipv6" class="page-scroll" target="_blank">Github
+                    Wolfgang Unger - AWS IPv6</a><br>
+
+                    <br>
+                    <h4>Conclusion</h4><br>
+                    It is quite some work to get a Fargate Service running for the first time and find and solve all issues.<br>
+                    Out of the box, your service will not become healthy.<br>
+                    You have to enable dualStackIPv6 ECS setting for your account first with CLI.<br>
+                    The ECR enpoint is not IPv6 ready. 
+                    You won't be able to pull the image by IPv6 (February 2024).<br>
+                    So it must be via the IPv4 address of the task/ENI. <br>
+                    Therefore we need VPC endpoints if we don't want to add a NAT. <br>
+                    And don't forget to add your Fargate Security Group to the interface endpoints. <br><br>
+                    Have fun and also a little bit patience to get it running. <br><br>
+                    See IaC examples in CloudFormation, Terraform and CDK in this repo<br>
+                    It is under constrcution, stay tuned ! <br>
+                    <a href="https://github.com/wolfgangunger/aws-ipv6" class="page-scroll" target="_blank">Github
+                        Wolfgang Unger - AWS IPv6</a><br>
+                    <br>
+                    The blog for introduction and how to setup a IPv6 VPC.<br>
+                    <a href="vpc6-introduction.html" class="page-scroll">VPC IPv6 Introduction</a><br>
+                    <br>
+
+                </div>
+
+                References: <br>
+        
+                AWS Documentation<br>
+
+                <a href="https://docs.aws.amazon.com/whitepapers/latest/ipv6-on-aws/IPv6-on-AWS.html" target="_blank">IPv6 on AWS</a><br>
+                <a href="https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html" target="_blank">Migrate your VPC from IPv4 to IPv6</a><br>
+                <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-task-networking.html#fargate-task-networking-vpc-dual-stack" target="_blank">IPv6 dual-stack Fargate</a><br>
+                <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html" target="_blank">ECS Account Settings</a><br>
+                <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/account-setting-management-cli.html" target="_blank">ECS Account Settings with CLI</a><br>
+                <p></p>
+
+            </div>
+        </div>
+        <center>
+            <li><a href="blog.html" class="page-scroll">Back to Blog Overview</a></li>
+        </center>
+    </div>
+
+
+
+
+    <div id="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Autor</h2>
+                <hr>
+            </div>
+            <div id="row">
+                <div class="col-md-3 col-sm-6 team">
+                    <div class="thumbnail"> <img src="../../img/team/wu1.jpg" alt="..." class="team-img">
+                        <div class="caption">
+                            <h3>Wolfgang Unger</h3>
+                            <p>AWS Architect & Developer</p>
+                            <p>6 x AWS Certified </p>
+                            <p>1 x Azure Certified </p>
+                            <p>A Cloud Guru Instructor</p>
+                            <p>Certified Oracle JEE Architect</p>
+                            <p>Certified Scrum Master</p>
+                            <p>Certified Java Programmer</p>
+                            <p>Passionate surfer & guitar player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Section -->
+
+    <div id="social-section">
+        <div class="container">
+            <div class="social">
+                <ul>
+                    <li><a href="https://www.facebook.com/SCC-Brasil-111049103585600"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://github.com/wolfgangunger"><i class="fa fa-github"></i></a></li>
+                    <li><a href="https://www.instagram.com/sccbrasil.insta/"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="https://www.linkedin.com/company/26187795/"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../..js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../../js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="../../js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../../js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="../../js/contact_me.js"></script>
+
+    <!-- Javascripts
+            ================================================== -->
+    <script type="text/javascript" src="../../js/main.js"></script>
+</body>
+
+</html>
