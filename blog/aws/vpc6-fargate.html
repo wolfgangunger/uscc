@@ -261,6 +261,16 @@
                     Have a look in my Repo, wou will find examples there, 
                     the repo is in work, keep that in mind. 
                     Stay tuned<br>
+                    To run the fargate service with the CFN templates you will need:<br>
+                    aws_100_vpc_dual_stack.yaml<br>
+                    aws_110_hosted_zone.yaml (optional - if you use a ALB and RS)<br>
+                    aws_520_ecr.yml - the repo for your images <br>
+                    aws_521_ecs_alb.yml (optional if you want to deploy the service with ALB)<br>
+                    aws_525_ecs_cluster.yml - the cluster <br>
+                    aws_541_vpc_endpoints.yml - the 4 vpc endpoints <br>
+                    aws_542_service_private_ip6.yml - fargate service <br>
+                    aws_543_service_private_ip6_alb.yml - fargate service with ALb <br>
+                    <br>
                     The repo (under construction) is :<br>
                     <a href="https://github.com/wolfgangunger/aws-ipv6" class="page-scroll" target="_blank">Github
                     Wolfgang Unger - AWS IPv6</a><br>
@@ -275,6 +285,13 @@
                     So it must be via the IPv4 address of the task/ENI. <br>
                     Therefore we need VPC endpoints if we don't want to add a NAT. <br>
                     And don't forget to add your Fargate Security Group to the interface endpoints. <br><br>
+                    Well, is Fargate in a IPv6 Dualstack an option to save money? <br>
+                    Not yet really, you will need 4 VPC endpoint to get it running. <br>
+                    So the money you will save on the Nat, you will spend on this VPC enpoints. <br>
+                    Hopefully the ECR & Cloudwatch Support for IPv6 is ready soon and we won't need those 4 endpoints anymore. <br>
+                    Then it will be an option!<br>
+                    <br>
+                    No, you can try to run your first Fargate Service in IPv6 dual-stack mode. <br>
                     Have fun and also a little bit patience to get it running. <br><br>
                     See IaC examples in CloudFormation, Terraform and CDK in this repo<br>
                     It is under constrcution, stay tuned ! <br>
