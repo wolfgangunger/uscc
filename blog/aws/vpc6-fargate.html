@@ -225,6 +225,9 @@
                     Service with IaC and have a dedicated SG for my Service. This caused me a headache.<br>
                     So, don't forget to add your Service Security Group to the 2 interface endpoints.<br>
                     <br>
+                    Keep in mind, these enpoints are not for free, one will cost us about 7$ a month (not included data transfer costs). <br>
+                    So this is not really a much better solution than a NAT, I hope, we will see IPv6 support for ECR soon. <br>
+                    <br>
                     Will our Service now finally become healthy? <br>
                     No... at least not, if we enable Log Collection on the Task Definition. <br>
                     The communication from the task to CloudWatch will fail. We would need another enpoint (com.amazonaws.region.logs), to enable this.<br>
