@@ -240,8 +240,17 @@
                     <br>
                     It was a hard piece of work, but finally the service is running . <br>
                     Thanks for Joel Brandenburg from AWS for giving me support on the VPC enpoints part. <br>
-
-
+                    <br>
+                    <h4>ALB in front of the Service</h4><br>
+                    I have a example in my Github Repo with a Fargate Service with a ALB.<br>
+                    There is also still an issue here.<br>
+                    We cannot select IpAddressType: ipv6 on the TargetGroup.<br>
+                    Our Dual Stack Fargate Service will pass its IPv4 address, not the IPv6 address and this will cause an error. <br>
+                    For now we have to register the fargate service as target with its IPv4 address.<br>
+                    Therefore :<br>
+                    <i>IpAddressType: ipv4<br>
+                    TargetType: ip<br>
+                </i>
                     <br>
                     <h4>IaC</h4><br>
                     For your first tests you should try by WebConsole, this will keeps things easier.<br>
