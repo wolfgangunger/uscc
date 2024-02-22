@@ -13,7 +13,7 @@
 </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AWS Blog Wolfgang Unger | Origin Access Control on Cloudfront Distribution.</title>
+    <title>AWS Blog Wolfgang Unger | Two S3 Origins in the same Cloudfront Distribution.</title>
     <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
     <meta name="keywords"
         content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
@@ -95,96 +95,64 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>Origin access control on Cloudfront Distributions</h2>
+                <h2>Delivering two S3 buckets using the same Cloudfront Distribution</h2>
                 <hr>
             </div>
             <div class="space"></div>
             <div class="row">
                 <div class="col-md-12">
                     <img class="blog-image" src="img/routestobucket.png" alt="7" loading="lazy" />
-                    <p></p>
-                    <h4>Origin Access Control</h4><br>
-                    <p>Usually when a application is new and small we tend to relax the storage configuration, for example not implementing correct storage tiering, <br>
-                        and implementing bucket policies that allow all the objects to be public, don't configure correcly the CORS, and so on.<br>
-                        As your application grows, you must start implementing some best practices, one of the most common is implement cloudfront, to cache the objects and reduce the latency,<br>
-                        And one of the steps to implement cloudfront is to configure the Origin Access Identity (OAI) or Origin Access Control (OAC).<br>
-
-                        Until 2022, aws supply the OAI, that is a special cloudfront user that you can associate with your distribution, <br>
-                        and this user has permission to access the objects in your S3 bucket, giving you the ability to restrict access to your objects, <br>
-                        and also to use the bucket policy to allow only the cloudfront distribution to access the objects.<br>
-
-                        Since 2022, aws supply the OAC, OAC strengthens security with short-term credentials and more frequent credential rotations compared to OAI. 
-                        It also allows for granular policy configurations through resource-based policies, providing better protection against confused deputy attacks.<br>
-                    </p><br>
-
-                    <p>
-                        Checkout our git repository with an example of deploy a cloudfront distribution with OAC, and multiple S3 Origins, using cloudformation.
-                        <a href="https://github.com/nascimento-d/cfn-cloudfront">Github repo with cloudformation code to deploy this example.</a><br>
-                    </p>
-
-
-                    <h4>The Evolution from OAI to OAC</h4>                    
-                    <p>While OAI offered a secure way to connect S3 origins to CloudFront, it fell short in supporting granular policy configurations, 
-                        HTTP and HTTPS requests using the POST method in AWS regions requiring AWS Signature Version 4 (SigV4), and integration 
-                        with Server-Side Encryption with AWS Key Management Service (SSE-KMS). OAC addresses these limitations and introduces 
-                        several notable enhancements.</p>
-                    
-                    <h4>Configuring OAC for an Existing CloudFront Distribution</h4>
-                    
-                    <p>To configure OAC, sign in to the AWS Management Console and navigate to the CloudFront console. Select a distribution 
-                        from the list and choose the S3 origin you wish to associate with an origin access control setting under the Origins tab. 
-                        If the origin is public or uses OAI, it will show as such. To use OAC, select "Origin access control settings" and choose 
-                        an existing origin access control or create a new control setting with one of three signing options.</p>
-                    
-                    <h4>Updating an Existing Distribution</h4>
-                    
-                    <p>When updating a distribution, it's crucial to modify the S3 policy to permit the CloudFront IAM service principal and your 
-                        distribution resource to access the S3 bucket. We recommend updating the policy to allow access to both OAI and OAC before 
-                        saving the origin configuration, effectively reducing service downtime to zero.</p>
-                    
-                    <pre>
-                    {
-                        "Version": "2012-10-17",
-                        "Statement": [
-                            {
-                                "Sid": "AllowCloudFrontServicePrincipalReadOnly",
-                                "Effect": "Allow",
-                                "Principal": {
-                                    "Service": "cloudfront.amazonaws.com"
-                                },
-                                "Action": "s3:GetObject",
-                                "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*",
-                                "Condition": {
-                                    "StringEquals": {
-                                        "AWS:SourceArn": "arn:aws:cloudfront::ACCOUNT_ID:distribution/DISTRIBUTION_ID"
-                                    }
-                                }
-                            },
-                            {
-                                "Sid": "AllowLegacyOAIReadOnly",
-                                "Effect": "Allow",
-                                "Principal": {
-                                    "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EH1HDMB1FH2TC"
-                                },
-                                "Action": "s3:GetObject",
-                                "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
-                            }
-                        ]
-                    }
-                    </pre>
-                    
-                    <h4>Advantages of OAC</h4>
-                    
-                    <p>OAC is designed with enhanced security practices such as short-term credentials, frequent credential rotations, and 
-                        resource-based policies, providing stronger security for your distributions and better protection against confused 
-                        deputy attacks. It supports all HTTP methods, including GET, PUT, POST, PATCH, DELETE, OPTIONS, and HEAD. 
-                        OAC also supports downloading and uploading S3 objects encrypted with SSE-KMS. Furthermore, 
-                        OAC allows access to S3 in all AWS regions, including existing and future regions, unlike OAI, 
-                        which will only be supported in existing AWS regions and regions launched before December 2022.</p>
-
-                </div>
-
-                
+                    <br><br>
+                    <h4>Multiple S3 Origins</h4><br>                    
+                    Cloudfront supports various origins, including S3, EC2, ELB, and custom origins. In this article, we will focus on S3 origins. 
+                    This is a common scenario when you have two buckets, one for your frontend code and another for assets, uploaded by the users of your application.<br>
+                    <br>
+                    In addition to the basic setup, it's important to understand that each S3 origin in CloudFront can have its own unique configuration settings. 
+                    These settings include the origin ID, domain name, origin path, origin access identity, and more. 
+                    Each of these settings plays a crucial role in how CloudFront interacts with the S3 bucket.<br>
+                    <br>
+                    Checkout our git repository with an example of deploying a CloudFront distribution with OAC, and multiple S3 Origins, using CloudFormation.<br>
+                    <a href="https://github.com/nascimento-d/cfn-cloudfront">Github repo with CloudFormation code to deploy this example.</a><br>
+                    In the example, we have two origins, one for the frontend code and another for the assets. 
+                    The path pattern for the frontend code is / and for the assets is /assets/*.<br>
+                    <br>
+                    <h4>Path's configurations</h4><br>
+                    The way that CloudFront decides which origin to use is based on the path pattern. 
+                    In the behavior of your CloudFront distribution, you can define a path pattern for each origin, 
+                    and CloudFront will use the origin that matches the path pattern.<br>
+                    <br>
+                    Also in the origin configuration, you can define the path in your S3 bucket that CloudFront will use to get the objects. 
+                    These two configurations can cause confusion, so be careful when defining the path pattern in the CacheBehaviour 
+                    (this is related to your URL, and can be related to specific file types like /*.png)<br>
+                    and the path in the origin configuration (this is related to the path in your S3 bucket where the objects are stored).<br>
+                    <br>
+                    It's worth noting that the path pattern in the CacheBehaviour is a string that lets you specify one or more files 
+                    that you want CloudFront to deliver to viewers. You can use wildcard characters to specify multiple files.<br>
+                    <br>
+                    <h4>Origin access control and origin access identity</h4><br>
+                    Another configuration that can cause some confusion is the origin access identity and the origin access control configurations. 
+                    The two configurations are related to the security of your S3 bucket, but they are different.<br>
+                    <br>
+                    We are using the origin access control in the example, since it is the most recent configuration. 
+                    these two can be used to guarantee objects in your S3 bucket come only from CloudFront, not directly from users.<br>
+                    <br>
+                    Checkout this blog about the differences between these two configurations.<br>
+                    <a href="oac-config.html">Origin Access Control on CloudFront distributions</a><br>
+                    <br>
+                    <h4>Managed cache policies</h4><br>
+                    Finally, the cache policy and the origin request policy are two configurations that can be used to define the cache and the 
+                    request behavior of your CloudFront distribution.<br>
+                    <br>
+                    AWS provides some AWS managed cache policies that you can use, or you can create your own policies. 
+                    In the example, we are using an AWS managed cache policy. To use this policy in CloudFormation, you have to include the ID of the 
+                    managed policy. This ID can be found in the AWS documentation on 
+                    https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html<br>
+                    <br>
+                    Cache policies determine the values that CloudFront includes in a request that it sends to the origin. 
+                    These values can include headers, cookies, and URL query strings. 
+                    Cache policies also determine the objects that CloudFront caches and how long those objects stay in the cache.<br>
+                    <br>
+                    </div>                
 
             </div>
         </div>
@@ -208,7 +176,7 @@
                         <div class="caption">
                             <h3>Daniel do Nascimento</h3>
                             <p>AWS Developer</p>
-                            <p>2 x AWS Certified </p>
+                            <p>3 x AWS Certified </p>
                         </div>
                     </div>
                 </div>
