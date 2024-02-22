@@ -106,6 +106,10 @@
                     <h3>Introduction</h3><br>   
                     AWS Cloudfront is a content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally 
                     with low latency, high transfer speeds, all within a developer-friendly environment.
+                    Configuring CloudFront with S3 is a common use case, and it's a good practice to use CloudFront to cache the objects in your S3 bucket,
+                    reducing the latency and the costs of the requests to your S3 bucket.<br>
+                    Make this configuration secure and accross multiple S3 buckets is a challenge, there is lot of configurations and variations of 
+                    cache policies, origins, behaviours, etc.<br>
                     On this blog post we will talk about how to use Cloudfront with multiple S3 origins and how to use Origin Access Control (OAC) 
                     to secure the access to the S3 objects.<br> 
                     <br>
@@ -142,7 +146,7 @@
                     AWS provides some AWS managed cache policies that you can use, or you can create your own policies. 
                     In the example, we are using an AWS managed cache policy. To use this policy in CloudFormation, you have to include the ID of the 
                     managed policy. This ID can be found in the AWS documentation on 
-                    https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html<br>
+                    <a href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html" > using cache managed policies.</a><br>
                     <br>
                     Cache policies determine the values that CloudFront includes in a request that it sends to the origin. 
                     These values can include headers, cookies, and URL query strings. 
