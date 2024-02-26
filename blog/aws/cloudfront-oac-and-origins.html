@@ -13,7 +13,7 @@
 </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AWS Blog Wolfgang Unger | Two S3 Origins in the same Cloudfront Distribution.</title>
+    <title>AWS Blog Wolfgang Unger | Cloudfront Distributions </title>
     <meta name="description" content="AWS Blog Wolfgang Unger & SCC Brasil">
     <meta name="keywords"
         content="SCC Brasil, Software, Cloud Consulting, AWS, Cloud, Migration, CDK, Lambda, CodePipeline, CodeBuild, Batch, EC2, RDS, S3, CodeDeploy, Jenkins, SSM, Fargate, ECS, EKS, Devops, Shoring, Security, Software Development, Blumenau, Santa Catarina, Brasil, Brazil, Cloud Training, Consulting, Engineering,  Wolfgang Unger, Nuvem, Desenvolvimento, Consultoria, Migração, Operações, Segurança, os cloud gurus, #sccbrasil, #oscloudgurus, ">
@@ -95,7 +95,7 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>Using <b>Multiple S3 Origins</b> and <b>Origin Access Control</b> on <b>AWS Cloudfront</b> </h2>
+                <h2>AWS Cloudfront</h2>
                 <hr>
             </div>
             <div class="space"></div>
@@ -108,15 +108,47 @@
                     with low latency, high transfer speeds, all within a developer-friendly environment.
                     Configuring CloudFront with S3 is a common use case, and it's a good practice to use CloudFront to cache the objects in your S3 bucket,
                     reducing the latency and the costs of the requests to your S3 bucket.<br>
+                    <br>
+
+                    This initial configuration is simple, you just need to create a CloudFront distribution and configure the S3 bucket as the origin,
+                    and configure the cache behavior to cache the objects in the S3 bucket.
+                    Normally, you let the objects in the S3 bucket public, and configure the bucket policy to allow the CloudFront distribution to access the objects.<br>
+                    <br>
+                    <img class="simple-cloudfront-ui" src="img/cloudfront-ui.png" alt="4" loading="lazy" height="400" /><br>
+                    Simple diagram of a Cloudfront distribution with a S3 bucket as origin.<br>
+                    <br>
+
+                    If you use the AWS console UI to create the CloudFront distribution, you can easily configure the S3 bucket as the origin,
+                    but the default options are not secure, and there is some other details that can pass unnoticed.<br>
+                    <br> 
+                    <br> 
+                    <h4>Error pages configuration</h4><br>
+                    <br>
+                    If your s3 bucket has a frontend code of your app, and this frontend code is a react type(react router deliver the page on index.html), 
+                    you need to configure the error pages in the CloudFront distribution, to redirect the user to the index.html when the user tries to access a page that doesn't exist.<br>
+                    The normal configuration on this case is like this:<br>
+                    <img class="error-pages" src="img/error-pages.png" alt="4" loading="lazy" height="400"/><br>
+                    <br>
+                    <br> 
+                    <h4>Cache Invalidations</h4><br>
+                    <br>
+                    If you are new to Cloudfront, the cache invalidations can be a little bit confusing, because the invalidations are not immediate,
+                    when you change files in your origin, or configurations, you need to invalidate the cache, so the updated content is delivered to the users.<br>
+                    You can do the invalidations in the UI giving the path of the object that you want to invalidate,(use /* as path to invalidate all objects) or you can use the AWS CLI to do this.<br>
+                    <br>
+
+                    <h3>Multiple S3 Origins and Origin Access Control</h3><br>
                     Make this configuration secure and accross multiple S3 buckets is a challenge, there is lot of configurations and variations of 
                     cache policies, origins, behaviours, etc.<br>
-                    On this blog post we will talk about how to use Cloudfront with multiple S3 origins and how to use Origin Access Control (OAC) 
-                    to secure the access to the S3 objects.<br> 
                     <br>
                     Checkout our git repository with an example of deploying a CloudFront distribution with OAC, and multiple S3 Origins, using CloudFormation.<br>
                     <a href="https://github.com/nascimento-d/cfn-cloudfront">Github repo with CloudFormation code to deploy this example.</a><br>
                     In the example, we have two origins, one for the frontend code and another for the assets. 
                     The path pattern for the frontend code is / and for the assets is /assets/*.<br>
+                    <br>
+                    
+                    <img class="multiple-origin-aoc" src="img/cloudfront_oac_diagram.png" alt="4" loading="lazy" height="400"/><br>
+                    Improving the security of the structure implementing Origin Access Control and two separate buckets as origins for different use cases.<br>
 
                     <h3>Multiple S3 Origins</h3><br>                    
                     Cloudfront supports various origins, including S3, EC2, ELB, and custom origins. In this article, we will focus on S3 origins. 
@@ -226,6 +258,13 @@
                     OAC also supports downloading and uploading S3 objects encrypted with SSE-KMS. Furthermore, <br>
                     OAC allows access to S3 in all AWS regions, including existing and future regions, unlike OAI, <br>
                     which will only be supported in existing AWS regions and regions launched before December 2022. <br>
+                    <br>
+
+                    <h3>Conclusions</h3><br>  
+                    CloudFront is a powerful service that can be used to cache the objects and reduce latency in your app, but it requires attention to detail
+                    to configure it correctly. <br>
+                    The initial configuration is simple, but there are some details that can pass unnoticed, error pages, cache invalidations, and the security of the origins.<br>
+                    Following this practices and undestanding the details of the configurations, you can improve the security and the performance of your app.<br>
                     <br>
                 </div>
 
