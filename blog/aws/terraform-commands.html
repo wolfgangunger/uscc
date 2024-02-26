@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11478199739"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11478199739"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-  gtag('config', 'AW-11478199739');
-</script>
+        gtag('config', 'AW-11478199739');
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AWS Blog Wolfgang Unger | 10 usefull Terraform commands to troubleshoot your infrastructure</title>
@@ -22,8 +22,8 @@
 
     <!-- Favicons
             ================================================== -->
-            <link rel="shortcut icon" href="../../img/SCC.ico" type="image/x-icon" />
-            <link rel="icon" href="../../img/SCC.ico" type="image/x-icon"  />
+    <link rel="shortcut icon" href="../../img/SCC.ico" type="image/x-icon" />
+    <link rel="icon" href="../../img/SCC.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
@@ -95,7 +95,7 @@
     <div id="about-section">
         <div class="container">
             <div class="section-title">
-                <h2>10 useful commands to troubleshoot terraform infrastructure</h2>
+                <h2>Useful commands to troubleshoot terraform infrastructure</h2>
                 <hr>
             </div>
             <div class="space"></div>
@@ -103,51 +103,114 @@
                 <div class="col-md-12">
                     <img class="blog-image" src="img/terraformcommands.png" alt="7" loading="lazy" />
                     <p></p>
-                    <h4>Terraform Commands for Troubleshooting</h4><br>
                     <br>
-                    <li><strong>terraform validate:</strong> This command checks your Terraform configuration files for syntax errors and validates the correctness of your code. It's a good practice to run this command before applying changes to catch any potential issues early. For example, <code>terraform validate</code> in your project directory will validate your configuration files.</li>
+                    <h4>Introduction</h4><br>
+                    <p>When working with Terraform, it's important to have a good understanding of the available
+                        commands and how to use them effectively.
+                        Terraform provides a set of commands for managing your infrastructure, and knowing how to use
+                        them can help you troubleshoot issues,
+                        debug your configuration, and gain insights into your infrastructure.
+                        In this article, we'll explore 10 useful Terraform commands that can help you troubleshoot your
+                        infrastructure.</p>
+
+                    <br>
+
+                    <h4>Commands</h4><br>
+                
+                    <p>One common issue that you might encounter when working with Terraform is that it keeps recreating
+                        resources every time you run
+                        <code>terraform apply</code>. This can happen if the resource's configuration has changed
+                        outside of Terraform, or if the state file
+                        has become out of sync with the actual infrastructure. To troubleshoot this issue, you can use
+                        the following commands to inspect
+                        the state file, refresh the state, and debug the problem.
+                    </p>
+                    <br>
+                    To verify the actual configuration that is triggering the recreation, you can use the
+                    <code>terraform plan</code> command to
+                    generate an execution plan and see what changes Terraform will make to your infrastructure.<br>
+                    <li><strong>terraform plan:</strong> This command generates an execution plan, showing what changes
+                        Terraform will make to your
+                        infrastructure. It provides a preview of the actions that Terraform will perform, which is
+                        useful for verifying changes before
+                        they are applied. For example, <code>terraform plan</code> will show you what changes will be
+                        applied to your infrastructure.</li>
+                    <br>
+                    <img class="terraform-plan-object" src="img/terraform-plan-object.png" alt="4" loading="lazy"
+                        height="150" /><br>
+                    Example of an object that will be updated, show in the plan output. In the message you can see the
+                    changes that will be made, and to which attributes.<br>
+                    On this case the change is triggered by the change in the TargetGroup and Load Balancer changes, you can 
+                    checkout the state of these resources to view what attributes are being changed and why.<br>
+
+                    <br>
+                    In case you need more information about this object, you can use the
+                    <code>terraform state show</code> command to display the
+                    current state of the resource and inspect its attributes and metadata.<br>
+                    <li><strong>terraform state show <resource_name>:</strong> This command shows the current state of a
+                        specific resource.
+                        It's useful for inspecting the details of a resource, such as its attributes and metadata.
+                        For example, <code>terraform state show aws_instance.example</code> will show the state of the
+                        "example" AWS instance.</li>
+                    <br>
+
+                    <br>
+                    <li><strong>terraform validate:</strong> This command checks your Terraform configuration files for
+                        syntax errors and validates
+                        the correctness of your code. It's a good practice to run this command before applying changes
+                        to catch any potential issues early.
+                        For example, <code>terraform validate</code> in your project directory will validate your
+                        configuration files.</li>
                     <br>
                     <br>
-                    <li><strong>terraform plan:</strong> This command generates an execution plan, showing what changes Terraform will make to your infrastructure. It provides a preview of the actions that Terraform will perform, which is useful for verifying changes before they are applied. For example, <code>terraform plan</code> will show you what changes will be applied to your infrastructure.</li>
+                    <li><strong>terraform state list:</strong> This command lists all resources managed by Terraform.
+                        It's useful for getting an
+                        overview of all the resources that Terraform is managing. For example,
+                        <code>terraform state list</code> will list all the
+                        resources in your state file.</li>
                     <br>
                     <br>
-                    <li><strong>terraform show:</strong> This command displays the detailed execution plan after running terraform plan. It's useful for reviewing the planned actions in detail or for sharing the plan with others before applying it. For example, <code>terraform show</code> will display the current state of your infrastructure.</li>
+                    <li><strong>terraform refresh:</strong> This command refreshes the state file by querying the actual
+                        infrastructure.
+                        It's useful for updating the state file to match the real-world state of resources, especially
+                        when changes have been made
+                        outside of Terraform. For example, <code>terraform refresh</code> will update your state file to
+                        match the current state of
+                        your infrastructure.</li>
                     <br>
                     <br>
-                    <li><strong>terraform state list:</strong> This command lists all resources managed by Terraform. It's useful for getting an overview of all the resources that Terraform is managing. For example, <code>terraform state list</code> will list all the resources in your state file.</li>
+                    
+                    <li><strong>terraform rm:</strong> This command removes a resource from the Terraform state. It's
+                        useful for cleaning up resources
+                        that are no longer needed or that have been deleted outside of Terraform.
+                        For example, <code>terraform rm aws_instance.example</code> will remove the "example" AWS
+                        instance from your state file.</li>
+                    Another use of rm command is when dealing with migrantions or changes in databases or secrets for example, 
+                    you want to keep the resources in the cloud but not in the state file, so you can use the rm command to
+                    during a change avoid recreating the resource. Normally this is used in combination with the import
+                    command to bring the resource back to the state file after the change is done.<br>
                     <br>
-                    <br>
-                    <li><strong>terraform state show <resource_name>:</strong> This command shows the current state of a specific resource. It's useful for inspecting the details of a resource, such as its attributes and metadata. For example, <code>terraform state show aws_instance.example</code> will show the state of the "example" AWS instance.</li>
+                    <li><strong>terraform import <resource_type>.<resource_name>
+                                    <resource_id>:</strong> This command imports an existing resource into
+                        Terraform state. It's useful for bringing resources under Terraform management without
+                        recreating them.
+                        For example, <code>terraform import aws_instance.example i-abc1234</code> will import the
+                        "example" AWS instance with ID "i-abc1234" into your state file.</li>
                     <br>
                     <div class="code-example">
-                    <pre>
-                    # Show the state of the "example" AWS instance
-                    terraform state show aws_instance.example
-                    </pre>
-                    </div>
-                    <br>
-                    <li><strong>terraform refresh:</strong> This command refreshes the state file by querying the actual infrastructure. It's useful for updating the state file to match the real-world state of resources, especially when changes have been made outside of Terraform. For example, <code>terraform refresh</code> will update your state file to match the current state of your infrastructure.</li>
-                    <br>
-                    <br>
-                    <li><strong>terraform console:</strong> This command opens an interactive console where you can evaluate expressions and inspect variables. It's useful for debugging and exploring your Terraform configuration. For example, <code>terraform console</code> will open the interactive console.</li>
-                    <br>
-                    <br>
-                    <li><strong>terraform graph:</strong> This command generates a visual representation of your infrastructure as a graph. It's useful for understanding the dependencies between resources and for documenting your infrastructure. For example, <code>terraform graph</code> will generate a graph of your infrastructure.</li>
-                    <br>
-                    <br>
-                    <li><strong>terraform import <resource_type>.<resource_name> <resource_id>:</strong> This command imports an existing resource into Terraform’s state. It's useful for bringing resources under Terraform management without recreating them. For example, <code>terraform import aws_instance.example i-abc1234</code> will import the "example" AWS instance with ID "i-abc1234" into your state file.</li>
-                    <br>
-                    <div class="code-example">
-                    <pre>
+                        <pre>
                     # Import the "example" AWS instance
                     terraform import aws_instance.example i-abc1234
                     </pre>
                     </div>
                     <br>
-                    <li><strong>Enable debug logging:</strong> Use the command <code>export TF_LOG=”DEBUG”</code>, and then set your log path with <code>export TF_LOG_PATH="<your/log/path>"</code>. This enables detailed logging, which can be helpful for troubleshooting complex issues. For example, you can enable debug logging and set your log path like this:</li>
+                    <li><strong>Enable debug logging:</strong> Use the command <code>export TF_LOG=”DEBUG”</code>, and
+                        then set your log path with <code>export TF_LOG_PATH="<your/log/path>"</code>. This enables
+                        detailed logging, which can be helpful for troubleshooting complex issues. For example, you can
+                        enable debug logging and set your log path like this:</li>
                     <br>
                     <div class="code-example">
-                    <pre>
+                        <pre>
                     # Enable debug logging
                     export TF_LOG="DEBUG"
                     
@@ -157,8 +220,14 @@
                     </div>
                     <br>
 
-
+                    <h4>Conclusion</h4><br>
+                    <p>These are just a few of the many commands that Terraform provides for managing your infrastructure.
+                        By understanding how to use these commands effectively, you can troubleshoot issues, debug your
+                        configuration, and gain insights into your infrastructure. Whether you're new to Terraform or an
+                        experienced user, these commands can help you work more efficiently and effectively with
+                        Terraform.</p>
                 </div>
+
 
             </div>
         </div>
