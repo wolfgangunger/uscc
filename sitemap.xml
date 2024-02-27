@@ -24,34 +24,42 @@
         <loc>https://www.sccbrasil.com/faq_po.html</loc>
         <lastmod>2024-02-06</lastmod>
     </url>
-   <url>
+    <url>
         <loc>https://www.sccbrasil.com/blog/aws/blog.html</loc>
         <lastmod>2024-02-16</lastmod>
-   </url>
+    </url>
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/blog_de.html</loc>
         <lastmod>2024-02-16</lastmod>
-   </url>  
-    <url>
+    </url>  
+    <url>   
         <loc>https://www.sccbrasil.com/blog/aws/blog_po.html</loc>
         <lastmod>2024-02-16</lastmod>
-   </url>  
-   <url>
+    </url>  
+    <url>
         <loc>https://www.sccbrasil.com/blog/cases/cases.html</loc>
         <lastmod>2024-02-06</lastmod>
-   </url>
-   <url>
+    </url>
+    <url>
         <loc>https://www.sccbrasil.com/blog/cases/carglass.html</loc>
         <lastmod>2024-02-16</lastmod>
-   </url>
-   <url>
+    </url>
+    <url>
         <loc>https://www.sccbrasil.com/blog/cases/ogulo.html</loc>
         <lastmod>2024-02-06</lastmod>
-   </url>
-     <url>
+    </url>
+    <url>
         <loc>https://www.sccbrasil.com/contact.html</loc>
         <lastmod>2024-02-06</lastmod>
-   </url> 
+    </url> 
+    <url>
+        <loc>https://www.sccbrasil.com/solutions.html</loc>
+        <lastmod>2024-02-08</lastmod>
+    </url> 
+    <url>
+        <loc>https://www.sccbrasil.com/blog/aws/cfn-iac-generator.html</loc>
+        <lastmod>2024-02-16</lastmod>
+    </url>    
     <url>
         <loc>https://www.sccbrasil.com/blog/aws/vpc6-fargate.html</loc>
         <lastmod>2024-02-16</lastmod>
@@ -216,9 +224,6 @@
         <loc>https://www.sccbrasil.com/blog/aws/terraform-state.html</loc>
         <lastmod>2024-02-22</lastmod>
     </url> 
-     <url>
-        <loc>https://www.sccbrasil.com/solutions.html</loc>
-        <lastmod>2024-02-08</lastmod>
-    </url> 
+
                                                                                                                   
 </urlset> 
