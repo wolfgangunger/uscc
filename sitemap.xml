@@ -205,6 +205,18 @@
         <lastmod>2024-01-01</lastmod>
     </url> 
      <url>
+        <loc>https://www.sccbrasil.com/blog/aws/cloudfront-oac-and-origins.html</loc>
+        <lastmod>2024-02-22</lastmod>
+    </url> 
+     <url>
+        <loc>https://www.sccbrasil.com/blog/aws/terraform-commands.html</loc>
+        <lastmod>2024-02-22</lastmod>
+    </url> 
+     <url>
+        <loc>https://www.sccbrasil.com/blog/aws/terraform-state.html</loc>
+        <lastmod>2024-02-22</lastmod>
+    </url> 
+     <url>
         <loc>https://www.sccbrasil.com/solutions.html</loc>
         <lastmod>2024-02-08</lastmod>
     </url> 
