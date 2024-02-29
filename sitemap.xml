@@ -224,6 +224,17 @@
         <loc>https://www.sccbrasil.com/blog/aws/terraform-state.html</loc>
         <lastmod>2024-02-22</lastmod>
     </url> 
+<<<<<<< Updated upstream
 
+=======
+     <url>
+        <loc>https://www.sccbrasil.com/blog/aws/textract.html</loc>
+        <lastmod>2024-02-29</lastmod>
+    </url> 
+     <url>
+        <loc>https://www.sccbrasil.com/solutions.html</loc>
+        <lastmod>2024-02-08</lastmod>
+    </url> 
+>>>>>>> Stashed changes
                                                                                                                   
 </urlset> 
