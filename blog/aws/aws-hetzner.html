@@ -162,8 +162,10 @@
                     Inside these projects you can define your infrastructure, that means define VPCs, VMs and so on.<br>
                     So these projects serve really good to create multiple environments for your stages like Dev, Int, Prod.<br>
                     You can invite users to these projects and define those users for each projects different.<br>
-                    So this gives you a basic IAM. <br>
+                    So this gives you a basic IAM. <br> 
+                    But indeed just basic. There is not yet a IAM on Hetzner available you could compare to AWS IAM features. <br>
                     The billing will be for the account, so all of your projects will be billed together.<br><br>
+
                     <h4>Services and data</h4><br>
                     We cannot make a complete services comparison in this blog, probably a dedicated blog about this will follow, 
                     but lets have a look what Hetzner got to offer.<br>
@@ -194,7 +196,7 @@
                     <b>Floating IPs</b> - Similar to Elastic IP on AWS.  A Floating IP can be assigned and reassigned to any server at any time in any location.<br>
                     <b>Snapshots</b> - Should be self explaining , a snapshot is a full copy of your server's disk<br>
                     <b>Load Balancer</b> - you should be familar with this concept, it will distribute traffic between multiple target servers.<br>
-                    <b>Buckets</b> - Similar to S3 Buckets in AWS. <br>
+                    <b>Buckets</b> - Similar to S3 Buckets in AWS. But of course not yet with all S3 features you know from AWS<br>
 <br>
                     So for our example infrastructure, we used to have S3, EC2, Loadbalancers, RDS, EKS and Lambda on AWS:<br>
                     - S3 and EC2 can be substituted pretty easy on Hetzner. Also Loadbalancers<br>
