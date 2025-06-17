@@ -123,10 +123,64 @@
                     here, these <br>
                     are too individual from customer to customer but lets look at the migration on a abstract level and
                     ignore the service tier in detail for now.<br>
+                    If you are basically using EC2 a lot on AWS you will be able to migrate them quite easy to Hetzner. <br>
+                    You will also save a considerable amount of your cloud costs with this migration, since the prices for VMs on 
+                    Hetzner are much lower as on AWS. <br>
+                    As showed in this
+                    <a href="https://learn.umh.app/blog/aws-and-azure-are-at-least-4x-10x-more-expensive-than-hetzner/" class="page-scroll" target="_blank">
+                        UMH blog from Jeremy Theocharis</a>
+                    here, see the following numbers to get an idea: <br> 
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cloud Provider</th>
+                                <th>Type&ensp;</th>
+                                <th>vCPUs &ensp;   </th>
+                                <th>RAM &ensp;    </th>
+                                <th>Monthly Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hetzner  Cloud</td>
+                                <td>CPX41</td>
+                                <td>8</td>
+                                <td>16 GiB&ensp;</td>
+                                <td>$32.70 (billed hourly)</td>
+                            </tr>
+                            <tr>
+                                <td>AWS EC2(1-Year)</td>
+                                <td>c6g.2xlarge&ensp;</td>
+                                <td>8</td>
+                                <td>16 GiB</td>
+                                <td>$180.60</td>
+                            </tr>
+                            <tr>
+                                <td>AWS EC2(On-Demand)&ensp; </td>
+                                <td>c6g.2xlarge</td>
+                                <td>8</td>
+                                <td>16 GiB</td>
+                                <td>$226.59</td>
+                            </tr>
+                            <tr>
+                                <td>Azure VM</td>
+                                <td> F8</td>
+                                <td>8</td>
+                                <td>16 GiB</td>
+                                <td>$331.4 (billed hourly)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    Please keep in mind the prices are updated monthly, make your own comparison. <br>
+                    <br>
+                    But if you use a lot of managed services, like RDS and others and use a lot of Lambda, maybe EventBridge, your conclusion might be, you cannot 
+                    migrate this infrastructure with reasonable effort<br> 
 
                     <br>
                     <h4>Your Current Cloud Infrastructure</h4><br>
-                    Lets define an example Infrastructure to approach the answer on our question:<br>
+                    The answer to the million-dollar question will depend on your infrastructure and must be analysed individual. <br>
+                    But lets define an example Infrastructure to approach the answer on this question on an abstract level:<br>
                     <br>
                     - You have a multi-account environment in AWS with lets say a Master/Organisational Account and 3
                     Stage accounts (DEV, INT, PROD).<br>
@@ -141,6 +195,8 @@
                     <br>
                     - You use IaC to deploy your infrastructure, which might be Terraform or CloudFormation.<br>
 
+                    <br>
+                    Lets have a closer look if you could migrate this infrastructure from AWS to Hetzner.<br>
                     <br>
 
 
@@ -164,6 +220,7 @@
                     You can invite users to these projects and define those users for each projects different.<br>
                     So this gives you a basic IAM. <br> 
                     But indeed just basic. There is not yet a IAM on Hetzner available you could compare to AWS IAM features. <br>
+                    If you define a admin user he is admin over all resources in the project. <br>
                     The billing will be for the account, so all of your projects will be billed together.<br><br>
 
                     <h4>Services and data</h4><br>
@@ -236,7 +293,9 @@
                      Have a look in this blog of us :           <br>
                         <a href="7r.html" class="page-scroll" >
                         7 Cloud migration strategies</a>
-<br><br>
+                    <br>
+                    And keep in mind, cost might be one more factor to migrate, see the comparison above. <br>
+                    <br>
                      If you need help for your analysis or migration, you can  contact us, <br>
                     we would proudly help to get your architecture save and up to date with all best practices . <br><br>
                     <a href="../../contact.html" class="btn btn-default">Contact us</a>
